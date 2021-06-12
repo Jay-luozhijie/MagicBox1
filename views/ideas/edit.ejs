@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-6 offset-1 mt-5">
+            <form action="/<%=idea._id%>?_method=PATCH" method='POST'>
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title:</label>
+                    <textarea id="title" class="form-control" type="text" name="idea[title]"><%=idea.title%></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="description">idea description:</label>
+                    <textarea id="description" class="form-control" name="idea[description]" rows="10"><%=idea.description%></textarea>
+                </div>
+                <button class="btn btn-success">edit</button>
+            </form>
+        </div>
+    </div>
+    <!-- <% layout('layouts/boilerplate') %>
+        <div class="row">
+            <h1 class="text-center">New Campground</h1>
+            <div class="col-6 offset-3">
+                <form action="/" method=POST>
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Title</label>
+                        <input class="form-control" type="text" id="title" name="idea[title]">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea class="form-control" type="text" id="title" name="idea[description]"
+                            rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-success">submit</button>
+                </form>
+            </div> -->
