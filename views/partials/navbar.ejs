@@ -28,8 +28,22 @@
           </button>
         </form>
         <form class="d-flex pt-2">
-          <button class="btn btn-outline-primary">User</button>
+          <button class="btn btn-outline-primary">
+            <%if(currentUser){%>
+              <%=currentUser.username%>
+            <%} else{%>
+              User
+            <%}%>
+          </button>
         </form>
+        <div class="navbar-nav ml-auto">
+          <% if(!currentUser){ %>
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+          <% } else { %>
+          <a class="nav-link" href="/logout">Logout</a>
+          <% } %>
+        </div>
       </div>
     </div>
   </nav>

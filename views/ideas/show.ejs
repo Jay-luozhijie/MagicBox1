@@ -1,15 +1,55 @@
 <% layout('layouts/boilerplate') %>
-    <div>
-        <h2>Title: <%=idea.title%></h2>
-        <h3>Description:</h3> 
-        <div><%=idea.description%></div>
+    <div class="row">
+        <div class="col-8 offset-1">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2>author: <%=idea.author.username%></h2>
+                    <h2>Title: <%=idea.title%>
+                    </h2>
+                    <h3>Description:</h3>
+                    <div>
+                        <%=idea.description%>
+                    </div>
+                </div>
+                <%if(currentUser && idea.author.equals(currentUser._id)){%>
+                <form class="ms-3">
+                    <button onclick="location.href='/<%=idea._id%>/edit'" type="button"
+                        class="btn btn-primary mb-3">Edit</button>
+                </form>
+                <%}%>
+                <form class="ms-3">
+                    <button onclick="location.href='/'" type="button" class="btn btn-success mb-3">Back to Home</button>
+                </form>
+                <%if(currentUser && idea.author.equals(currentUser._id)){%>
+                <form class="ms-3 mb-3" method="POST" action="/<%= idea._id %>?_method=DELETE">
+                    <button class="btn btn-danger md-3">Delete</button>
+                </form>
+                <%}%>
+            </div>
+            <%if(currentUser){%>
+                <form action="/<%=idea._id%>/comment" class="validated-form mb-3" method="POST" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="commentbody">Comment</label>
+                        <textarea class='form-control' name='comment' id='commentbody' cols='30' rows='3'
+                            required></textarea>
+                        <div class="valid-feedback">good!</div>
+                        <div class="invalid-feedback">Please provide description.</div>
+                    </div>
+                    <button class="btn btn-success">Submit</button>
+                </form>
+            <%}%>
+            <%for(let comment of idea.comment){%>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card=title">By <%=comment.author.username%></h5>
+                        <p class="card-text">comment body: <%=comment.commentBody%></p>
+                        <%if(currentUser && comment.author.equals(currentUser._id)){%>
+                            <form action='/<%=idea._id%>/comment/<%=comment._id%>?_method=DELETE' method="POST">
+                                <button class='btn btn-sm btn-danger'>Delete</button>
+                            </form>
+                        <%}%>
+                    </div>
+                </div>
+                <%}%>
+        </div>
     </div>
-    <form>
-        <button onclick="location.href='/<%=idea._id%>/edit'" type="button"class="btn btn-primary mb-3">Edit</button>
-    </form>
-    <form>
-        <button onclick="location.href='/'" type="button" class="btn btn-success mb-3">Back to Home</button>
-    </form>
-    <form method="POST" action="/<%= idea._id %>?_method=DELETE">
-        <button class="btn btn-danger md-3">Delete</button>
-    </form>
