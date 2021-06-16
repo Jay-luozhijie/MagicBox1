@@ -11,12 +11,13 @@ const LocalStrategy = require('passport-local')
 
 const ExpressError = require('./utils/ExpressError')
 const ideaRoute = require('./routes/ideaRoute')
+const userRoute = require('./routes/userRoute')
 const commentRoute = require('./routes/commentRoute')
 const UserModel = require('./models/userModel')
 
 
 
-mongoose.connect('mongodb://localhost:27017/IdeaV1', { useNewUrlParser: true, useUnifiedTopology: true })  
+mongoose.connect('mongodb://localhost:27017/IdeaV1', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Connection open")
     })
@@ -64,8 +65,10 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use('/user', userRoute)                                  //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js
+
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('page not found', 404))                 //if all address above can't match, this page can't find, give error

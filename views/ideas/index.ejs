@@ -6,15 +6,23 @@
             <div class="d-flex card mb-4" style="height:15rem; width: 58rem;">
                 <div class="card-body row">
                     <div>
-                        <h5 class="card-title">author: <%= idea.author.username%></h5>
-                        <h5 class="card-title"><%= idea.title%></h5>
-                        <p class="card-text"><%=idea.description%></p>
+                        <h5 class="card-title">author: <%= idea.author.username%>
+                        </h5>
+                        <h5 class="card-title">
+                            <%= idea.title%>
+                        </h5>
+                        <p class="card-text">
+                            <%=idea.description%>
+                        </p>
+                        <p>
+                            <%= idea.upVote.length %> people like this post!
+                        </p>
                     </div>
                     <div>
                         <a href="/<%=idea._id%>" class="btn btn-primary bt-auto">more</a>
                     </div>
                 </div>
             </div>
-        <%}%>
-        
+            <%}%>
+
     </ul>

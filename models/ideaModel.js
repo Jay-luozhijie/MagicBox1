@@ -3,10 +3,10 @@ const CommentModel = require('./commentModel');
 const Schema = mongoose.Schema;
 
 const IdeaSchema = new Schema({
-    author:{
-        type:Schema.Types.ObjectId,
-        ref:'UserModel',
-        required:true,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel',
+        required: true,
     },
     title: {
         type: String,
@@ -16,11 +16,21 @@ const IdeaSchema = new Schema({
         type: String,
         required: [true, "please provide description"]
     },
-    upVote: Number,
-    downVote: Number,
+    upVote: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
     comment: [
         { type: Schema.Types.ObjectId, ref: 'CommentModel' }
-    ]
+    ],
+    doer: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
+    follower: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel',
+    }]
 })
 
 IdeaSchema.post('findOneAndDelete', async function (doc) {

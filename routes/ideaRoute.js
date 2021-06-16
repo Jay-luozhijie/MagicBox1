@@ -6,6 +6,8 @@ const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
 const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
+const { findByIdAndUpdate } = require('../models/ideaModel')
+const ideaModel = require('../models/ideaModel')
 
 
 
@@ -112,6 +114,20 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {    
     res.redirect('/');
 }))
 
-
+router.put('/:id', isLoggedIn, catchAsync(async (req, res) => { //if LIKE, upVote +1; else, then upVote -1
+    const { id } = req.params;
+    let idea = await IdeaModel.findById(id);
+    let thisIdea;
+    if (idea.upVote.includes(req.user._id)) { //if liked already
+        idea.upVote = idea.upVote.filter(e => e !== `req.user._id`);
+        req.user.likePost.filter(e => e !== `${id}`);
+        thisIdea = await ideaModel.findByIdAndUpdate(id, { ...idea });
+    } else {
+        idea.upVote.push(req.user._id);
+        req.user.likePost.push(id);
+        thisIdea = await ideaModel.findByIdAndUpdate(id, { ...idea });
+    }
+    res.redirect(`/${thisIdea._id}`);
+}))
 
 module.exports = router
