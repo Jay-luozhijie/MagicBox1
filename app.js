@@ -15,6 +15,8 @@ const userRoute = require('./routes/userRoute')
 const commentRoute = require('./routes/commentRoute')
 const UserModel = require('./models/userModel')
 
+const cookieParser = require('cookie-parser');
+
 
 
 mongoose.connect('mongodb://localhost:27017/IdeaV1', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -38,6 +40,8 @@ app.set('views', path.join(__dirname, '/views'))
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(cookieParser());
 
 const sessionConfig = {
     secret: 'thisissecret',

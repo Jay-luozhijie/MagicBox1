@@ -8,6 +8,8 @@ const UserModel = require('../models/userModel')
 const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
 const { findByIdAndUpdate } = require('../models/ideaModel')
 const ideaModel = require('../models/ideaModel')
+const { response } = require('express')
+
 
 
 
@@ -87,6 +89,7 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
         req.flash('error', 'Cannot find that idea!')
         return res.redirect('/')
     }
+    res.cookie("ideaId", req.params.id);
     res.render("ideas/show", { idea })
 }))
 
@@ -114,20 +117,32 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {    
     res.redirect('/');
 }))
 
-router.put('/:id', isLoggedIn, catchAsync(async (req, res) => { //if LIKE, upVote +1; else, then upVote -1
-    const { id } = req.params;
-    let idea = await IdeaModel.findById(id);
-    let thisIdea;
-    if (idea.upVote.includes(req.user._id)) { //if liked already
-        idea.upVote = idea.upVote.filter(e => e !== `req.user._id`);
-        req.user.likePost.filter(e => e !== `${id}`);
-        thisIdea = await ideaModel.findByIdAndUpdate(id, { ...idea });
-    } else {
-        idea.upVote.push(req.user._id);
-        req.user.likePost.push(id);
-        thisIdea = await ideaModel.findByIdAndUpdate(id, { ...idea });
+router.post('/like', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+    if (idea.upVote.indexOf(userId) === 0) { }
+    else {
+        user.likePost.push(ideaId);
+        idea.upVote.push(userId);
+        await UserModel.findByIdAndUpdate(userId, { ...user });
+        await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
     }
-    res.redirect(`/${thisIdea._id}`);
-}))
+})
+
+router.post('/cancelLike', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+
+    const ideaIndex = user.likePost.indexOf(ideaId);
+    user.likePost.splice(ideaIndex, 1);
+    const userIndex = idea.upVote.indexOf(userId);
+    idea.upVote.splice(userIndex, 1);
+    await UserModel.findByIdAndUpdate(userId, { ...user });
+    await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+})
 
 module.exports = router
