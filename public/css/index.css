@@ -1,0 +1,14 @@
+.indexIdeaDescription{
+    width:100%;
+    overflow: hidden; 
+    display:-webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+.eachIdea{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+

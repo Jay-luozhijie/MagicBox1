@@ -25,6 +25,8 @@ mongoose.connect('mongodb://localhost:27017/IdeaV1', { useNewUrlParser: true, us
         console.log(err)
     })
 mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useCreateIndex', true);
 mongoose.connection.on("error", console.error.bind(console, "connection error:"))
 mongoose.connection.once("open", () => {
     console.log("Datebase connected")
