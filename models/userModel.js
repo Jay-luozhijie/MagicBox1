@@ -7,7 +7,23 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-    }
+    },
+    idea: [{
+        type: Schema.Types.ObjectId,
+        ref: 'ideaModel',
+    }],
+    likePost: [{
+        type: Schema.Types.ObjectId,
+        ref: 'ideaModel'
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
+    follower: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }]
 })
 
 UserSchema.plugin(passportLocalMongoose)

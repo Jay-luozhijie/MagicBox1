@@ -6,6 +6,10 @@ const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
 const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
+const { findByIdAndUpdate } = require('../models/ideaModel')
+const ideaModel = require('../models/ideaModel')
+const { response } = require('express')
+
 
 
 
@@ -85,6 +89,7 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
         req.flash('error', 'Cannot find that idea!')
         return res.redirect('/')
     }
+    res.cookie("ideaId", req.params.id);
     res.render("ideas/show", { idea })
 }))
 
@@ -112,7 +117,33 @@ router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {    
     res.redirect('/');
 }))
 
+router.post('/like', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+    if (idea.upVote.indexOf(userId) === 0) { }
+    else {
+        user.likePost.push(ideaId);
+        idea.upVote.push(userId);
+        await UserModel.findByIdAndUpdate(userId, { ...user });
+        await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+    }
+})
 
+router.post('/cancelLike', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+
+    const ideaIndex = user.likePost.indexOf(ideaId);
+    user.likePost.splice(ideaIndex, 1);
+    const userIndex = idea.upVote.indexOf(userId);
+    idea.upVote.splice(userIndex, 1);
+    await UserModel.findByIdAndUpdate(userId, { ...user });
+    await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+})
 
 
 module.exports = router

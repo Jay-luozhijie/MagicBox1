@@ -1,0 +1,10 @@
+
+.like {
+    background-color: palevioletred;
+    padding: 10px 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    color:honeydew;
+    cursor: pointer;
+}
