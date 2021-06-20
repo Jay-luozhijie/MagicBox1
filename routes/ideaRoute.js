@@ -61,7 +61,6 @@ router.get('/logout', (req, res) => {                   //logout
 
 router.get('/', catchAsync(async (req, res) => {        //index page
     const ideas = await IdeaModel.find({}).populate('author')
-    console.log(ideas)
     res.render("ideas/index", { ideas })
 }))
 
@@ -84,7 +83,6 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
             path: 'author',
         }
     }).populate('author')
-    console.log(idea)
     if (!idea) {
         req.flash('error', 'Cannot find that idea!')
         return res.redirect('/')

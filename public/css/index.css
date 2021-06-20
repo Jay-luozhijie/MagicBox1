@@ -6,9 +6,19 @@
     -webkit-line-clamp: 5;
 }
 
-.eachIdea{
+.indexIdeaContent{
     display: flex;
     flex-direction: column;
     justify-content: start;
+    height:22rem; 
+    width: 48rem;
 }
 
+.indexIdeaContainer{
+    width:900px;
+    border: solid;
+    border-width: 1px;
+    border-color: #adb5bd;
+    border-radius:7px;
+    background-color: white;
+}

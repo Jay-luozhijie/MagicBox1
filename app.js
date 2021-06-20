@@ -13,6 +13,7 @@ const ExpressError = require('./utils/ExpressError')
 const ideaRoute = require('./routes/ideaRoute')
 const userRoute = require('./routes/userRoute')
 const commentRoute = require('./routes/commentRoute')
+const apiRoute=require("./routes/apiRoute")
 const UserModel = require('./models/userModel')
 
 const cookieParser = require('cookie-parser');
@@ -74,7 +75,7 @@ app.use((req, res, next) => {
 app.use('/user', userRoute)                                  //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js
-
+app.use('/api',apiRoute)
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('page not found', 404))                 //if all address above can't match, this page can't find, give error
