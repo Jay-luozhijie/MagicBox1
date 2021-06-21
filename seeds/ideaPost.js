@@ -20,11 +20,11 @@ const seedDB = async () => {
     await IdeaModel.deleteMany({});
     for (let i = 1; i <= 50; i++) {
         const idea = new IdeaModel({
-            author: `60cdbd034fb8ab91d9ae5253`,
+            author: `60cff944888b25d2ed3c6795`,
             title: `idea${i}`,
             description: `this is the description of idea${i}this is the description of idea${i}this is the description of idea${i}`,
             upVote: [],
-            follower: [],
+            collector: [],
             doer: []
         })
         await idea.save();

@@ -59,9 +59,8 @@ router.get('/logout', (req, res) => {                   //logout
 
 ////////////////////////  basic CRUD   ////////////////////////////////
 router.get('/:id', catchAsync(async (req, res) => {                    //userPage
-    // const user = await findById(req.params.id);
-    // console.log(user);
-    // res.render('users/userPage', { user });
+    const user = await UserModel.findById(req.params.id).populate('likePost').populate('doingPost').populate('collect');
+    res.render('users/userPage', { user });
 }))
 
 module.exports = router

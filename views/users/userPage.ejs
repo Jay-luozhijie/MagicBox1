@@ -1,20 +1,82 @@
 <% layout('layouts/boilerplate') %>
+    <div>
+        <h1>
+            Hello, <%= user.username %>!
+        </h1>
+    </div>
     <div class="row">
-        <div class="col-6 offset-1 mt-5">
+        <div class="col-6">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h2>Email: <%= user.email %>
-                    </h2>
-                    <h3>Like following post:</h3>
-                    <% for(let post of user.likePost) { %>
-                        <h5>
-                            <%= post.title %>:
-                        </h5>
-                        <p>
-                            <%= post.description %>
-                        </p>
-                        <br>
-                        <% } %>
+                    <h3>Doing-list:</h3>
+                    <% if(user.doingPost.length> 0) {%>
+                        <% for(let post of user.doingPost) { %>
+                            <hr>
+                            <div>
+                                <h5>
+                                    <%= post.title %>:
+                                </h5>
+                                <p>
+                                    <%= post.description %>
+                                </p>
+                                <a class="btn btn-primary" href="/<%= post._id %>" role="button">Link</a>
+                            </div>
+
+                            <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You are not doing any item currently.</p>
+                                    <% } %>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3>Collection:</h3>
+                    <% if(user.collect.length> 0) {%>
+                        <% for(let post of user.collect) { %>
+                            <hr>
+                            <div>
+                                <h5>
+                                    <%= post.title %>:
+                                </h5>
+                                <p>
+                                    <%= post.description %>
+                                </p>
+                                <a class="btn btn-primary" href="/<%= post._id %>" role="button">Link</a>
+                            </div>
+
+                            <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You haven't collected any post so far.</p>
+                                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3>Liked post:</h3>
+                    <% if(user.likePost.length> 0) {%>
+                        <% for(let post of user.likePost) { %>
+                            <hr>
+                            <div>
+                                <h5>
+                                    <%= post.title %>:
+                                </h5>
+                                <p>
+                                    <%= post.description %>
+                                </p>
+                                <a class="btn btn-primary" href="/<%= post._id %>" role="button">Link</a>
+                            </div>
+
+                            <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You haven't liked any post so far.</p>
+                                    <% } %>
                 </div>
             </div>
         </div>
