@@ -10,19 +10,23 @@ const UserSchema = new Schema({
     },
     idea: [{
         type: Schema.Types.ObjectId,
-        ref: 'ideaModel',
+        ref: 'IdeaModel',
     }],
     likePost: [{
         type: Schema.Types.ObjectId,
-        ref: 'ideaModel'
+        ref: 'IdeaModel'
     }],
-    following: [{
+    collect: [{
         type: Schema.Types.ObjectId,
-        ref: 'UserModel'
+        ref: 'IdeaModel'
     }],
-    follower: [{
+    doingPost: [{
         type: Schema.Types.ObjectId,
-        ref: 'UserModel'
+        ref: 'IdeaModel'
+    }],
+    finishedPost: [{
+        type: Schema.Types.ObjectId,
+        ref: 'IdeaModel'
     }]
 })
 

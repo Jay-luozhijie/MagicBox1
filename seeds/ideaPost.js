@@ -24,7 +24,7 @@ const seedDB = async () => {
             title: `idea${i}`,
             description: `this is the description of idea${i}this is the description of idea${i}this is the description of idea${i}`,
             upVote: [],
-            follower: [],
+            collector: [],
             doer: []
         })
         await idea.save();
