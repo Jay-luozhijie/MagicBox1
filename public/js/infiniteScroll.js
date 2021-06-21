@@ -5,8 +5,10 @@
     const limit = 10;
     let loading = false;
 
-    const getIdeas = async (page, limit) => {
-        const API_URL = `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;     //fetch data from db
+    const getIdeas = async (page, limit, isSearching) => {
+        const API_URL = !isSearching
+                        ?`http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`
+                        :`http://localhost:3000/api/searchIdeas/?page=${page}&limit=${limit}`;     //fetch data from db
         const response = await fetch(API_URL, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json'
@@ -70,6 +72,8 @@
             await loadIdeas(page, limit);
         }
     }, { passive: true })
+
+    
 
 })()
 
