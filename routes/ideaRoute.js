@@ -59,9 +59,13 @@ router.get('/logout', (req, res) => {                   //logout
 
 ////////////////////////  basic CRUD   ////////////////////////////////
 
-router.get('/', catchAsync(async (req, res) => {        //index page
-    const ideas = await IdeaModel.find({}).populate('author')
-    res.render("ideas/index", { ideas })
+router.get('/', catchAsync(async (req, res) => {                     //index page
+    if(req.query.keyword) {
+        const keyword = req.query.keyword;
+        res.render("ideas/searchIndex",{keyword:JSON.stringify(keyword)})
+    } else {
+        res.render("ideas/index", {})
+    }
 }))
 
 router.get('/new', isLoggedIn, (req, res) => {                      //create new idea page
@@ -79,8 +83,18 @@ router.post('/', isLoggedIn, validateIdea, catchAsync(async (req, res) => {//pos
 router.get('/:id', catchAsync(async (req, res) => {         //show page
     const idea = await IdeaModel.findById(req.params.id).populate({
         path: 'comment',
-        populate: {
-            path: 'author',
+        populate: [
+            {path: 'author'},
+            {path:'reply',
+            populate:[
+                {path:'author'},
+                {path:'replyTo'}]
+            }
+        ]
+    }).populate({
+        path:'answer',
+        populate:{
+            path:'author'
         }
     }).populate('author')
     if (!idea) {

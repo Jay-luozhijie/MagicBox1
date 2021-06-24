@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate') %>
+    <div><a href="/new">Create an idea</a></div>
+    <div class='ideas' id="searchIndex">
+        <%=keyword%>
+    </div>
+    <div class='loader'>
+        loading in process...
+    </div>
+    <script>var keyword = JSON.parse('<%-keyword%>');
+            window.keyword = keyword;
+            </script>
+    <script src='/js/infiniteScroll.js'></script>

@@ -14,7 +14,10 @@ const ideaRoute = require('./routes/ideaRoute')
 const userRoute = require('./routes/userRoute')
 const commentRoute = require('./routes/commentRoute')
 const apiRoute=require("./routes/apiRoute")
+const answerRoute = require('./routes/answerRoute')
+
 const UserModel = require('./models/userModel')
+const commentModel = require("./models/commentModel")
 
 const cookieParser = require('cookie-parser');
 
@@ -72,10 +75,12 @@ app.use((req, res, next) => {
     next()
 })
 
+
 app.use('/user', userRoute)                                  //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js
 app.use('/api',apiRoute)
+app.use('/:id/answer',answerRoute)
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('page not found', 404))                 //if all address above can't match, this page can't find, give error
@@ -86,6 +91,7 @@ app.use((err, req, res, next) => {
     if (!err.message) { err.message = 'something went wrong!' }     //catch error in the end if there is
     res.status(statusCode).render('error', { err })
 })
+
 
 app.listen(3000, () => {
     console.log("port 3000 listening!")

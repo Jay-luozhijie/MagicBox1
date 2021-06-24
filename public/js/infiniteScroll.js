@@ -4,11 +4,14 @@
     let page = 1;
     const limit = 10;
     let loading = false;
+    let keyword = window.keyword;
+    window.keyword = undefined;
 
-    const getIdeas = async (page, limit, isSearching) => {
-        const API_URL = !isSearching
-                        ?`http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`
-                        :`http://localhost:3000/api/searchIdeas/?page=${page}&limit=${limit}`;     //fetch data from db
+    const getIdeas = async (page, limit) => {
+        const API_URL = keyword
+                        ? `http://localhost:3000/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
+                        : `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;
+
         const response = await fetch(API_URL, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json'
@@ -55,9 +58,7 @@
     const loadIdeas = async (page, limit) => {
         setTimeout(async () => {
             const response = await getIdeas(page, limit)
-           
             showIdeas(response.result)
-            total = response.total
             loading = false;
         },300)
     }
@@ -73,7 +74,7 @@
         }
     }, { passive: true })
 
-    
+
 
 })()
 

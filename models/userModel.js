@@ -10,11 +10,11 @@ const UserSchema = new Schema({
     },
     idea: [{
         type: Schema.Types.ObjectId,
-        ref: 'ideaModel',
+        ref: 'IdeaModel',
     }],
     likePost: [{
         type: Schema.Types.ObjectId,
-        ref: 'ideaModel'
+        ref: 'IdeaModel'
     }],
     following: [{
         type: Schema.Types.ObjectId,

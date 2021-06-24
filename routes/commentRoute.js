@@ -4,7 +4,8 @@ const router = express.Router({ mergeParams: true })
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const CommentModel = require('../models/commentModel')
-const { isLoggedIn, validateComment,isCommentAuthor } = require('../middleware')
+const ReplyModel = require('../models/replyModel')
+const { isLoggedIn, validateComment, validateReply, isCommentAuthor, isReplyAuthor } = require('../middleware')
 
 
 router.get('/', (req, res) => {     //because when not login->comment and submit, we are asking post('/60c02e831d964f134cdbb0d9/comment') 
@@ -18,7 +19,7 @@ router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res) => {  
     idea.comment.push(comment)
     await comment.save()
     await idea.save()
-    req.flash('success','created a new comment!')
+    req.flash('success', 'created a new comment!')
     res.redirect(`/${idea._id}`)
 }))
 
@@ -26,7 +27,30 @@ router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req,
     const { id, commentId } = req.params
     await IdeaModel.findByIdAndUpdate(id, { $pull: { comment: commentId } })
     await CommentModel.findByIdAndDelete(commentId)
-    req.flash('success','successfully deleted comment')
+    req.flash('success', 'successfully deleted comment')
+    res.redirect(`/${id}`)
+}))
+
+router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
+    const idea = await IdeaModel.findById(req.params.id)
+    const comment = await CommentModel.findById(req.params.commentId)
+    const reply = new ReplyModel({
+        replyTo: comment.author,
+        replyBody: req.body.reply,
+    })
+    reply.author = req.user._id
+    comment.reply.push(reply)
+    await reply.save()
+    await comment.save()
+    req.flash('success', 'created a new reply!')
+    res.redirect(`/${idea._id}`)
+}))
+
+router.delete('/:commentId/reply/:replyId', isLoggedIn, isReplyAuthor, catchAsync(async (req, res) => {
+    const { id, commentId, replyId } = req.params
+    await CommentModel.findByIdAndUpdate(commentId, { $pull: { reply: replyId } })
+    await ReplyModel.findByIdAndDelete(replyId)
+    req.flash('success', 'successfully deleted reply')
     res.redirect(`/${id}`)
 }))
 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const CommentModel = require('./commentModel');
 const Schema = mongoose.Schema;
 
 const IdeaSchema = new Schema({
@@ -16,6 +15,10 @@ const IdeaSchema = new Schema({
         type: String,
         required: [true, "please provide description"]
     },
+    answer:[{
+        type: Schema.Types.ObjectId,
+        ref: 'AnswerModel'
+    }],
     upVote: [{
         type: Schema.Types.ObjectId,
         ref: 'UserModel'
@@ -32,6 +35,7 @@ const IdeaSchema = new Schema({
         ref: 'UserModel',
     }]
 })
+IdeaSchema.index({'title': 'text','description': 'text'});
 
 IdeaSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
