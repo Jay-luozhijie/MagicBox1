@@ -8,6 +8,14 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
+    follower: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
     idea: [{
         type: Schema.Types.ObjectId,
         ref: 'IdeaModel',

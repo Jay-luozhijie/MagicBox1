@@ -7,6 +7,13 @@ module.exports.IdeaSchema = Joi.object({
     }).required()
 })
 
-module.exports.CommentSchema=Joi.object({
-    comment:Joi.string().required()
+module.exports.CommentSchema = Joi.object({
+    comment: Joi.string().required()
+})
+
+module.exports.UserSchema = Joi.object({
+    user: Joi.object({
+        username: Joi.string().required(),
+        email: Joi.string().required()
+    }).required()
 })

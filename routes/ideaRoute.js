@@ -120,8 +120,7 @@ router.post('/like', async (req, res) => {
     const ideaId = req.cookies.ideaId;
     const user = await UserModel.findById(userId);
     const idea = await IdeaModel.findById(ideaId);
-    if (idea.upVote.indexOf(userId) === 0) { }
-    else {
+    if (idea.upVote.indexOf(userId) === -1) {
         user.likePost.push(ideaId);
         idea.upVote.push(userId);
         await UserModel.findByIdAndUpdate(userId, { ...user });
@@ -148,8 +147,7 @@ router.post('/collect', async (req, res) => {
     const ideaId = req.cookies.ideaId;
     const user = await UserModel.findById(userId);
     const idea = await IdeaModel.findById(ideaId);
-    if (idea.collector.indexOf(userId) === 0) { }
-    else {
+    if (idea.collector.indexOf(userId) === -1) {
         user.collect.push(ideaId);
         idea.collector.push(userId);
         await UserModel.findByIdAndUpdate(userId, { ...user });
@@ -176,8 +174,7 @@ router.post('/doIt', async (req, res) => {
     const ideaId = req.cookies.ideaId;
     const user = await UserModel.findById(userId);
     const idea = await IdeaModel.findById(ideaId);
-    if (idea.doer.indexOf(userId) === 0) { }
-    else {
+    if (idea.doer.indexOf(userId) === -1) {
         user.doingPost.push(ideaId);
         idea.doer.push(userId);
         await UserModel.findByIdAndUpdate(userId, { ...user });

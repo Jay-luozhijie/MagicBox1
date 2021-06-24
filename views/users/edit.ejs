@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-6 offset-1 mt-5">
+            <h1 class="mb-3">Edit your profile:</h1>
+            <form action="/user/edit?_method=PATCH" method='POST' novalidate class="validated-form">
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username:</label>
+                    <input id="username" class="form-control" type="text" name="user[username]"
+                        value="<%=user.username%>" required maxlength="20">
+                    <div class="valid-feedback">good!</div>
+                    <div class="invalid-feedback">Please enter a valid username
+                        (your username cannot be empty and must
+                        be less than 20 letters)</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email:</label>
+                    <input id="email" type="email" class="form-control" value="<%= user.email %>" name="user[email]"
+                        required>
+                    <div class="valid-feedback">good!</div>
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="bio">Bio: (introduce yourself)</label>
+                    <textarea class="form-control" type="text" id="bio" name="user[bio]"
+                        rows="5"><%= user.bio%> </textarea>
+                </div> -->
+                <button class="btn btn-success">edit</button>
+            </form>
+        </div>
+    </div>

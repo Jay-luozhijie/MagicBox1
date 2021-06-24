@@ -4,8 +4,20 @@
         <div class="col-8 offset-1">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h2>author: <%=idea.author.username%>
-                    </h2>
+                    <div>
+                        <h2>author: <%=idea.author.username%>
+                        </h2>
+
+                        <% if(idea.author.follower.includes(currentUser._id)) { %>
+                            <a type="button" class="followBtn" id="cancelFollow">Cancel follow this author
+                            </a>
+                            <% } else { %>
+                                <a type="button" class="followBtn" id="follow">Follow this author
+                                </a>
+                                <% } %>
+
+                    </div>
+                    <br>
                     <h2>Title: <%=idea.title%>
                     </h2>
                     <h3>Description:</h3>

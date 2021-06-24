@@ -1,14 +1,16 @@
 <% layout('layouts/boilerplate') %>
     <div class="row">
         <div class="col-6 offset-1 mt-5">
-            <form action="/<%=idea._id%>?_method=PATCH" method='POST'>
+            <form action="/<%=idea._id%>?_method=PATCH" method='POST' novalidate class="validated-form">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title:</label>
-                    <textarea id="title" class="form-control" type="text" name="idea[title]"><%=idea.title%></textarea>
+                    <textarea id="title" class="form-control" type="text" name="idea[title]" required
+                        maxlength="100"><%=idea.title%></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="description">idea description:</label>
-                    <textarea id="description" class="form-control" name="idea[description]" rows="10"><%=idea.description%></textarea>
+                    <textarea id="description" class="form-control" name="idea[description]" rows="10"
+                        required><%=idea.description%></textarea>
                 </div>
                 <button class="btn btn-success">edit</button>
             </form>
