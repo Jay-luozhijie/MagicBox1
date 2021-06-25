@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate') %>
+    <div>
+        <div class="row mt-5">
+            <div class="col-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h1>
+                            <%=user.username%>'s followers:
+                        </h1>
+                        <% if(user.follower.length> 0) { %>
+                            <ul>
+                                <% for (let follower of user.follower) { %>
+                                    <li>
+                                        <a href='/user/<%= follower._id%>'>
+                                            <%=follower.username %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                            <% } else { %>
+                                <p>Sorry, you don't have any follower..</p>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h1>
+                            <%=user.username%> is following:
+                        </h1>
+                        <% if(user.following.length> 0) { %>
+                            <ul>
+                                <% for (let following of user.following) { %>
+                                    <li>
+                                        <a href='/user/<%= following._id%>'>
+                                            <%=following.username %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                            <% } else { %>
+                                <p>You haven't followed any user..</p>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

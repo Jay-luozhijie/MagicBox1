@@ -134,8 +134,7 @@ router.post('/like', async (req, res) => {
     const ideaId = req.cookies.ideaId;
     const user = await UserModel.findById(userId);
     const idea = await IdeaModel.findById(ideaId);
-    if (idea.upVote.indexOf(userId) === 0) { }
-    else {
+    if (idea.upVote.indexOf(userId) === -1) {
         user.likePost.push(ideaId);
         idea.upVote.push(userId);
         await UserModel.findByIdAndUpdate(userId, { ...user });
@@ -157,5 +156,58 @@ router.post('/cancelLike', async (req, res) => {
     await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
 })
 
+router.post('/collect', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+    if (idea.collector.indexOf(userId) === -1) {
+        user.collect.push(ideaId);
+        idea.collector.push(userId);
+        await UserModel.findByIdAndUpdate(userId, { ...user });
+        await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+    }
+})
+
+router.post('/uncollect', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+
+    const ideaIndex = user.collect.indexOf(ideaId);
+    user.collect.splice(ideaIndex, 1);
+    const userIndex = idea.collector.indexOf(userId);
+    idea.collector.splice(userIndex, 1);
+    await UserModel.findByIdAndUpdate(userId, { ...user });
+    await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+})
+
+router.post('/doIt', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+    if (idea.doer.indexOf(userId) === -1) {
+        user.doingPost.push(ideaId);
+        idea.doer.push(userId);
+        await UserModel.findByIdAndUpdate(userId, { ...user });
+        await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+    }
+})
+
+router.post('/undo', async (req, res) => {
+    const userId = req.user._id;
+    const ideaId = req.cookies.ideaId;
+    const user = await UserModel.findById(userId);
+    const idea = await IdeaModel.findById(ideaId);
+
+    const ideaIndex = user.doingPost.indexOf(ideaId);
+    user.doingPost.splice(ideaIndex, 1);
+    const userIndex = idea.doer.indexOf(userId);
+    idea.doer.splice(userIndex, 1);
+    await UserModel.findByIdAndUpdate(userId, { ...user });
+    await IdeaModel.findByIdAndUpdate(ideaId, { ...idea });
+})
 
 module.exports = router

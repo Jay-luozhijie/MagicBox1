@@ -21,6 +21,7 @@ const seedDB = async () => {
     for (let i = 1; i <= 50; i++) {
         const idea = new IdeaModel({
             author: `60c5ddb2b171e75a48810f52`,
+
             title: `idea${i}`,
             description: `this is the description of idea${i}this is the description of idea${i}this is the description of idea${i}
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam neque libero quisquam impedit consequatur fugiat ipsa
@@ -35,7 +36,7 @@ const seedDB = async () => {
                 Reiciendis unde amet totam, nihil praesentium, saepe doloribus, deserunt deleniti sunt commodi nostrum ad veniam facere
                 exercitationem illo hic doloremque sint cupiditate quod explicabo pariatur fuga at expedita voluptates. Nisi!`,
             upVote: [],
-            follower: [],
+            collector: [],
             doer: []
         })
         await idea.save();

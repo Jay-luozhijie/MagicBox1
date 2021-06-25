@@ -17,4 +17,11 @@ module.exports.ReplySchema = Joi.object({
 
 module.exports.AnswerSchema = Joi.object({
     content: Joi.string().required()
+}).required()
+
+module.exports.UserSchema = Joi.object({
+    user: Joi.object({
+        username: Joi.string().required(),
+        email: Joi.string().required()
+    }).required()
 })

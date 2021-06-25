@@ -8,6 +8,14 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
+    follower: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
+    following: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }],
     idea: [{
         type: Schema.Types.ObjectId,
         ref: 'IdeaModel',
@@ -16,13 +24,17 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'IdeaModel'
     }],
-    following: [{
+    collect: [{
         type: Schema.Types.ObjectId,
-        ref: 'UserModel'
+        ref: 'IdeaModel'
     }],
-    follower: [{
+    doingPost: [{
         type: Schema.Types.ObjectId,
-        ref: 'UserModel'
+        ref: 'IdeaModel'
+    }],
+    finishedPost: [{
+        type: Schema.Types.ObjectId,
+        ref: 'IdeaModel'
     }]
 })
 

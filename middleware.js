@@ -1,4 +1,4 @@
-const { IdeaSchema, CommentSchema, ReplySchema, AnswerSchema } = require('./JoiSchemas')
+const { IdeaSchema, CommentSchema, UserSchema, ReplySchema, AnswerSchema } = require('./JoiSchemas')
 const ExpressError = require('./utils/ExpressError')
 const IdeaModel = require('./models/ideaModel')
 const CommentModel = require('./models/commentModel')
@@ -76,6 +76,16 @@ module.exports.isReplyAuthor = async (req, res, next) => {       //看是否为�
 
 module.exports.validateAnswer = (req, res, next) => {
     const { error } = AnswerSchema.validate(req.body)
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next()
+    }
+}
+
+module.exports.validateUser = (req, res, next) => {
+    const { error } = UserSchema.validate(req.body)         //查joi user schema 是否通过
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)

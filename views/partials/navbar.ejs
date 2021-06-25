@@ -10,10 +10,6 @@
         <li class="nav-item">
           <a class="nav-link active display-6" aria-current="page" href="/">Find Ideas</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active display-6" aria-current="page" href='#'>My page</a>
-          <!-- TODO -->
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle display-6" href="#" id="navbarDropdown" role="button"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,11 +28,14 @@
       </form>
       <form class="d-flex pt-2">
         <button class="btn btn-outline-primary">
-          <%if(currentUser){%>
-            <%=currentUser.username%>
-              <%} else{%>
-                User
-                <%}%>
+
+          <% if(currentUser) {%>
+            <a class="nav-link active display-6" aria-current="page" href='/user/<%= currentUser._id %>'>
+              <%= currentUser.username %>
+            </a>
+            <%} else{%>
+              User
+              <%}%>
         </button>
       </form>
       <div class="navbar-nav ml-auto">

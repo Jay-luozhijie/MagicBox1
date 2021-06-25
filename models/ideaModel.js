@@ -30,7 +30,7 @@ const IdeaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'UserModel'
     }],
-    follower: [{
+    collector: [{
         type: Schema.Types.ObjectId,
         ref: 'UserModel',
     }]
