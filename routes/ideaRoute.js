@@ -102,6 +102,8 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
         return res.redirect('/')
     }
     res.cookie("ideaId", req.params.id);
+    console.log("testing point1")
+    console.log(idea)
     res.render("ideas/show", { idea })
 }))
 

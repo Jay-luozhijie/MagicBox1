@@ -1,0 +1,87 @@
+<p>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#comment" role="button" aria-expanded="false" aria-controls="comment">
+        comments
+    </a>
+</p>
+<div class="collapse" id="comment">
+    <%if(currentUser){%>
+        <form action="/<%=idea._id%>/comment" class="validated-form mb-3" method="POST" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="commentbody">Comment</label>
+                <textarea class='form-control' name='comment' id='commentbody' cols='30' rows='3'
+                    required></textarea>
+                <div class="valid-feedback">good!</div>
+                <div class="invalid-feedback">Please provide description.</div>
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+    <%}%>
+    <%for(let comment of idea.comment){%>
+        <div class="card mb-3 ">
+            <div class="card-body">
+                <h5 class="card=title">By <%=comment.author.username%></h5>
+                <p class="card-text">comment body: <%=comment.commentBody%></p>
+                <%if(currentUser && comment.author.equals(currentUser._id)){%>
+                    <form action='/<%=idea._id%>/comment/<%=comment._id%>?_method=DELETE'
+                        method="POST">
+                        <button class='btn btn-sm btn-danger'>Delete</button>
+                    </form>
+                <%}%>
+
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#replyToComment" role="button" aria-expanded="false" aria-controls="replyToComment">
+                        reply
+                    </a>
+                </p>
+                <div class="collapse" id="replyToComment">
+                    <%if(currentUser){%>
+                        <form action="/<%=idea._id%>/comment/<%=comment._id%>/reply" class="validated-form mb-3" method="POST" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="replyBody">reply</label>
+                                <textarea class='form-control' name='reply' id='replyBody' cols='30' rows='1'
+                                    required></textarea>
+                                <div class="valid-feedback">good!</div>
+                                <div class="invalid-feedback">Please provide reply content.</div>
+                            </div>
+                            <button class="btn btn-success">Submit</button>
+                        </form>
+                    <%}%>
+                </div>
+                <div class='card'>
+                    <%for(let reply of comment.reply){%>
+                        <div class="card-body">
+                            <p class="card-title"><%=reply.author.username%> reply to: <%=reply.replyTo.username%></p>
+                            <p class="card-text"><%=reply.replyBody%></p>
+                            <%if(currentUser && reply.author.equals(currentUser._id)){%>
+                                <form action='/<%=idea._id%>/comment/<%=comment._id%>/reply/<%=reply._id%>?_method=DELETE'
+                                    method="POST">
+                                    <button class='btn btn-sm btn-danger'>Delete</button>
+                                </form>
+                            <%}%>
+
+                            <p>
+                                <a class="btn btn-primary " data-bs-toggle="collapse" href="#reply<%=reply._id%>" role="button" aria-expanded="false" aria-controls="reply<%=reply._id%>">
+                                    reply
+                                </a>
+                            </p>
+                            <div class="collapse" id="reply<%=reply._id%>">
+                                <%if(currentUser){%>
+                                    <form action="/<%=idea._id%>/comment/<%=comment._id%>/reply" class="validated-form mb-3" method="POST" novalidate>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="replyBody">reply</label>
+                                            <textarea class='form-control' name='reply' id='replyBody' cols='30' rows='1'
+                                                required></textarea>
+                                            <div class="valid-feedback">good!</div>
+                                            <div class="invalid-feedback">Please provide reply content.</div>
+                                        </div>
+                                        <button class="btn btn-success">Submit</button>
+                                    </form>
+                                <%}%>
+                            </div>
+                        </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    <%}%>
+</div>

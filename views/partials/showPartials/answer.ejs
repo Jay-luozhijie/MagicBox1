@@ -1,0 +1,28 @@
+<div class="answerComponent">
+    <div class="card-body">
+        <%if(currentUser){%>
+            <form action="/<%=idea._id%>/answer" class="validated-form mb-3" method="POST" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="commentbody">answer</label>
+                    <textarea class='form-control' name='content' id='commentbody' cols='30' rows='3'
+                        required></textarea>
+                    <div class="valid-feedback">good!</div>
+                    <div class="invalid-feedback">Please provide content.</div>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+        <%}%>
+    </div>
+    <div>Answers:</div>
+    <%for(let answer of idea.answer){%>
+        <div class='card mx-3 my-3'>
+            <div><%=answer.author.username%>   :   <%=answer.content%></div>
+            <%if(currentUser && answer.author.equals(currentUser._id)){%>
+                <form action='/<%=idea._id%>/answer/<%=answer._id%>?_method=DELETE'
+                    method="POST">
+                    <button class='btn btn-sm btn-danger'>Delete</button>
+                </form>
+            <%}%>
+        </div>
+    <%}%>
+</div>

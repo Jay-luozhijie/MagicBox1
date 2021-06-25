@@ -13,7 +13,7 @@ const { response } = require('express')
 
 
 
-/////////////////   user login, register and logout   ///////////////////////////////
+// /////////////////   user login, register and logout   ///////////////////////////////
 
 router.get('/register', (req, res) => {                 //register page, asking for username, password and email
     res.render('users/register')
