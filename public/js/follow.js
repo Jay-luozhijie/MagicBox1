@@ -9,7 +9,7 @@ if (followed) {
 followBtn.addEventListener('click', async event => {
     if (click0) {
         click0 = false;
-        followBtn.innerHTML = `Follow this author`;
+        followBtn.innerHTML = `follow`;
 
         const data = { followBtn };
         const options = {
@@ -22,7 +22,7 @@ followBtn.addEventListener('click', async event => {
         await fetch('/user/unfollow', options);
     } else {
         click0 = true;
-        followBtn.innerHTML = `Cancel follow this author`;
+        followBtn.innerHTML = `unfollow`;
 
         const data = { followBtn };
         const options = {

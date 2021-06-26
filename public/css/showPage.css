@@ -76,3 +76,49 @@
     background-color: #fec601;
     border-color:#fec601 ;
 }
+
+.ideaAuthor{
+    font-size:20px;
+}
+
+.followBtn{
+    font-size:18px;
+    text-decoration: none;
+    margin-top:2px;
+    color:#00b4d8;
+}
+
+.followBtn:hover{
+    color:#0077b6;
+}
+
+.ideaTitle{
+    font-size:20px;
+    margin-left: 20px;
+    margin-top:10px;
+    font-weight: 570;
+}
+
+.ideaDescription{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+
+.showIdea-buttons {
+    background-color: #fcdc5d;
+    padding: 7px 10px;
+    margin-left: 10px;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+    color:rgba(0,0,0,0.7);
+    cursor: pointer;
+}
+
+
+.showIdea-buttons:hover {
+    background-color: #fec601;
+    color:rgba(0,0,0,0.7);
+}
+
