@@ -25,6 +25,9 @@
 
     (async function ()  {
         const response = await getIdeas(page, limit)            //initialize
+        console.log('testing point2')
+        console.log(response.result)
+        console.log(response.result[0].author)
         showIdeas(response.result)
     })()
 
@@ -35,7 +38,7 @@
             
             ideaComponent.innerHTML = `
             <div class="mb-3 indexIdeaContainer">
-                <div class=" mt-4 ms-2 mb-3">author: ${idea.author.username}</div>
+                <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
                 <div class=" indexIdeaContent ms-5">
                     <div class="mb-3 indexIdeaTitle">
                     ${idea.title}
@@ -44,10 +47,10 @@
                     ${idea.description}
                     </div>
                     <div>
-                        <a href="/${idea._id}" class="btn btn-primary bt-auto">more</a>
+                        <a href="/${idea._id}" class="btn btn-primary btn-IndexMore">more</a>
                     </div>
                 </div>
-                <p>
+                <p class="ms-5 mb-1 indexLikedNumber">
                     ${idea.upVote.length} people like this post!
                 </p>
             </div>`;

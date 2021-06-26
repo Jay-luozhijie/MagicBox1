@@ -1,0 +1,32 @@
+.bg-light{
+    background-color: #fcdc5d !important;
+}
+
+.navbar .btn-primary{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+.navbar .btn-primary:hover{
+    color:black;
+    background-color: #f8ffe5;
+    border-color:#f8ffe5 ;
+}
+
+.dropdown-menu{
+    background-color: #bfd8bd; 
+    border:none; 
+    border-radius: 2px; 
+    
+}
+
+#navbarDropdownMenuLink{
+    border-radius:5px;
+}
+
+#navbarDropdownMenuLink:hover{
+    background-color: #f8ffe5;
+    border-color:#f8ffe5 ;
+}
+

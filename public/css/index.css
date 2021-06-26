@@ -10,15 +10,31 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    height:22rem; 
+    height:18rem; 
     width: 48rem;
 }
 
 .indexIdeaContainer{
-    width:900px;
+    width:55em;
     border: solid;
     border-width: 1px;
-    border-color: #adb5bd;
+    border-color: rgba(173,181,189,0.4);
     border-radius:7px;
     background-color: white;
+}
+
+.indexPage{
+    margin-left: 150px;
+}
+
+.btn-IndexMore{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+.btn-IndexMore:hover{
+    color:black;
+    background-color: #fec601;
+    border-color:#fec601 ;
 }

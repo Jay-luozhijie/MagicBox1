@@ -64,6 +64,7 @@ router.get('/', catchAsync(async (req, res) => {                     //index pag
         const keyword = req.query.keyword;
         res.render("ideas/searchIndex",{keyword:JSON.stringify(keyword)})
     } else {
+        console.log('testing point1')
         res.render("ideas/index", {})
     }
 }))
@@ -102,8 +103,6 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
         return res.redirect('/')
     }
     res.cookie("ideaId", req.params.id);
-    console.log("testing point1")
-    console.log(idea)
     res.render("ideas/show", { idea })
 }))
 
