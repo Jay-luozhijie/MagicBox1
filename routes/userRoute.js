@@ -76,9 +76,15 @@ router.get('/:id', catchAsync(async (req, res) => {                    //userPag
 }))
 
 router.get('/:id/follower', catchAsync(async (req, res) => {
-    const user = await UserModel.findById(req.params.id).populate('following').populate('follower');
+    const user = await UserModel.findById(req.params.id).populate('follower');
     console.log(user);
     res.render('users/follower', { user });
+}))
+
+router.get('/:id/following', catchAsync(async (req, res) => {
+    const user = await UserModel.findById(req.params.id).populate('following');
+    console.log(user);
+    res.render('users/following', { user });
 }))
 
 router.post('/follow', async (req, res) => {
