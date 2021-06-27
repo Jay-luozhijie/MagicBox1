@@ -57,12 +57,12 @@
     }
 
     const loadIdeas = async (page, limit) => {
-        async () => {
+        setTimeout(async () => {
             apiResponse = await getIdeas(page, limit)
             showIdeas(apiResponse.result)
             loading = false;
             loader.style.visibility ="hidden";
-        }
+        },0)
     }
 
     window.addEventListener('scroll', async () => {
