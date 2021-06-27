@@ -4,10 +4,10 @@ const passport = require('passport')
 
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
+const CommentModel = require('../models/commentModel')
 const UserModel = require('../models/userModel')
 const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
 const { findByIdAndUpdate } = require('../models/ideaModel')
-const ideaModel = require('../models/ideaModel')
 const { response } = require('express')
 
 

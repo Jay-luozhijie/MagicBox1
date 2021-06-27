@@ -69,7 +69,6 @@
         const totalHeight = document.documentElement.scrollHeight
         const scrolledHeight = window.scrollY;
         const pageHeight = window.innerHeight;
-        console.log(apiResponse.next)
         if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse.next) {
             loader.style.visibility ="visible";
             loading = true;

@@ -68,7 +68,6 @@ function searchResults(model) {
                 }
             }
             res.searchResults = results
-            console.log(results.result)
             return next()
         } catch (e) {
             res.status(500).json({ message: e.message })
