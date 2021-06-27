@@ -1,28 +1,48 @@
-<div class="answerComponent">
+<div class="answerComponent mb-4 ms-4 me-4">
     <div class="card-body">
         <%if(currentUser){%>
             <form action="/<%=idea._id%>/answer" class="validated-form mb-3" method="POST" novalidate>
                 <div class="mb-3">
-                    <label class="form-label" for="commentbody">answer</label>
-                    <textarea class='form-control' name='content' id='commentbody' cols='30' rows='3'
+                    <label class="form-label" for="commentbody">Answer</label>
+                    <textarea class='form-control' name='content' id='commentbody' cols='30' rows='5'
                         required></textarea>
                     <div class="valid-feedback">good!</div>
                     <div class="invalid-feedback">Please provide content.</div>
                 </div>
-                <button class="btn btn-success">Submit</button>
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-success" id="answerSubmit">Submit</button>
+                </div>
             </form>
-        <%}%>
-    </div>
-    <div>Answers:</div>
-    <%for(let answer of idea.answer){%>
-        <div class='card mx-3 my-3'>
-            <div><%=answer.author.username%>   :   <%=answer.content%></div>
-            <%if(currentUser && answer.author.equals(currentUser._id)){%>
-                <form action='/<%=idea._id%>/answer/<%=answer._id%>?_method=DELETE'
-                    method="POST">
-                    <button class='btn btn-sm btn-danger'>Delete</button>
-                </form>
             <%}%>
-        </div>
-    <%}%>
+    </div>
+    <br>
+    <div class="ms-4 me-4 mb-3">
+        <div>Answers:</div>
+        <% if(idea.answer.length> 0) {%>
+            <%for(let answer of idea.answer){%>
+                <div class='card mb-3 mt-3 mb-3'>
+                    <div class="card-body ms-3 mb-3">
+                        <div>
+                            <div class="answerAuthor mb-2">
+                                <%=answer.author.username%>
+                            </div>
+                            <p>
+                                <%=answer.content%>
+                            </p>
+                        </div>
+                        <%if(currentUser && answer.author.equals(currentUser._id)){%>
+                            <form action='/<%=idea._id%>/answer/<%=answer._id%>?_method=DELETE' method="POST">
+                                <button class='btn btn-sm btn-danger'>Delete</button>
+                            </form>
+                            <%}%>
+                    </div>
+                </div>
+                <%}%>
+                    <% } else { %>
+                        <div>
+                            <p>This post doesn't receive any answer.</p>
+                        </div>
+                        <% } %>
+    </div>
+
 </div>

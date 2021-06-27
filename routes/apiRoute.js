@@ -44,12 +44,17 @@ function searchResults(model) {
         const results = {}
 
         try {
+            const resultArray=await model.find(
+                { $text: { $search: keyword } },
+                { score: { $meta: "textScore" } }
+            ).sort({ score: { $meta: "textScore" } }).populate('author')
+
             results.result = await model.find(
                 { $text: { $search: keyword } },
                 { score: { $meta: "textScore" } }
             ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
-            if (endIndex < results.result.length) {
-                console.log("testing1")
+            
+            if (endIndex < resultArray.length) {
                 results.next = {
                     page: page + 1,
                     limit: limit
@@ -63,6 +68,7 @@ function searchResults(model) {
                 }
             }
             res.searchResults = results
+            console.log(results.result)
             return next()
         } catch (e) {
             res.status(500).json({ message: e.message })

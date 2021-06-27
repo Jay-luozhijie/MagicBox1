@@ -24,10 +24,10 @@
     }
 
     (async function ()  {
-        loader.style.visibility="hidden"
+        loader.style.visibility="visible"
         apiResponse = await getIdeas(page, limit)            //initialize
-        console.log(apiResponse)
         showIdeas(apiResponse.result)
+        loader.style.visibility="hidden"
     })()
 
     const showIdeas = (ideas) => {
@@ -61,16 +61,17 @@
             apiResponse = await getIdeas(page, limit)
             showIdeas(apiResponse.result)
             loading = false;
-            loader.style.visibility ="hidden"
-        },1000)
+            loader.style.visibility ="hidden";
+        },300)
     }
 
     window.addEventListener('scroll', async () => {
         const totalHeight = document.documentElement.scrollHeight
         const scrolledHeight = window.scrollY;
         const pageHeight = window.innerHeight;
+        console.log(apiResponse.next)
         if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse.next) {
-            loader.style.visibility ="visible"
+            loader.style.visibility ="visible";
             loading = true;
             page++;
             await loadIdeas(page, limit);

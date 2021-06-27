@@ -39,6 +39,18 @@
     border-color:#fec601 ;
 }
 
+#answerSubmit{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+#answerSubmit:hover{
+    color:black;
+    background-color: #fec601;
+    border-color:#fec601 ;
+}
+
 .replyButton{
     background-color: #caf0f8;
     border-color:#caf0f8 ;
@@ -79,6 +91,7 @@
 
 .ideaAuthor{
     font-size:20px;
+    color: grey;
 }
 
 .followBtn{
@@ -122,3 +135,29 @@
     color:rgba(0,0,0,0.7);
 }
 
+.idea-group-btn {
+    padding: 7px 15px;
+    margin-left: 10px;
+    font-size: 17px;
+    width: 90px;
+}
+
+/* .showPageContainer{
+    width:55em;
+    border:none;
+    background-color: white;
+}
+
+@media (min-width:900px){
+    .card{
+        display: flex;
+        flex-flow: wrap; 
+        flex-direction: row;
+        justify-content: end;
+    }
+} */
+
+.answerAuthor{
+    font-size:20px;
+    color: grey;
+}

@@ -1,11 +1,12 @@
 <% layout('layouts/boilerplate') %>
     <div class="indexPage">
-        <div><a href="/new">Create an idea</a></div>
-        <div class='ideas' id="searchIndex">
-            <%=keyword%>
-        </div>
-        <div class='loader'>
-            loading in progress...
+        <div>
+            <div class='ideas' id="searchIndex">
+                searching results of <%=keyword%>
+            </div>
+            <div class='loader'>
+                loading in progress...
+            </div>
         </div>
     </div>
     <script>var keyword = JSON.parse('<%-keyword%>');
