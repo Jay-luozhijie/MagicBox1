@@ -24,19 +24,18 @@ const UserModel = require('./models/userModel')
 const commentModel = require("./models/commentModel")
 
 const cookieParser = require('cookie-parser');
-// const MongoDBStore = require('connect-mongo')(session)
+const MongoStore = require('connect-mongo')
 
-const dbUrl = 'mongodb://localhost:27017/IdeaV1'//process.env.DB_URL
+const dbUrl = process.env.DB_URL||'mongodb://localhost:27017/IdeaV1'
 
 // 'mongodb://localhost:27017/IdeaV1'
-mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log("Connection open")
-    })
-    .catch(err => {
-        console.log("no")
-        console.log(err)
-    })
+mongoose.connect(dbUrl, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+ });
+
 mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
@@ -65,10 +64,15 @@ app.use(cookieParser());
 //     console.log("session store error",e)
 // })
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
+
 const sessionConfig = {
-    // store,
-    name:'session',
-    secret: 'thisissecret',
+    store:MongoStore.create({
+        mongoUrl:dbUrl,
+        secret,
+        touchAfter:24*60*60
+    }),
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
