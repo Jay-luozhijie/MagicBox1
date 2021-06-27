@@ -1,7 +1,9 @@
 <% layout('layouts/boilerplate') %>
     <div class="row">
-        <div class="col-6 offset-1 mt-5">
-            <h1 class="mb-3">Edit your profile:</h1>
+        <div class="col-6 offset-3 mt-5">
+            <div class="text-center">
+                <h1 class="mb-3">Edit your profile:</h1>
+            </div>
             <form action="/user/edit?_method=PATCH" method='POST' novalidate class="validated-form">
                 <div class="mb-3">
                     <label class="form-label" for="username">Username:</label>
@@ -24,7 +26,7 @@
                     <textarea class="form-control" type="text" id="bio" name="user[bio]"
                         rows="5"><%= user.bio%> </textarea>
                 </div> -->
-                <button class="btn btn-success">edit</button>
+                <button class="btn btn-warning">edit</button>
             </form>
         </div>
     </div>

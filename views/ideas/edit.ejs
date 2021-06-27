@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-6 offset-1 mt-5">
             <form action="/<%=idea._id%>?_method=PATCH" method='POST' novalidate class="validated-form">
                 <div class="mb-3">
@@ -12,7 +12,7 @@
                     <textarea id="description" class="form-control" name="idea[description]" rows="10"
                         required><%=idea.description%></textarea>
                 </div>
-                <button class="btn btn-success">edit</button>
+                <button class="btn btn-warning">edit</button>
             </form>
         </div>
     </div>
