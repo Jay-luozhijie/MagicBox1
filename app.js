@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require("express")
 const app = express()
 const methodOverride = require("method-override")
@@ -20,10 +24,12 @@ const UserModel = require('./models/userModel')
 const commentModel = require("./models/commentModel")
 
 const cookieParser = require('cookie-parser');
+// const MongoDBStore = require('connect-mongo')(session)
 
+const dbUrl = 'mongodb://localhost:27017/IdeaV1'//process.env.DB_URL
 
-
-mongoose.connect('mongodb://localhost:27017/IdeaV1', { useNewUrlParser: true, useUnifiedTopology: true })
+// 'mongodb://localhost:27017/IdeaV1'
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Connection open")
     })
@@ -49,7 +55,19 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cookieParser());
 
+// const store = new MongoStore({
+//     url:dbUrl,
+//     secret:"thisissecret",
+//     touchAfter:24*60*60
+// })
+
+// store.on('error',function(e){
+//     console.log("session store error",e)
+// })
+
 const sessionConfig = {
+    // store,
+    name:'session',
     secret: 'thisissecret',
     resave: false,
     saveUninitialized: true,

@@ -1,7 +1,5 @@
 
-<div class="" id="comment">
-
-
+<div class="collapse" id="comment">
     <%if(currentUser){%>
         <form action="/<%=idea._id%>/comment" class="validated-form mb-3 mx-5" method="POST" novalidate>
             <div class="mb-3">
@@ -37,7 +35,7 @@
                         </div>
                     <%} else {%>
                         <p>
-                            <a class="btn btn-primary replyButton btn-sm ms-3 mt-2" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
+                            <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
                                 Reply
                             </a>
                         </p>

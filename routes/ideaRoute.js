@@ -64,7 +64,6 @@ router.get('/', catchAsync(async (req, res) => {                     //index pag
         const keyword = req.query.keyword;
         res.render("ideas/searchIndex",{keyword:JSON.stringify(keyword)})
     } else {
-        console.log('testing point1')
         res.render("ideas/index", {})
     }
 }))

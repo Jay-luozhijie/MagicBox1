@@ -4,6 +4,7 @@
     let page = 1;
     const limit = 10;
     let loading = false;
+    let apiResponse=undefined;
     let keyword = window.keyword;
     window.keyword = undefined;
 
@@ -11,7 +12,6 @@
         const API_URL = keyword
                         ? `http://localhost:3000/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
                         : `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;
-
         const response = await fetch(API_URL, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json'
@@ -24,18 +24,16 @@
     }
 
     (async function ()  {
-        const response = await getIdeas(page, limit)            //initialize
-        console.log('testing point2')
-        console.log(response.result)
-        console.log(response.result[0].author)
-        showIdeas(response.result)
+        loader.style.visibility="hidden"
+        apiResponse = await getIdeas(page, limit)            //initialize
+        console.log(apiResponse)
+        showIdeas(apiResponse.result)
     })()
 
     const showIdeas = (ideas) => {
         ideas.forEach(idea => {
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
-            
             ideaComponent.innerHTML = `
             <div class="mb-3 indexIdeaContainer">
                 <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
@@ -60,25 +58,24 @@
 
     const loadIdeas = async (page, limit) => {
         setTimeout(async () => {
-            const response = await getIdeas(page, limit)
-            showIdeas(response.result)
+            apiResponse = await getIdeas(page, limit)
+            showIdeas(apiResponse.result)
             loading = false;
-        },300)
+            loader.style.visibility ="hidden"
+        },1000)
     }
 
     window.addEventListener('scroll', async () => {
         const totalHeight = document.documentElement.scrollHeight
         const scrolledHeight = window.scrollY;
         const pageHeight = window.innerHeight;
-        if (pageHeight + scrolledHeight > totalHeight - 1 && !loading) {
+        if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse.next) {
+            loader.style.visibility ="visible"
             loading = true;
             page++;
             await loadIdeas(page, limit);
         }
     }, { passive: true })
-
-
-
 })()
 
 
