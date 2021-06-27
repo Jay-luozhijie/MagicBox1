@@ -17,24 +17,38 @@ const ExpressError = require('./utils/ExpressError')
 const ideaRoute = require('./routes/ideaRoute')
 const userRoute = require('./routes/userRoute')
 const commentRoute = require('./routes/commentRoute')
-const apiRoute=require("./routes/apiRoute")
+const apiRoute = require("./routes/apiRoute")
 const answerRoute = require('./routes/answerRoute')
 
 const UserModel = require('./models/userModel')
 const commentModel = require("./models/commentModel")
 
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo')
 
-const dbUrl = process.env.DB_URL||'mongodb://localhost:27017/IdeaV1'
+
+
+
+
+
+
+
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/IdeaV1'
 
 // 'mongodb://localhost:27017/IdeaV1'
-mongoose.connect(dbUrl, { 
-    useNewUrlParser: true, 
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false
- });
+});
+
+
+
+
+
+
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
@@ -64,13 +78,19 @@ app.use(cookieParser());
 //     console.log("session store error",e)
 // })
 
+
+
+
+
+
+
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
 const sessionConfig = {
-    store:MongoStore.create({
-        mongoUrl:dbUrl,
+    store: MongoStore.create({
+        mongoUrl: dbUrl,
         secret,
-        touchAfter:24*60*60
+        touchAfter: 24 * 60 * 60
     }),
     secret,
     resave: false,
@@ -82,6 +102,20 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.use(flash())
 
 app.use(passport.initialize())
@@ -101,8 +135,8 @@ app.use((req, res, next) => {
 app.use('/user', userRoute)                                  //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js
-app.use('/api',apiRoute)
-app.use('/:id/answer',answerRoute)
+app.use('/api', apiRoute)
+app.use('/:id/answer', answerRoute)
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('page not found', 404))                 //if all address above can't match, this page can't find, give error
@@ -113,6 +147,12 @@ app.use((err, req, res, next) => {
     if (!err.message) { err.message = 'something went wrong!' }     //catch error in the end if there is
     res.status(statusCode).render('error', { err })
 })
+
+
+
+
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
