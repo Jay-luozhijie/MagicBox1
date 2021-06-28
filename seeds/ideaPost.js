@@ -17,28 +17,27 @@ db.once("open", () => {
 
 const seedDB = async () => {
     await IdeaModel.deleteMany({});
-    for (let i = 1; i <= 5; i++) {
-        const idea = new IdeaModel({
-            author: `60d541bca0c0b665c0d8a4f9`,
-
-            title: `idea${i}`,
-            description: `this is the description of idea${i}this is the description of idea${i}this is the description of idea${i}
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam neque libero quisquam impedit consequatur fugiat ipsa
-                nisi, architecto eum a assumenda corrupti voluptatum totam sit odit molestias ab natus iusto!
-                Accusantium repellendus ex assumenda distinctio, quos quia vitae, deleniti est saepe perferendis maxime iusto labore
-                illo odit incidunt officiis eius! Facilis sint similique possimus placeat. Pariatur optio expedita deleniti quae.
-                Soluta perspiciatis itaque quod quam provident similique error neque nostrum magnam numquam aspernatur repellendus
-                assumenda libero qui modi praesentium impedit perferendis laboriosam doloremque tenetur, corporis, vero dolorum? Sunt,
-                porro veritatis.
-                Excepturi dignissimos sapiente eius cumque veniam saepe aut itaque magnam expedita earum cum, eligendi eum optio
-                reiciendis reprehenderit provident sed rerum doloremque qui perferendis alias. Eveniet rem nemo eaque quas?
-                Reiciendis unde amet totam, nihil praesentium, saepe doloribus, deserunt deleniti sunt commodi nostrum ad veniam facere
-                exercitationem illo hic doloremque sint cupiditate quod explicabo pariatur fuga at expedita voluptates. Nisi!`,
+    for (let i = 1; i <= 10; i++) {
+        const idea1 = new IdeaModel({
+            author: `60d746baca590351d42cfcea`,
+            title: `NUS Map`,
+            description: `I’m a freshman in NUS. I’m not familiar with the location of NUS venues and thus often lost my way. I’m not from SOC and don’t know how to build an app, but it would be nice if there is an app that contains the NUS map and can direct me to the correct location of lecture theatre where I attend lectures. Also, since looking at a cell phone while walking is dangerous, this app should provide audio guidance while I’m walking.
+            It must be great if the app can work like Google Map!`,
             upVote: [],
             collector: [],
             doer: []
         })
-        await idea.save();
+        await idea1.save();
+        const idea2 = new IdeaModel({
+            author: `60d4021721179d2678f85a3c`,
+            title: `Umbrella problem`,
+            description: `Our normal umbrellas only keep us safe during light rain. When it rains very hard, or when the wind tilts it down, we get wet even with our umbrellas.
+            Who can design an umbrella that won't get me wet in rainy days?`,
+            upVote: [],
+            collector: [],
+            doer: []
+        })
+        await idea2.save();
     }
 }
 

@@ -28,8 +28,8 @@ const cookieParser = require('cookie-parser');
 
 const MongoStore = require('connect-mongo');
 
-console.log(process.env.DB_URL)
-const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/IdeaV1';
+// console.log(process.env.DB_URL)
+const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/IdeaV1';//
 // 'mongodb://localhost:27017/IdeaV1'
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -56,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cookieParser());
 
-const secret = process.env.SECRET||'thisshouldbeabettersecret!';
+const secret = process.env.SECRET||'thisshouldbeabettersecret!';//
 
 const sessionConfig = {
     name:'session',
@@ -78,20 +78,17 @@ app.use(session(sessionConfig))
 
 
 app.use(flash())
-
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(UserModel.authenticate()))
 passport.serializeUser(UserModel.serializeUser());
 passport.deserializeUser(UserModel.deserializeUser());
-
 app.use((req, res, next) => {
     res.locals.currentUser = req.user
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
 })
-
 
 app.use('/user', userRoute)                                  //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
@@ -110,7 +107,7 @@ app.use((err, req, res, next) => {
 })
 
 
-const port =  process.env.PORT || 3000; 
+const port =  process.env.PORT || 3000; //
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })

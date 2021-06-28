@@ -9,13 +9,11 @@
     window.keyword = undefined;
 
     const getIdeas = async (page, limit) => {
-        console.log('hello')
         const API_URL = keyword
                         ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
                         : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
                         // ? `http://localhost:3000/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
                         // : `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;
-        console.log(API_URL);
         const response = await fetch(API_URL, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +34,6 @@
 
     const showIdeas = (ideas) => {
         ideas.forEach(idea => {
-            console.log(idea)
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
             ideaComponent.innerHTML = `
