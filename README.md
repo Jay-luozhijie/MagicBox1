@@ -1,8 +1,12 @@
 # IDEA
 The website provides a Web-based forum for laypeople to post their ideas and for experts to pick creative ideas and realize them.
 
-## Access the web IDEA
-Type url <https://secure-brushlands-03249.herokuapp.com/> in your browser and click go.
+## Installation
+1. Run the following commands on your terminal
+ ```git clone https://github.com/LuoZhijie-tom/MagicBox1.git```
+2. ```npm install```
+3. ```node app.js```
+4. Open your browser and go to url - localhost3000
 
 ## Motivation 
 When you come up with some unbridled ideas, isn’t it depressing that you are unable to make it a reality?  
