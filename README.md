@@ -27,6 +27,14 @@ We hope to provide a platform where people’s good ideas can be realized with t
 3. Our website has a basic authentication system. Users can register, login and logout on the web. Also, users are authorised to create, edit and delete their own ideas.
 4. On the User Page, it shows the basic information of the user, including followers, other users followed, ‘like’ posts, collected posts, ‘working-on-it’ posts of the user.
 
+## Features to be completed by the end of July: 
+1.  Refinement of the UI and make some optimization such as to make the search more powerful, display the posting time and make the web page more responsive.
+2.  The web will support the posting of video, image and links.
+3.  The email during registration will be verified and users can change their password by entering their registered email address.
+4.  Add a mobile version
+5.  Recommendation system(it may not be based on machine learning, it may be simple  random recommendation )
+6.  Perform testing
+
 
 ## About
 IDEA is written by Luo Zhijie and Weng Ying.
