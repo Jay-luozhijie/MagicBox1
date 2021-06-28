@@ -28,6 +28,7 @@ const cookieParser = require('cookie-parser');
 
 const MongoStore = require('connect-mongo');
 
+console.log(process.env.DB_URL)
 const dbUrl = process.env.DB_URL ||'mongodb://localhost:27017/IdeaV1';
 // 'mongodb://localhost:27017/IdeaV1'
 mongoose.connect(dbUrl, {
@@ -55,22 +56,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cookieParser());
 
-
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    secret,
-    touchAfter: 24 * 60 * 60
-})
-
-store.on('error',function(e){
-    console.log("session store error",e)
-})
-
 const secret = process.env.SECRET||'thisshouldbeabettersecret!';
 
 const sessionConfig = {
     name:'session',
-    store,
+    store:MongoStore.create({
+        mongoUrl: dbUrl,
+        secret,
+        touchAfter: 24 * 60 * 60
+    }),
     secret,
     resave: false,
     saveUninitialized: true,
@@ -116,7 +110,7 @@ app.use((err, req, res, next) => {
 })
 
 
-const port =  3000; //process.env.PORT ||
+const port =  process.env.PORT || 3000; 
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
