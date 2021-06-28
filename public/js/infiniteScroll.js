@@ -36,6 +36,7 @@
 
     const showIdeas = (ideas) => {
         ideas.forEach(idea => {
+            console.log(idea)
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
             ideaComponent.innerHTML = `
