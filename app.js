@@ -26,16 +26,9 @@ const commentModel = require("./models/commentModel")
 const cookieParser = require('cookie-parser');
 
 
-
-
-
-
-
-
 const MongoStore = require('connect-mongo');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/IdeaV1'
-
+const dbUrl =  process.env.DB_URL || 'mongodb://localhost:27017/IdeaV1'
 // 'mongodb://localhost:27017/IdeaV1'
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -43,12 +36,6 @@ mongoose.connect(dbUrl, {
     useCreateIndex: true,
     useFindAndModify: false
 });
-
-
-
-
-
-
 
 mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
@@ -68,21 +55,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cookieParser());
 
-// const store = new MongoStore({
-//     url:dbUrl,
-//     secret:"thisissecret",
-//     touchAfter:24*60*60
-// })
+const store = new MongoStore({
+    url:dbUrl,
+    secret:"thisissecret",
+    touchAfter:24*60*60
+})
 
-// store.on('error',function(e){
-//     console.log("session store error",e)
-// })
-
-
-
-
-
-
+store.on('error',function(e){
+    console.log("session store error",e)
+})
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
@@ -102,18 +83,6 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig))
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.use(flash())
@@ -147,11 +116,6 @@ app.use((err, req, res, next) => {
     if (!err.message) { err.message = 'something went wrong!' }     //catch error in the end if there is
     res.status(statusCode).render('error', { err })
 })
-
-
-
-
-
 
 
 const port = process.env.PORT || 3000;

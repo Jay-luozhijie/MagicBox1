@@ -12,6 +12,8 @@
         const API_URL = keyword
                         ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
                         : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
+                        // ? `http://localhost:3000/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`     //fetch data from db
+                        // : `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL, {
             method: 'GET', headers: {
                 'Content-Type': 'application/json'

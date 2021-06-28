@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
@@ -18,7 +17,7 @@ db.once("open", () => {
 
 const seedDB = async () => {
     await IdeaModel.deleteMany({});
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 1; i <= 5; i++) {
         const idea = new IdeaModel({
             author: `60d541bca0c0b665c0d8a4f9`,
 
