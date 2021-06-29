@@ -1,4 +1,4 @@
-# IDEA
+# MagicBox
 The website provides a Web-based forum for laypeople to post their ideas and for experts to pick creative ideas and realize them.
 
 ## Installation
@@ -41,4 +41,4 @@ We hope to provide a platform where people’s good ideas can be realized with t
 
 
 ## About
-IDEA is written by Luo Zhijie and Weng Ying.
+MagicBox is written by Luo Zhijie and Weng Ying.
