@@ -25,7 +25,7 @@ function paginatedResults(model) {
         }
 
         try {
-            results.result = await model.find({}).populate('author').limit(limit).skip(startIndex).exec()
+            results.result = await model.find({}).limit(limit).skip(startIndex).exec()
             res.paginatedResults = results
             return next()
         } catch (e) {
