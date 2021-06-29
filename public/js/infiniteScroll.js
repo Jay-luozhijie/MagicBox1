@@ -33,14 +33,12 @@
     })()
 
     const showIdeas = (ideas) => {
-        console.log(ideas);
         ideas.forEach(idea => {
-            console.log(idea);
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
             ideaComponent.innerHTML = `
             <div class="mb-3 indexIdeaContainer">
-                <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author}</div>
+                <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
                 <div class=" indexIdeaContent ms-5">
                     <div class="mb-3 indexIdeaTitle">
                     ${idea.title}
