@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
@@ -9,7 +8,7 @@ const { isLoggedIn, isAuthor, validateIdea, validateUser } = require('../middlew
 const { findByIdAndUpdate, findById } = require('../models/ideaModel')
 const ideaModel = require('../models/ideaModel')
 const { response } = require('express')
-
+const ExpressError = require('../utils/ExpressError')
 
 
 ////////////////////////  basic CRUD   ////////////////////////////////
@@ -19,10 +18,32 @@ router.get('/edit', isLoggedIn, catchAsync(async (req, res) => {
 }))
 
 router.patch('/edit', isLoggedIn, validateUser, catchAsync(async (req, res) => {//summit edit user info  
-    const id = req.user._id;
-    await UserModel.findByIdAndUpdate(id, { ...req.body.user })
-    req.flash('success', 'Successfully edited your profile')
-    res.redirect(`/${id}`)
+    try{
+        const id = req.user._id;
+        const sameName = await UserModel.find({username:req.body.user.username}).limit(1)
+        const sameEmail = await UserModel.find({email:req.body.user.email}).limit(1)
+        if(sameName.length !== 0 && (String(sameName[0]._id) !== String(id))){
+            throw new ExpressError('username has already been registered', 500)
+        } else if(sameEmail.length !== 0 && (String(sameEmail[0]._id) !== String(id))){
+            throw new ExpressError('email has already been registered', 500)
+        } else {
+            console.log('hello')
+            const newUser = await UserModel.findByIdAndUpdate(id, { ...req.body.user },{new: true})
+            req.logout()
+            console.log('test')
+            req.login(newUser, err => {                                  //after register, will auto login and direct to main page
+                if (err) {
+                    return next(err)
+                } else {
+                    req.flash('success', 'Successfully edited your profile')
+                    res.redirect(`/user/${id}`)
+                }
+            })
+        }
+    } catch(e){
+        req.flash('error', e.message)
+        res.redirect('/user/edit')
+    }
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {                    //userPage

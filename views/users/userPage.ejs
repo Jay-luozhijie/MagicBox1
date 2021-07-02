@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-6 offset-3">
             <div>
-                <% if(currentUser.equals(user)) {%>
+                <% if(currentUser && currentUser.equals(user)) {%>
                     <div class="ms-3">
                         <h1>
                             Hello, <%= user.username %>!
@@ -14,27 +14,27 @@
                                 your
                                 profile</button>
                         </form>
-
-                        <% } else { %>
-                            <div>
-                                <h1>
-                                    Welcome to <%= user.username %>'s profile:
-                                </h1>
-                            </div>
-                            <% } %>
-                                <div class="mb-3 ms-3">
-                                    <a href="/user/<%=user._id%>/following" style="color: #fcc75d;">To see
-                                        who
-                                        <%= user.username %>
-                                            is following
-                                    </a>
-                                    <br>
-                                    <a href="/user/<%=user._id%>/follower" style="color: #fcc75d;">To see who are
-                                        following
-                                        <%= user.username %>
-                                    </a>
-                                </div>
+                <% } else { %>
+                    <div>
+                        <div>
+                            <h1>
+                                Welcome to <%= user.username %>'s profile:
+                            </h1>
+                        </div>
+                <% } %>
+                    <div class="mb-3 ms-3">
+                        <a href="/user/<%=user._id%>/following" style="color: #fcc75d;">To see
+                            who
+                            <%= user.username %>
+                                is following
+                        </a>
+                        <br>
+                        <a href="/user/<%=user._id%>/follower" style="color: #fcc75d;">To see who are
+                            following
+                            <%= user.username %>
+                        </a>
                     </div>
+                </div>
             </div>
         </div>
     </div>
