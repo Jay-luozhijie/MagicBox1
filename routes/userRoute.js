@@ -27,10 +27,8 @@ router.patch('/edit', isLoggedIn, validateUser, catchAsync(async (req, res) => {
         } else if(sameEmail.length !== 0 && (String(sameEmail[0]._id) !== String(id))){
             throw new ExpressError('email has already been registered', 500)
         } else {
-            console.log('hello')
             const newUser = await UserModel.findByIdAndUpdate(id, { ...req.body.user },{new: true})
             req.logout()
-            console.log('test')
             req.login(newUser, err => {                                  //after register, will auto login and direct to main page
                 if (err) {
                     return next(err)
