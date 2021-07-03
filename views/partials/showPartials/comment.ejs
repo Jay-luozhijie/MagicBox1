@@ -8,37 +8,38 @@
                 <div class="invalid-feedback">Please provide description.</div>
             </div>
             <div class="d-flex flex-row-reverse">
-                <button class="btn btn-success" id="commentSubmit">Submit</button>
+                <button class="btn commentSubmit">Submit</button>
             </div>
         </form>
     <%}%>
-
-    <div class="commentContainer mx-5">
+    <div class="mx-5">
         <%for(let comment of idea.comment){%>
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card=title commentUsername"><%=comment.author.username%></h5>
-                    <div class="card-text mx-3"><%=comment.commentBody%></div>
-                    <%if(currentUser && comment.author.equals(currentUser._id)){%>
-                        <div class="d-flex flex-row ">
+                    <div class="card-title commentReplyUsername"><%=comment.author.username%></div>
+                    <div class="card-text mx-3 mb-2"><%=comment.commentBody%></div>
+                    <% if(currentUser) {%>
+                        <%if(comment.author.equals(currentUser._id)){%>
+                            <div class="d-flex flex-row">
+                                <p>
+                                    <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
+                                        Reply
+                                    </a>
+                                </p>
+                                <form class="ms-2" action='/<%=idea._id%>/comment/<%=comment._id%>?_method=DELETE' method="POST">
+                                    <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
+                                </form>
+                            </div>
+                        <%} else {%>
                             <p>
                                 <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
                                     Reply
                                 </a>
                             </p>
-                            <form class="ms-2" action='/<%=idea._id%>/comment/<%=comment._id%>?_method=DELETE' method="POST">
-                                <button class='btn btn-sm btn-danger'>Delete</button>
-                            </form>
-                        </div>
-                    <%} else {%>
-                        <p>
-                            <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
-                                Reply
-                            </a>
-                        </p>
+                        <%}%>    
                     <%}%>
                     <div class="collapse" id="replyToComment<%=comment._id%>">
-                        <%if(currentUser){%>
+                        <% if(currentUser) {%>
                             <form action="/<%=idea._id%>/comment/<%=comment._id%>/reply"
                                 class="validated-form mb-3 mx-5" method="POST" novalidate>
                                 <div class="mb-3">
@@ -48,7 +49,7 @@
                                     <div class="invalid-feedback">Please provide reply content.
                                     </div>
                                 </div>
-                                <button class="btn btn-success replySubmit btn-sm">Submit</button>
+                                <button class="btn commentSubmit btn-sm">Submit</button>
                             </form>
                         <%}%>
                     </div>
@@ -56,21 +57,38 @@
                         <%for(let reply of comment.reply){%>
                             <div class="card-body eachReply">
                                 <p class="card-title">
-                                    <span class="commentUsername">
+                                    <span class="commentReplyUsername">
                                         <%=reply.author.username%>
                                     </span>
                                     reply to 
-                                    <span class="commentUsername">
+                                    <span class="commentReplyUsername">
                                         <%=reply.replyTo.username%>
                                     </span> :
                                 </p>
                                 <p class="card-text ms-3">
                                     <%=reply.replyBody%>
                                 </p>
-                                <%if(currentUser && reply.author.equals(currentUser._id)){%>
-                                    <div class="d-flex flex-row ">
+                                <% if(currentUser) {%>
+                                    <%if(reply.author.equals(currentUser._id)){%>
+                                        <div class="d-flex flex-row">
+                                            <p class="">
+                                                <a class="btn btn-primary replyButton btn-sm ms-3"
+                                                    data-bs-toggle="collapse"
+                                                    href="#reply<%=reply._id%>" role="button"
+                                                    aria-expanded="false"
+                                                    aria-controls="reply<%=reply._id%>">
+                                                    Reply
+                                                </a>
+                                            </p>
+                                            <form class="ms-2"
+                                                action='/<%=idea._id%>/comment/<%=comment._id%>/reply/<%=reply._id%>?_method=DELETE'
+                                                method="POST">
+                                                <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
+                                            </form>
+                                        </div>
+                                    <%} else {%>
                                         <p class="">
-                                            <a class="btn btn-primary replyButton btn-sm ms-3"
+                                            <a class="btn replyButton btn-sm ms-3"
                                                 data-bs-toggle="collapse"
                                                 href="#reply<%=reply._id%>" role="button"
                                                 aria-expanded="false"
@@ -78,22 +96,7 @@
                                                 Reply
                                             </a>
                                         </p>
-                                        <form class="ms-2"
-                                            action='/<%=idea._id%>/comment/<%=comment._id%>/reply/<%=reply._id%>?_method=DELETE'
-                                            method="POST">
-                                            <button class='btn btn-sm btn-danger'>Delete</button>
-                                        </form>
-                                    </div>
-                                <%} else {%>
-                                    <p class="">
-                                        <a class="btn btn-primary replyButton btn-sm ms-3"
-                                            data-bs-toggle="collapse"
-                                            href="#reply<%=reply._id%>" role="button"
-                                            aria-expanded="false"
-                                            aria-controls="reply<%=reply._id%>">
-                                            Reply
-                                        </a>
-                                    </p>
+                                    <%}%>
                                 <%}%>
                                 <div class="collapse" id="reply<%=reply._id%>">
                                     <%if(currentUser){%>
@@ -107,11 +110,9 @@
                                                     cols='30' rows='1'
                                                     required></textarea>
                                                 <div class="valid-feedback">good!</div>
-                                                <div class="invalid-feedback">Please
-                                                    provide reply content.</div>
+                                                <div class="invalid-feedback">Please provide reply content</div>
                                             </div>
-                                            <button
-                                                class="btn btn-success replySubmit btn-sm">Submit</button>
+                                            <button class="btn commentSubmit btn-sm">Submit</button>
                                         </form>
                                     <%}%>
                                 </div>

@@ -13,12 +13,12 @@
                     <button class="btn btn-success" id="answerSubmit">Submit</button>
                 </div>
             </form>
-            <%}%>
+        <%}%>
     </div>
     <br>
     <div class="ms-4 me-4 mb-3">
         <div>Answers:</div>
-        <% if(idea.answer.length> 0) {%>
+        <% if(idea.answer.length > 0) {%>
             <%for(let answer of idea.answer){%>
                 <div class='card mb-3 mt-3 mb-3'>
                     <div class="card-body ms-3 mb-3">
@@ -34,15 +34,14 @@
                             <form action='/<%=idea._id%>/answer/<%=answer._id%>?_method=DELETE' method="POST">
                                 <button class='btn btn-sm btn-danger'>Delete</button>
                             </form>
-                            <%}%>
+                        <%}%>
                     </div>
                 </div>
-                <%}%>
-                    <% } else { %>
-                        <div>
-                            <p>This post doesn't receive any answer.</p>
-                        </div>
-                        <% } %>
+            <%}%>
+        <%} else {%>
+            <div>
+                <p>This post hasn't received any answer.</p>
+            </div>
+        <%}%>
     </div>
-
 </div>

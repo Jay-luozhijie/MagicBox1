@@ -1,94 +1,4 @@
-/* .commentBackground{
-    width:100%;
-    height:100%;
-    background-color:rgba(0,0,0,0.7);
-    position:absolute;
-    top:0;
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.commentContent{
-    width:750px;
-    height:600px;
-    background-color: white;
-    overflow:scroll;
-}
-
-.close{
-    font-size: 40px;
-    color: white;
-    transform: rotate(45deg);
-    margin-top: 140px;
-    padding-left: 0px;
-    padding-right: 0px;
-    cursor:pointer;
-} */
-
-#commentSubmit{
-    background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
-}
-
-#commentSubmit:hover{
-    color:black;
-    background-color: #fec601;
-    border-color:#fec601 ;
-}
-
-#answerSubmit{
-    background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
-}
-
-#answerSubmit:hover{
-    color:black;
-    background-color: #fec601;
-    border-color:#fec601 ;
-}
-
-.replyButton{
-    background-color: #caf0f8;
-    border-color:#caf0f8 ;
-    color:black;
-}
-
-.replyButton:hover{
-    background-color: #0275d8;
-    border-color: #0275d8;
-    color:black;
-}
-
-.commentUsername{
-    font-weight:800;
-}
-
-.replyIndex{
-    border:none;
-}
-
-.eachReply{
-    border-top:solid;
-    border-width:1px;
-    border-color:silver;
-}
-
-.replySubmit{
-    background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
-}
-
-.replySubmit:hover{
-    color:black;
-    background-color: #fec601;
-    border-color:#fec601 ;
-}
-
+/* idea */
 .ideaAuthor{
     font-size:20px;
     color: grey;
@@ -117,8 +27,13 @@
     margin-top: 10px;
 }
 
+.editDeleteBtn {/*only author can see the edit & delete btn*/
+    margin-left: 10px;
+    font-size: 17px;
+    width: 80px;
+}
 
-.showIdea-buttons {
+.showIdea-buttons {/*5 btns below idea*/
     background-color: #fcdc5d;
     padding: 7px 10px;
     margin-left: 10px;
@@ -129,33 +44,69 @@
     cursor: pointer;
 }
 
-
 .showIdea-buttons:hover {
     background-color: #fec601;
     color:rgba(0,0,0,0.7);
 }
 
-.idea-group-btn {
-    padding: 7px 15px;
-    margin-left: 10px;
-    font-size: 17px;
-    width: 90px;
+
+/* comment */
+.commentReplyUsername{
+    color: grey;
 }
 
-/* .showPageContainer{
-    width:55em;
+.commentSubmit{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+.commentSubmit:hover{
+    background-color: #fec601;
+    border-color:#fec601 ;
+}
+
+.replyIndex{
     border:none;
-    background-color: white;
 }
 
-@media (min-width:900px){
-    .card{
-        display: flex;
-        flex-flow: wrap; 
-        flex-direction: row;
-        justify-content: end;
-    }
-} */
+.eachReply{
+    border-top:solid;
+    border-width:1px;
+    border-color:silver;
+}
+
+.replyButton{
+    background-color: #caf0f8;
+    border-color:#caf0f8 ;
+    color:black;
+}
+
+.replyButton:hover{
+    background-color: #0275d8;
+    border-color: #0275d8;
+    color:white;
+}
+
+.commentDeleteButton{
+    background-color: #f8ad9d;
+    border-color:#f8ad9d ;
+    color:black;
+}
+
+
+/*answer*/
+#answerSubmit{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+#answerSubmit:hover{
+    color:black;
+    background-color: #fec601;
+    border-color:#fec601 ;
+}
 
 .answerAuthor{
     font-size:20px;

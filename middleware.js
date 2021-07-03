@@ -5,9 +5,9 @@ const CommentModel = require('./models/commentModel')
 const ReplyModel = require('./models/replyModel')
 const AnswerModel = require('./models/answerModel')
 
-module.exports.isLoggedIn = (req, res, next) => {                 //require the user to login before proceed
-    if (!req.isAuthenticated()) {                             //not login now
-        req.session.returnTo = req.originalUrl                //记下现在所在的地址方便login后redirect回来
+module.exports.isLoggedIn = (req, res, next) => {             //require the user to login before proceed
+    if (!req.isAuthenticated()) {                             //not logged in now
+        req.session.returnTo = req.originalUrl                //remember current address so as to redirect to here after logging in
         req.flash('error', 'You mush be signed in first!')
         return res.redirect('/login')
     }
@@ -15,7 +15,7 @@ module.exports.isLoggedIn = (req, res, next) => {                 //require the 
 }
 
 module.exports.validateIdea = (req, res, next) => {
-    const { error } = IdeaSchema.validate(req.body)         //查joi schema 是否通过
+    const { error } = IdeaSchema.validate(req.body)         //joi idea schema
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -24,7 +24,7 @@ module.exports.validateIdea = (req, res, next) => {
     }
 }
 
-module.exports.isAuthor = async (req, res, next) => {              //看是否为此idea的作者
+module.exports.isAuthor = async (req, res, next) => {         //is idea's author
     const { id } = req.params
     const idea = await IdeaModel.findById(id)
     if (!idea.author.equals(req.user._id)) {
@@ -34,7 +34,7 @@ module.exports.isAuthor = async (req, res, next) => {              //看是否�
     next()
 }
 
-module.exports.validateComment = (req, res, next) => {      //查joi comment schema 是否通过
+module.exports.validateComment = (req, res, next) => {      //joi comment schema
     const { error } = CommentSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
@@ -44,7 +44,7 @@ module.exports.validateComment = (req, res, next) => {      //查joi comment sch
     }
 }
 
-module.exports.validateReply = (req, res, next) => {
+module.exports.validateReply = (req, res, next) => {        //joi reply schema
     const { error } = ReplySchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
@@ -54,9 +54,9 @@ module.exports.validateReply = (req, res, next) => {
     }
 }
 
-module.exports.isCommentAuthor = async (req, res, next) => {       //看是否为此comment的作者
+module.exports.isCommentAuthor = async (req, res, next) => {       
     const { id, commentId } = req.params
-    const comment = await (await CommentModel.findById(commentId))
+    const comment = await CommentModel.findById(commentId)
     if (!comment.author.equals(req.user._id)) {
         req.flash('error', "you are not this comment's author")
         return res.redirect(`/${id}`)
@@ -64,8 +64,8 @@ module.exports.isCommentAuthor = async (req, res, next) => {       //看是否�
     next()
 }
 
-module.exports.isReplyAuthor = async (req, res, next) => {       //看是否为此comment的作者
-    const { id, commentId, replyId } = req.params
+module.exports.isReplyAuthor = async (req, res, next) => {       
+    const { id, replyId } = req.params
     const reply = await ReplyModel.findById(replyId)
     if (!reply.author.equals(req.user._id)) {
         req.flash('error', "you are not this reply's author")

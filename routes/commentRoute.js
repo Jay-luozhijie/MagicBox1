@@ -1,16 +1,15 @@
+/////////////////// address start with "/:id/comment" /////////////////
 const express = require('express')
 const router = express.Router({ mergeParams: true })
-
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const CommentModel = require('../models/commentModel')
 const ReplyModel = require('../models/replyModel')
 const { isLoggedIn, validateComment, validateReply, isCommentAuthor, isReplyAuthor } = require('../middleware')
 
-
 router.get('/', (req, res) => {     //because when not login->comment and submit, we are asking post('/60c02e831d964f134cdbb0d9/comment') 
-    res.redirect(`/`)           //but req.session.returnTo is /60c02e831d964f134cdbb0d9/comment no matter post or get 
-})                              //but there's no get('/60c02e831d964f134cdbb0d9/comment'...), so I add a get route and redirect to home
+    res.redirect(`/`)               //but req.session.returnTo is /60c02e831d964f134cdbb0d9/comment no matter post or get 
+})                                  //but there's no get('/60c02e831d964f134cdbb0d9/comment'...), so I add a get route and redirect to home
 
 router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res) => {              //post new comment
     const idea = await IdeaModel.findById(req.params.id)

@@ -1,12 +1,9 @@
+///////////////////////// address start with "/:id/answer" ///////////////
 const express = require('express')
 const router = express.Router({ mergeParams: true })
-
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
-const CommentModel = require('../models/commentModel')
-const ReplyModel = require('../models/replyModel')
 const AnswerModel = require("../models/answerModel")
-
 const { isLoggedIn, validateAnswer, isAnswerAuthor } = require('../middleware')
 
 router.get('/', (req, res) => {

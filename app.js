@@ -29,7 +29,6 @@ mongoose.connect(dbUrl, {
     useCreateIndex: true,
     useFindAndModify: false
 });
-
 mongoose.connection.on("error", console.error.bind(console, "connection error:"))
 mongoose.connection.once("open", () => {
     console.log("Datebase connected")
@@ -79,8 +78,8 @@ app.use((req, res, next) => {
 app.use('/user', userRoute)                                      //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js
-app.use('/api', apiRoute)
-app.use('/:id/answer', answerRoute)
+app.use('/api', apiRoute)                                        //to  /routes/apiRoute.js
+app.use('/:id/answer', answerRoute)                              //to  /routes/answerRoute.js
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('page not found', 404))                 //if all address above can't match, this page can't find, give error
@@ -92,7 +91,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-const port = 3000;                        //process.env.PORT ||                                 //deploy version
+const port = 3000;                        //process.env.PORT ||                       //deploy version
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })

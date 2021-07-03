@@ -8,7 +8,7 @@
     let keyword = window.keyword;
     window.keyword = undefined;
 
-    const getIdeas = async (page, limit) => {
+    const getIdeas = async (page, limit) => {//fetch data from api
         const API_URL = keyword
                         // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
                         // : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
@@ -25,32 +25,32 @@
         return await response.json();
     }
 
-    (async function ()  {
+    (async function ()  {//initialize
         loader.style.visibility="visible"
-        apiResponse = await getIdeas(page, limit)            //initialize
+        apiResponse = await getIdeas(page, limit)            
         showIdeas(apiResponse.result)
         loader.style.visibility="hidden"
     })()
 
-    const showIdeas = (ideas) => {
+    const showIdeas = (ideas) => {//show 10 ideas
         ideas.forEach(idea => {
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
             ideaComponent.innerHTML = `
-            <div class="mb-3 indexIdeaContainer">
+            <div class="mb-3 ideaCard">
                 <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
                 <div class=" indexIdeaContent ms-5">
                     <div class="mb-3 indexIdeaTitle">
-                    ${idea.title}
+                        ${idea.title}
                     </div>
                     <div class="indexIdeaDescription mb-2">
-                    ${idea.description}
+                        ${idea.description}
                     </div>
                     <div>
-                        <a href="/${idea._id}" class="btn btn-primary btn-IndexMore">more</a>
+                        <a href="/${idea._id}" class="btn btn-primary more-btn">more</a>
                     </div>
                 </div>
-                <p class="ms-5 mb-1 indexLikedNumber">
+                <p class="ms-5 mb-1 likedNum">
                     ${idea.upVote.length} people like this post!
                 </p>
             </div>`;
@@ -67,7 +67,7 @@
         },0)
     }
 
-    window.addEventListener('scroll', async () => {
+    window.addEventListener('scroll', async () => {//listen to scroll-to-bottom event
         const totalHeight = document.documentElement.scrollHeight
         const scrolledHeight = window.scrollY;
         const pageHeight = window.innerHeight;

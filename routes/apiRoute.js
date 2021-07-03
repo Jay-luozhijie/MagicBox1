@@ -1,3 +1,4 @@
+///////////////////////// address start with "/api" ///////////////
 const express = require('express')
 const router = express.Router({ mergeParams: true })
 const IdeaModel = require('../models/ideaModel')
@@ -16,14 +17,12 @@ function paginatedResults(model) {
                 limit: limit
             }
         }
-
         if (startIndex > 0) {
             results.previous = {
                 page: page - 1,
                 limit: limit
             }
         }
-
         try {
             results.result = await model.find({}).populate('author').limit(limit).skip(startIndex).exec()
             res.paginatedResults = results
@@ -44,7 +43,7 @@ function searchResults(model) {
         const results = {}
 
         try {
-            const resultArray=await model.find(
+            const resultArray = await model.find(
                 { $text: { $search: keyword } },
                 { score: { $meta: "textScore" } }
             ).sort({ score: { $meta: "textScore" } }).populate('author')
@@ -53,14 +52,13 @@ function searchResults(model) {
                 { $text: { $search: keyword } },
                 { score: { $meta: "textScore" } }
             ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
-            
+
             if (endIndex < resultArray.length) {
                 results.next = {
                     page: page + 1,
                     limit: limit
                 }
             }
-    
             if (startIndex > 0) {
                 results.previous = {
                     page: page - 1,

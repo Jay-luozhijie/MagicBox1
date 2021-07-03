@@ -1,20 +1,12 @@
-.indexIdeaDescription{
-    width:100%;
-    overflow: hidden; 
-    display:-webkit-box; 
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+@media (min-width:1000px){  /*index idea list justify to center when >= 1000px */
+    .indexPage{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 }
 
-.indexIdeaContent{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    height:18rem; 
-    width: 48rem;
-}
-
-.indexIdeaContainer{
+.ideaCard{  /*container of each idea in index page*/
     width:55em;
     border: solid;
     border-width: 1px;
@@ -23,38 +15,45 @@
     background-color: white;
 }
 
-@media (min-width:1000px){
-    .indexPage{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
-.btn-IndexMore{
-    background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
-}
-
-.btn-IndexMore:hover{
-    color:black;
-    background-color: #fec601;
-    border-color:#fec601 ;
-}
-
-
-.indexIdeaTitle{
-    font-weight: 800;
-}
-
-.IndexideaAuthor{
+.IndexideaAuthor{       
     font-weight: 350;
     font-size: 20px;
     color: grey;
 }
 
-.indexLikedNumber{
+.indexIdeaContent{      /*container of title & description*/
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height:18rem; 
+    width: 48rem;
+}
+
+.indexIdeaTitle{
+    font-weight: 800;
+}
+
+.indexIdeaDescription{
+    width: 100%;
+    overflow: hidden; 
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+.more-btn{
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+.more-btn:hover{
+    color:black;
+    background-color: #fec601;
+    border-color:#fec601 ;
+}
+
+.likedNum{
     font-weight: 330;
     font-size:15px;
 }
