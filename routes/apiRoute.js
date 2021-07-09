@@ -45,7 +45,7 @@ function searchResults(model) {
 
         try {
             const resultArray = await model.find(
-                { $regex: { $search: keyword } },
+                { $text: { $search: keyword } },
                 { score: { $meta: "textScore" } }
             ).sort({ score: { $meta: "textScore" } }).populate('author')
 
