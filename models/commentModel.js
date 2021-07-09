@@ -10,9 +10,14 @@ const CommentSchema = new Schema({
         type: String,
         required: true,
     },
-    reply: [
-        { type: Schema.Types.ObjectId, ref: 'ReplyModel' }
-    ],
+    reply: [{
+        type: Schema.Types.ObjectId,
+        ref: 'ReplyModel'
+    }],
+    idea: {
+        type: Schema.Types.ObjectId,
+        ref: 'IdeaModel'
+    }
 })
 
 module.exports = mongoose.model('CommentModel', CommentSchema)

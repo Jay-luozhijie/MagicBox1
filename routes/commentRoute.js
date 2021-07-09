@@ -16,6 +16,7 @@ router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res) => {  
     const comment = new CommentModel({ commentBody: req.body.comment })
     comment.author = req.user._id
     idea.comment.push(comment)
+    comment.idea = idea._id
     await comment.save()
     await idea.save()
     req.flash('success', 'created a new comment!')
@@ -40,6 +41,22 @@ router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (re
     reply.author = req.user._id
     comment.reply.push(reply)
     await reply.save()
+    await comment.save()
+    req.flash('success', 'created a new reply!')
+    res.redirect(`/${idea._id}`)
+}))
+
+router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
+    let oldReply = await ReplyModel.findById(req.params.replyId).populate('author','username')
+    const idea = await IdeaModel.findById(req.params.id)
+    const comment = await CommentModel.findById(req.params.commentId)
+    const newReply = new ReplyModel({
+        replyTo: oldReply.author,
+        replyBody: req.body.reply,
+    })
+    newReply.author = req.user._id
+    comment.reply.push(newReply)
+    await newReply.save()
     await comment.save()
     req.flash('success', 'created a new reply!')
     res.redirect(`/${idea._id}`)

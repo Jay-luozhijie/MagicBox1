@@ -51,6 +51,27 @@
 
 
 /* comment */
+#comment{
+    border:solid;
+    border-radius: 5px;
+    border-width: 2px;
+    margin: 5%;
+    border-color: #ced4da;
+}
+
+#commentPreviousPage{
+    font-size:17px;
+}
+#commentPreviousPage:hover{
+    color:#00b4d8;
+}
+#commentNextPage{
+    font-size:17px;
+}
+#commentNextPage:hover{
+    color:#00b4d8;
+}
+
 .commentReplyUsername{
     color: grey;
 }

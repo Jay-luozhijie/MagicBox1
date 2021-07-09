@@ -1,126 +1,38 @@
 <div class="collapse" id="comment">
     <%if(currentUser){%>
-        <form action="/<%=idea._id%>/comment" class="validated-form mb-3 mx-5" method="POST" novalidate>
-            <div class="mb-3">
+        <form action="/<%=idea._id%>/comment" class="validated-form mb-3 mx-5" id="commentForm" method="POST" novalidate>
+            <div class="my-3">
                 <label class="form-label" for="commentbody">Comment</label>
-                <textarea class='form-control' name='comment' id='commentbody' cols='30' rows='3' required></textarea>
-                <div class="valid-feedback">good!</div>
-                <div class="invalid-feedback">Please provide description.</div>
+                <textarea class='form-control' name='comment' id='commentbody' cols='30' rows='2'></textarea>
             </div>
             <div class="d-flex flex-row-reverse">
-                <button class="btn commentSubmit">Submit</button>
+                <button class="btn btn-sm commentSubmit">Submit</button>
             </div>
         </form>
+        <hr style="height:20px; color:#ced4da;">
     <%}%>
-    <div class="mx-5">
-        <%for(let comment of idea.comment){%>
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="card-title commentReplyUsername"><%=comment.author.username%></div>
-                    <div class="card-text mx-3 mb-2"><%=comment.commentBody%></div>
-                    <% if(currentUser) {%>
-                        <%if(comment.author.equals(currentUser._id)){%>
-                            <div class="d-flex flex-row">
-                                <p>
-                                    <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
-                                        Reply
-                                    </a>
-                                </p>
-                                <form class="ms-2" action='/<%=idea._id%>/comment/<%=comment._id%>?_method=DELETE' method="POST">
-                                    <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
-                                </form>
-                            </div>
-                        <%} else {%>
-                            <p>
-                                <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment<%=comment._id%>" role="button" aria-expanded="false" aria-controls="replyToComment">
-                                    Reply
-                                </a>
-                            </p>
-                        <%}%>    
-                    <%}%>
-                    <div class="collapse" id="replyToComment<%=comment._id%>">
-                        <% if(currentUser) {%>
-                            <form action="/<%=idea._id%>/comment/<%=comment._id%>/reply"
-                                class="validated-form mb-3 mx-5" method="POST" novalidate>
-                                <div class="mb-3">
-                                    <textarea class='form-control' name='reply' id='replyBody'
-                                        cols='30' rows='1' required></textarea>
-                                    <div class="valid-feedback">good!</div>
-                                    <div class="invalid-feedback">Please provide reply content.
-                                    </div>
-                                </div>
-                                <button class="btn commentSubmit btn-sm">Submit</button>
-                            </form>
-                        <%}%>
-                    </div>
-                    <div class='card replyIndex ms-4'>
-                        <%for(let reply of comment.reply){%>
-                            <div class="card-body eachReply">
-                                <p class="card-title">
-                                    <span class="commentReplyUsername">
-                                        <%=reply.author.username%>
-                                    </span>
-                                    reply to 
-                                    <span class="commentReplyUsername">
-                                        <%=reply.replyTo.username%>
-                                    </span> :
-                                </p>
-                                <p class="card-text ms-3">
-                                    <%=reply.replyBody%>
-                                </p>
-                                <% if(currentUser) {%>
-                                    <%if(reply.author.equals(currentUser._id)){%>
-                                        <div class="d-flex flex-row">
-                                            <p class="">
-                                                <a class="btn btn-primary replyButton btn-sm ms-3"
-                                                    data-bs-toggle="collapse"
-                                                    href="#reply<%=reply._id%>" role="button"
-                                                    aria-expanded="false"
-                                                    aria-controls="reply<%=reply._id%>">
-                                                    Reply
-                                                </a>
-                                            </p>
-                                            <form class="ms-2"
-                                                action='/<%=idea._id%>/comment/<%=comment._id%>/reply/<%=reply._id%>?_method=DELETE'
-                                                method="POST">
-                                                <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
-                                            </form>
-                                        </div>
-                                    <%} else {%>
-                                        <p class="">
-                                            <a class="btn replyButton btn-sm ms-3"
-                                                data-bs-toggle="collapse"
-                                                href="#reply<%=reply._id%>" role="button"
-                                                aria-expanded="false"
-                                                aria-controls="reply<%=reply._id%>">
-                                                Reply
-                                            </a>
-                                        </p>
-                                    <%}%>
-                                <%}%>
-                                <div class="collapse" id="reply<%=reply._id%>">
-                                    <%if(currentUser){%>
-                                        <form
-                                            action="/<%=idea._id%>/comment/<%=comment._id%>/reply"
-                                            class="validated-form mb-3 mx-5"
-                                            method="POST" novalidate>
-                                            <div class="mb-3">
-                                                <textarea class='form-control'
-                                                    name='reply' id='replyBody'
-                                                    cols='30' rows='1'
-                                                    required></textarea>
-                                                <div class="valid-feedback">good!</div>
-                                                <div class="invalid-feedback">Please provide reply content</div>
-                                            </div>
-                                            <button class="btn commentSubmit btn-sm">Submit</button>
-                                        </form>
-                                    <%}%>
-                                </div>
-                            </div>
-                        <%}%>
-                    </div>
-                </div>
-            </div>
-        <%}%>
+    <div>
+        <div class="mx-5" id="commentsContainer">
+           
+        </div>
+        <div id='commentNavigation' class='d-flex justify-content-center'>
+            
+        </div>
     </div>
 </div>
+
+<script>
+    const c = '<%-JSON.stringify(currentUser)%>'
+    let currentUser = undefined
+    let commentAuthor = undefined
+    if('<%-JSON.stringify(currentUser)%>'){
+        currentUser = JSON.parse('<%-JSON.stringify(currentUser)%>')
+        commentAuthor = currentUser.username
+    }
+    const ideaId = '<%=idea._id%>'
+    const commentArrayLength='<%=idea.comment.length%>'
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src='/js/comment/submitComment.js'></script>
+<script src='js/comment/paginatedComment.js'></script>
+<script src='js/comment/submitReply.js'></script>
