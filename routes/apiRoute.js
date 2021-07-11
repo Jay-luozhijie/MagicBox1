@@ -45,14 +45,27 @@ function searchResults(model) {
 
         try {
             const resultArray = await model.find(
-                { $text: { $search: keyword } },
-                { score: { $meta: "textScore" } }
-            ).sort({ score: { $meta: "textScore" } }).populate('author')
+                // { $text: { $search: keyword } },
+                // { score: { $meta: "textScore" } }
+                // { title: { "$regex": keyword, $options: "i" } }
+                {"$or": [
+                    { title: { '$regex': keyword, '$options': 'i' } },
+                    { description: { '$regex': keyword, '$options': 'i' } }
+                ]}
+            )
+            console.log(resultArray)
+            // ).sort({ score: { $meta: "textScore" } }).populate('author')
 
             results.result = await model.find(
-                { $text: { $search: keyword } },
-                { score: { $meta: "textScore" } }
-            ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
+                // { title: { "$regex": keyword, $options: "i" } }
+                {"$or": [
+                    { title: { '$regex': keyword, '$options': 'i' } },
+                    { description: { '$regex': keyword, '$options': 'i' } }
+                ]}
+            ).populate('author').limit(limit).skip(startIndex).exec()
+            //     { $text: { $search: keyword } },
+            //     { score: { $meta: "textScore" } }
+            // ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
 
             if (endIndex < resultArray.length) {
                 results.next = {
@@ -97,10 +110,10 @@ function paginatedComments(model) {
         }
         try {
             results.result = await model.find({ idea: ideaId }).populate('author')
-            .populate({
-                path:'reply',
-                populate:[{path:'author'},{path:'replyTo'}]
-            }).limit(limit).skip(startIndex).exec()
+                .populate({
+                    path: 'reply',
+                    populate: [{ path: 'author' }, { path: 'replyTo' }]
+                }).limit(limit).skip(startIndex).exec()
             res.paginatedComments = results
             return next()
         } catch (e) {
