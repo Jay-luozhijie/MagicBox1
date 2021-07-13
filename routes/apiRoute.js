@@ -43,15 +43,18 @@ function searchResults(model) {
         const results = {}
 
         try {
-            const resultArray = await model.find(
-                { $text: { $search: keyword } },
-                { score: { $meta: "textScore" } }
-            ).sort({ score: { $meta: "textScore" } }).populate('author')
+            // const resultArray = await model.find(
+            //     { $text: { $search: keyword } },
+            //     { score: { $meta: "textScore" } }
+            // ).sort({ score: { $meta: "textScore" } }).populate('author')
 
-            results.result = await model.find(
-                { $text: { $search: keyword } },
-                { score: { $meta: "textScore" } }
-            ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
+            // results.result = await model.find(
+            //     { $text: { $search: keyword } },
+            //     { score: { $meta: "textScore" } }
+            // ).sort({ score: { $meta: "textScore" } }).populate('author').limit(limit).skip(startIndex).exec()
+
+            const resultArray = await model.find({ $or: [{ title: { $regex: keyword, $options: "$i" } }, { description: { $regex: keyword, $options: "$i" } }] }).populate('author')
+            results.result = await model.find({ $or: [{ title: { $regex: keyword, $options: "$i" } }, { description: { $regex: keyword, $options: "$i" } }] }).populate('author').limit(limit).skip(startIndex).exec()
 
             if (endIndex < resultArray.length) {
                 results.next = {
