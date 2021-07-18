@@ -84,7 +84,7 @@
                     eachCommentContainer.appendChild(replyContainer)
                     if (currentUser) {
                         replyContainer.innerHTML += `
-                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToComment${comment._id}' class="validated-form mb-3 mx-5 replyToCommentForm" method="POST" novalidate>
+                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="validated-form mb-3 mx-5 replyToCommentForm" method="POST" novalidate>
                             <div class="mb-3">
                                 <textarea class='form-control replyBody' name='reply'
                                     cols='30' rows='1' required></textarea>
@@ -125,7 +125,7 @@
                                     <p class="">
                                         <a class="btn btn-primary replyButton btn-sm ms-3"
                                             data-bs-toggle="collapse"
-                                            href="#reply${reply._id}" role="button"
+                                            href="#replyToReply${reply._id}" role="button"
                                             aria-expanded="false"
                                             aria-controls="reply${reply._id}">
                                             Reply
@@ -142,7 +142,7 @@
                                 <p>
                                     <a class="btn replyButton btn-sm ms-3"
                                         data-bs-toggle="collapse"
-                                        href="#reply${reply._id}" role="button"
+                                        href="#replyToReply${reply._id}" role="button"
                                         aria-expanded="false"
                                         aria-controls="reply${reply._id}">
                                         Reply
@@ -153,7 +153,7 @@
                                 //<div class='collapse'>
                                 let replyToReplyForm = document.createElement('div')
                                 replyToReplyForm.classList.add('collapse')
-                                replyToReplyForm.id = `reply${reply._id}`
+                                replyToReplyForm.id = `replyToReply${reply._id}`
                                 eachReply.appendChild(replyToReplyForm)
                                 if (currentUser) {
                                     replyToReplyForm.innerHTML += `
