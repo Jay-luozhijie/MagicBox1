@@ -1,7 +1,7 @@
-if (process.env.NODE_ENV !== "production") {                                                
+if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
-}    
-                                                
+}
+
 const express = require("express")
 const app = express()
 const methodOverride = require("method-override")
@@ -22,6 +22,10 @@ const commentRoute = require('./routes/commentRoute')
 const apiRoute = require("./routes/apiRoute")
 const answerRoute = require('./routes/answerRoute')
 const UserModel = require('./models/userModel')
+
+const multer = require('multer')
+const {storage} = require('./cloudinary')
+const upload = multer({ storage })
 
 const dbUrl = 'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
 mongoose.connect(dbUrl, {
@@ -75,6 +79,18 @@ app.use((req, res, next) => {
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
+})
+
+app.get('/textEditor',(req,res)=>{
+    res.render('TextEditor')
+})
+
+app.get('/imageUpload',(req,res)=>{
+    res.render('test')
+})
+
+app.post('/imageUpload', upload.array('image'), (req, res)=> {
+    res.send(req.files)
 })
 
 app.use('/user', userRoute)                                      //to  /routes/userRoute.js

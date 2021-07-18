@@ -140,6 +140,7 @@ router.post('/commentForm', async (req, res) => {
     idea.comment.push(comment)
     await comment.save()
     await idea.save()
+    return res.json({commentId:comment._id})
 })
 
 router.get('/paginatedComment', paginatedComments(CommentModel), (req, res) => {

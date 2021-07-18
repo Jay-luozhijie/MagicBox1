@@ -33,7 +33,7 @@ router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req,
 
 router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
     const idea = await IdeaModel.findById(req.params.id)
-    const comment = await CommentModel.findById(req.params.commentId)
+    const comment = await CommentModel.findById(req.params.commentId).populate('author')
     const reply = new ReplyModel({
         replyTo: comment.author,
         replyBody: req.body.reply,
@@ -42,8 +42,11 @@ router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (re
     comment.reply.push(reply)
     await reply.save()
     await comment.save()
-    req.flash('success', 'created a new reply!')
-    res.redirect(`/${idea._id}`)
+    return res.json({
+        replyId:reply._id,
+        commentAuthor:comment.author.username,
+    })
+    
 }))
 
 router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
@@ -58,8 +61,11 @@ router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(a
     comment.reply.push(newReply)
     await newReply.save()
     await comment.save()
-    req.flash('success', 'created a new reply!')
-    res.redirect(`/${idea._id}`)
+    return res.json({
+        newReplyId:newReply._id,
+        userRepliedTo:oldReply.author.username,
+        commentId:comment._id,
+    })
 }))
 
 router.delete('/:commentId/reply/:replyId', isLoggedIn, isReplyAuthor, catchAsync(async (req, res) => {

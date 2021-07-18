@@ -48,13 +48,14 @@
             commentComponent.classList.add('card', 'mb-3')
             commentComponent.id = `commentComponent${comment._id}`
             commentsContainer.appendChild(commentComponent)
-                const eachCommentContainer = document.createElement('div'); //eachCommentContainer
-                eachCommentContainer.classList.add('card-body')
-                eachCommentContainer.id = `eachCommentContainer${comment._id}`
-                commentComponent.appendChild(eachCommentContainer)
-                    eachCommentContainer.innerHTML = `
-                    <div class="card-title commentReplyUsername">${comment.author.username}</div>
-                    <div class="card-text mx-3 mb-2">${comment.commentBody}</div>`
+            
+            const eachCommentContainer = document.createElement('div'); //eachCommentContainer
+            eachCommentContainer.classList.add('card-body')
+            eachCommentContainer.id = `eachCommentContainer${comment._id}`
+            commentComponent.appendChild(eachCommentContainer)
+                eachCommentContainer.innerHTML = `
+                <div class="card-title commentReplyUsername">${comment.author.username}</div>
+                <div class="card-text mx-3 mb-2">${comment.commentBody}</div>`
             if (currentUser) {
                 if (comment.author._id === currentUser._id) {
                     eachCommentContainer.innerHTML += `
