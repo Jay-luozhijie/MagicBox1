@@ -3,8 +3,9 @@ const Joi = require('joi')
 module.exports.IdeaSchema = Joi.object({
     idea: Joi.object({
         title: Joi.string().required(),
-        description: Joi.string().required()
-    }).required()
+        description: Joi.string().required(),
+    }).required(),
+    deleteImages:Joi.array(),
 })
 
 module.exports.CommentSchema = Joi.object({
@@ -16,7 +17,8 @@ module.exports.ReplySchema = Joi.object({
 })
 
 module.exports.AnswerSchema = Joi.object({
-    content: Joi.string().required()
+    answerContent: Joi.string().required(),
+    deleteImages:Joi.array(),
 })
 
 module.exports.UserSchema = Joi.object({

@@ -26,22 +26,22 @@
         showComments(apiResponse.result)
     })()
 
-    const showComments = (comments) => {//show 10 comment
+    const showComments = (comments) => {//show 5 comment
         const commentNavigation = document.querySelector('#commentNavigation')
         if (apiResponse.previous && apiResponse.next) {
             commentNavigation.innerHTML = `
             <a class='btn me-3' id='commentPreviousPage'>&lt;---previous</a>
             <span style="font-size:18px;">${page}</span>
             <a class='btn ms-3' id='commentNextPage'>next---&gt;</a>`
+        } else if(!apiResponse.next && !apiResponse.previous){
+            commentNavigation.innerHTML = `
+            <span style="font-size:18px;">${page}</span>`
+        } else if(!apiResponse.next){
+            commentNavigation.innerHTML = `
+            <a class='btn me-3' id='commentPreviousPage'>&lt;---previous</a><span style="font-size:18px;">${page}</span>`
         } else {
-            if (!apiResponse.previous) {
-                commentNavigation.innerHTML = `
-                <span style="font-size:18px;">${page}</span><a class='btn ms-3' id='commentNextPage'>next---&gt;</a>`
-            }
-            if (!apiResponse.next) {
-                commentNavigation.innerHTML = `
-                <a class='btn me-3' id='commentPreviousPage'>&lt;---previous</a><span style="font-size:18px;">${page}</span>`
-            }
+            commentNavigation.innerHTML = `
+            <span style="font-size:18px;">${page}</span><a class='btn ms-3' id='commentNextPage'>next---&gt;</a>`
         }
         comments.forEach(comment => {
             const commentComponent = document.createElement('div')      //commentComponent
@@ -127,7 +127,7 @@
                                             data-bs-toggle="collapse"
                                             href="#replyToReply${reply._id}" role="button"
                                             aria-expanded="false"
-                                            aria-controls="reply${reply._id}">
+                                            aria-controls="replyToReply${reply._id}">
                                             Reply
                                         </a>
                                     </p>
@@ -144,7 +144,7 @@
                                         data-bs-toggle="collapse"
                                         href="#replyToReply${reply._id}" role="button"
                                         aria-expanded="false"
-                                        aria-controls="reply${reply._id}">
+                                        aria-controls="replyToReply${reply._id}">
                                         Reply
                                     </a>
                                 </p>`

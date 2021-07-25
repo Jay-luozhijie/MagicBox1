@@ -2,20 +2,31 @@
     <div class="row mt-3">
         <h1 class="text-center">New Idea</h1>
         <div class="col-6 offset-3">
-            <form action="/" method="POST" novalidate class="validated-form">
+            <form action="/" method="POST" novalidate class="validated-form my-3 mx-5"  enctype="multipart/form-data">           
                 <div class="mb-3">
                     <label class="form-label" for="title">Title:</label>
                     <input class="form-control" type="text" id="title" name="idea[title]" required maxlength="100">
                     <div class="valid-feedback">good!</div>
                     <div class="invalid-feedback">Please enter a title.</div>
                 </div>
+    
                 <div class="mb-3">
-                    <label class="form-label" for="description">Description:</label>
-                    <textarea class="form-control" type="text" id="title" name="idea[description]" rows="5"
-                        required></textarea>
+                    <label class="">Description:</label>
+                    <textarea class='form-control textEditorArea' name="idea[description]" placeholder="description:" required></textarea>
                     <div class="valid-feedback">good!</div>
                     <div class="invalid-feedback">Please provide description.</div>
                 </div>
-                <button class="btn btn-warning">submit</button>
+    
+                <div class="mb-5 mt-3">
+                    <label for="ideaImage" class="form-label">upload images:</label>
+                    <input class="form-control" type="file" id="ideaImage" name='ideaImage' multiple>
+                </div>
+            
+                <div>
+                    <button type="submit" class="btn" id='answerSubmit'>Save</button>    
+                </div>
             </form>
         </div>
+    </div>
+
+        

@@ -37,24 +37,41 @@
         ideas.forEach(idea => {
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
-            ideaComponent.innerHTML = `
-            <div class="mb-3 ideaCard">
-                <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
-                <div class=" indexIdeaContent ms-5">
-                    <div class="mb-3 indexIdeaTitle">
-                        ${idea.title}
+            if(!idea.deleted){
+                ideaComponent.innerHTML = `
+                <div class="mb-3 ideaCard">
+                    <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
+                    <div class=" indexIdeaContent ms-5">
+                        <div class="mb-3 indexIdeaTitle">
+                            ${idea.title}
+                        </div>
+                        <div class="indexIdeaDescription mb-2">
+                            ${idea.description}
+                        </div>
+                        <div>
+                            <a href="/${idea._id}" class="btn btn-primary more-btn">more</a>
+                        </div>
                     </div>
-                    <div class="indexIdeaDescription mb-2">
-                        ${idea.description}
+                    <p class="ms-5 mb-1 likedNum">
+                        ${idea.upVote.length} people like this post!
+                    </p>
+                </div>`;
+            } else {
+                ideaComponent.innerHTML = `
+                <div class="mb-3 ideaCard">
+                    <div class="indexIdeaContent ms-5 mt-5">
+                        <div class="mb-5 deletedIdeaDescription">
+                            ${idea.description}
+                        </div>
+                        <div>
+                            <a href="/${idea._id}" class="btn btn-primary more-btn mt-5">more</a>
+                        </div>
                     </div>
-                    <div>
-                        <a href="/${idea._id}" class="btn btn-primary more-btn">more</a>
-                    </div>
-                </div>
-                <p class="ms-5 mb-1 likedNum">
-                    ${idea.upVote.length} people like this post!
-                </p>
-            </div>`;
+                    <p class="ms-5 mb-1 likedNum">
+                        ${idea.upVote.length} people like this post!
+                    </p>
+                </div>`;
+            }
             ideasIndex.appendChild(ideaComponent)
         })
     }

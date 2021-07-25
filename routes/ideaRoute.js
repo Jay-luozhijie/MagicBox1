@@ -5,7 +5,11 @@ const passport = require('passport')
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
+const CommentModel = require('../models/commentModel')
 const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
+const multer = require('multer')
+const { storage, cloudinary } = require('../cloudinary')
+const upload = multer({ storage })
 
 /////////////////   user login, register and logout   ///////////////////////////////
 
@@ -65,9 +69,10 @@ router.get('/new', isLoggedIn, (req, res) => {                      //create new
     res.render('ideas/new')
 })
 
-router.post('/', isLoggedIn, validateIdea, catchAsync(async (req, res) => {//post new idea 
+router.post('/', isLoggedIn, upload.array('ideaImage'), validateIdea, catchAsync(async (req, res) => {//post new idea 
     const newIdea = new IdeaModel(req.body.idea)
     newIdea.author = req.user._id
+    newIdea.images = req.files.map(file => ({ url: file.path, filename: file.filename }))
     await newIdea.save()
     req.flash('success', 'Successfully made a new idea!')
     res.redirect(`/${newIdea._id}`)
@@ -104,18 +109,39 @@ router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {  
     res.render("ideas/edit", { idea })
 }))
 
-router.patch('/:id', isLoggedIn, isAuthor, validateIdea, catchAsync(async (req, res) => {//summit edit page
+router.patch('/:id', isLoggedIn, isAuthor, upload.array('ideaImage'), validateIdea, catchAsync(async (req, res) => {//summit edit page
     const { id } = req.params
-    await IdeaModel.findByIdAndUpdate(id, { ...req.body.idea })
+    const idea = await IdeaModel.findById(id)
+    idea.title = req.body.idea.title
+    idea.description = req.body.idea.description
+    let imgs = req.files.map(file => ({ url: file.path, filename: file.filename }))
+    idea.images.push(...imgs)
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename)
+        }
+        await idea.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
+    }
+    await idea.save()
     req.flash('success', 'Successfully edited the idea!')
     res.redirect(`/${id}`)
 }))
 
 router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {          //delete idea
     const { id } = req.params
-    const idea = await IdeaModel.findByIdAndDelete(id);
+    const idea = await IdeaModel.findById(id);
+    idea.title = 'This idea has been deleted'
+    idea.description = 'This idea has been deleted'
+    idea.deleted = true
+    await CommentModel.deleteMany({
+        _id: {
+            $in: idea.comment
+        }
+    })
+    idea.comment = []
+    idea.save()
     req.flash('success', 'Successfully deleted the idea!')
-    res.redirect('/');
+    res.redirect(`/${id}`);
 }))
 
 router.post('/like', async (req, res) => {

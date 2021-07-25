@@ -53,7 +53,6 @@ function searchResults(model) {
                     { description: { '$regex': keyword, '$options': 'i' } }
                 ]}
             )
-            console.log(resultArray)
             // ).sort({ score: { $meta: "textScore" } }).populate('author')
 
             results.result = await model.find(
@@ -142,6 +141,18 @@ router.post('/commentForm', async (req, res) => {
     await idea.save()
     return res.json({commentId:comment._id})
 })
+
+// router.post('/answerCommentForm',async(req,res)=>{
+//     const ideaId = req.body.ideaId
+//     const idea = await IdeaModel.findById(ideaId)
+//     const comment = new CommentModel({ commentBody: req.body.commentContent })
+//     comment.author = req.user._id
+//     comment.idea = idea._id
+//     idea.comment.push(comment)
+//     await comment.save()
+//     await idea.save()
+//     return res.json({commentId:comment._id})
+// })
 
 router.get('/paginatedComment', paginatedComments(CommentModel), (req, res) => {
     return res.json(res.paginatedComments)

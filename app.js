@@ -81,18 +81,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/textEditor',(req,res)=>{
-    res.render('TextEditor')
-})
-
-app.get('/imageUpload',(req,res)=>{
-    res.render('test')
-})
-
-app.post('/imageUpload', upload.array('image'), (req, res)=> {
-    res.send(req.files)
-})
-
 app.use('/user', userRoute)                                      //to  /routes/userRoute.js
 app.use('/', ideaRoute)                                          //to  /routes/ideaRoute.js
 app.use('/:id/comment', commentRoute)                            //to  /routes/commentRoute.js

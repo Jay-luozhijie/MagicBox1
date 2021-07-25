@@ -36,7 +36,7 @@
 .showIdea-buttons {/*5 btns below idea*/
     background-color: #fcdc5d;
     padding: 7px 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 17px;
     border: none;
     border-radius: 5px;
@@ -51,13 +51,12 @@
 
 
 /* comment */
-#comment{
+/* #comment{
     border:solid;
     border-radius: 5px;
     border-width: 2px;
-    margin: 5%;
     border-color: #ced4da;
-}
+} */
 
 #commentPreviousPage{
     font-size:17px;
@@ -116,7 +115,7 @@
 }
 
 
-/*answer*/
+/*create answer*/
 #answerSubmit{
     background-color: #fcdc5d;
     border-color:#fcdc5d ;
@@ -129,7 +128,73 @@
     border-color:#fec601 ;
 }
 
+.createAnswerArea{
+    border:solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #ced4da;
+}
+
+
+/* answer index */
 .answerAuthor{
     font-size:20px;
     color: grey;
+}
+
+#backgroundCover{
+    top:0%;
+    left:0%;
+    visibility: hidden;
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    z-index: 0;
+    opacity: 0.5;
+}
+
+.answerEdit-modal{
+    position:fixed;
+    top:55%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    transition: 300ms ease-in-out;
+    border:1px solid black;
+    border-radius:10px;
+    z-index: 2;
+    width: 800px;
+    max-width: 80%;
+    background-color: white;
+}
+
+.answerEdit-modalBody{
+    height: 600px;
+    overflow-y:scroll;
+}
+
+.answerEdit-modalHeader{
+    padding:10px 15px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    border-bottom: 1px solid black;
+}
+
+.answerEdit-modalHeader .answerEditTitle{
+    font-size:1.25rem;
+    font-weight:bold;
+}
+
+.answerEdit-modalHeader .answerEditClose-btn{
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background:none;
+    font-size:1.5rem;
+    font-weight: bold;
+}
+
+.carousel-button{
+    z-index:0;
 }

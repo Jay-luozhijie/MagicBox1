@@ -16,6 +16,13 @@ const IdeaSchema = new Schema({
         type: String,
         required: [true, "please provide description"]
     },
+    images:[{
+        url:String,
+        filename:String
+    }],
+    deleted:{
+        type:Boolean
+    },
     answer:[{
         type: Schema.Types.ObjectId,
         ref: 'AnswerModel'
@@ -37,15 +44,5 @@ const IdeaSchema = new Schema({
     }]
 })
 IdeaSchema.index({'title': 'text','description': 'text'});
-
-IdeaSchema.post('findOneAndDelete', async function (doc) {
-    if (doc) {
-        await CommentModel.deleteMany({
-            _id: {
-                $in: doc.comment
-            }
-        })
-    }
-})
 
 module.exports = mongoose.model('IdeaModel', IdeaSchema)

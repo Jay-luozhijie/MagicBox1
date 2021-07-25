@@ -11,6 +11,13 @@ const AnswerSchema = new Schema({
         type: String,
         required: [true, "please provide content"]
     },
+    images:[{
+        url:String,
+        filename:String
+    }],
+    comment: [
+        { type: Schema.Types.ObjectId, ref: 'CommentModel' }
+    ],
 })
 
 module.exports = mongoose.model('AnswerModel', AnswerSchema)

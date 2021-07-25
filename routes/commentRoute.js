@@ -13,7 +13,7 @@ router.get('/', (req, res) => {     //because when not login->comment and submit
 
 router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res) => {              //post new comment
     const idea = await IdeaModel.findById(req.params.id)
-    const comment = new CommentModel({ commentBody: req.body.comment })
+    const comment = new CommentModel({ commentBody: req.body.commentContent })
     comment.author = req.user._id
     idea.comment.push(comment)
     comment.idea = idea._id
