@@ -8,7 +8,9 @@
     const commentNextPage = document.querySelector('#commentNextPage')
 
     const getComments = async (page, limit) => {//fetch data from api
-        const API_URL = `https://secure-brushlands-03249.herokuapp.com/api/paginatedComment/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
+        //https://secure-brushlands-03249.herokuapp.com
+        //http://localhost:3000/api/paginatedComment
+        const API_URL = `http://localhost:3000/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {

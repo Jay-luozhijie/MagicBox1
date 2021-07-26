@@ -6,41 +6,108 @@ const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const UserModel = require('../models/userModel')
 const CommentModel = require('../models/commentModel')
-const { isLoggedIn, isAuthor, validateIdea } = require('../middleware')
+const { isLoggedIn, isAuthor, validateIdea, isVerified } = require('../middleware')
 const multer = require('multer')
 const { storage, cloudinary } = require('../cloudinary')
 const upload = multer({ storage })
 
+const sendgrid = require('@sendgrid/mail');
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY || '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'); //should keep in secret!!!
+
+const crypto = require('crypto');
 /////////////////   user login, register and logout   ///////////////////////////////
 
 router.get('/register', (req, res) => {                                     //register page, asking for username, password and email
     res.render('users/register')
 })
 
-router.post('/register', catchAsync(async (req, res) => {                   //post register form
+
+
+
+router.post('/register', async (req, res) => {
+    const { email, username, password } = req.body
+    const emailToken = crypto.randomBytes(64).toString('hex')
+    const isVerified = false;
+    const user = new UserModel({ email, username, emailToken, isVerified })
+
+    UserModel.register(user, password, async function (err, user) {
+        if (err) {
+            console.log(err.message)
+            req.flash("error", 'Something went wrong..')
+            return res.redirect('register')
+        }
+
+        const msg = {
+            from: 'magicBoxNoReply@gmail.com',
+            to: user.email,
+            subject: 'MagicBox - verify your email',
+            text: `
+                Hello, thanks for registering on our site.
+                Please copy and paste the address below to verify your account.
+                http://${req.headers.host}/verify-email?token-${user.emailToken}
+                `,
+            html: `
+                <h1>Hello,</h1>
+                <p>Thanks for registering on our site.</p>
+                <p>Please click the link below to verify your account.</p>
+                <a href="http://${req.headers.host}/verify-email?token-${user.emailToken}">Verify your account</a>
+                `
+        }
+
+
+
+
+        try {
+            await sendgrid.send(msg)
+            req.flash('success', 'Thanks for registering. Please check your email to verify your account.')
+
+            res.redirect('/');
+
+        } catch (err) {
+            console.log(err)
+            req.flash('error', 'Something went wrong..')
+            res.redirect('/')
+        }
+    })
+})
+
+
+// Email verification route
+router.get('/verify-email', async (req, res, next) => {
     try {
-        const { email, username, password } = req.body
-        const user = new UserModel({ email, username })
-        const registeredUser = await UserModel.register(user, password)     //create a new user
-        req.login(registeredUser, err => {                                  //after register, will auto login and direct to main page
+        const user = await UserModel.findOne({ emailToken: req.query.token });
+
+        if (!user) {
+            req.flash('error', 'Token is invalid. Please contact us for assistance');
+            return res.redirect('/');
+        }
+        user.emailToken = null;
+        user.isVerified = true;
+
+        await user.save();
+
+        await req.login(user, async (err) => {
             if (err) {
-                return next(err)
-            } else {
-                req.flash('success', 'Welcome!')
-                res.redirect('/')
+                return next(err);
             }
+
+            req.flash('success', `Welcome to MagicBox, ${user.username}!`);
+            res.redirect('/');
         })
-    } catch (e) {
-        req.flash('error', e.message)
-        res.redirect('/register')
+
+    } catch (error) {
+        console.log(error)
+        req.flash('error', 'Something went wrong.')
+        res.redirect('/')
     }
-}))
+})
+
 
 router.get('/login', (req, res) => {                    //login page, asking for username and password
     res.render('users/login')
 })
 
-router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {//post login
+router.post('/login', isVerified, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {//post login
     req.flash('success', 'Welcome back!')
     const redirectUrl = req.session.returnTo || '/'
     delete req.session.returnTo
