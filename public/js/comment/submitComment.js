@@ -4,7 +4,7 @@ $(document).ready(function(){
         let commentContent=document.querySelector('#commentbody').value
         document.querySelector('#commentbody').value=``
         let author = commentAuthor
-        let url = 'http://localhost:3000/api/commentForm'
+        let url = 'https://secure-brushlands-03249.herokuapp.com/api/commentForm'
 
         $.post(url,{commentContent,ideaId}).done(function(data){
             const commentComponent = document.createElement('div')      //commentComponent
