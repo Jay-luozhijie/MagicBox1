@@ -8,6 +8,8 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
+    emailToken: String,
+    isVerified: Boolean,
     follower: [{
         type: Schema.Types.ObjectId,
         ref: 'UserModel'
