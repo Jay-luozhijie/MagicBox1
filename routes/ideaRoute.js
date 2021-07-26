@@ -44,13 +44,13 @@ router.post('/register', async (req, res) => {
             text: `
                 Hello, thanks for registering on our site.
                 Please copy and paste the address below to verify your account.
-                http://${req.headers.host}/verify-email?token-${user.emailToken}
+                http://${req.headers.host}/verify-email?token=${user.emailToken}
                 `,
             html: `
                 <h1>Hello,</h1>
                 <p>Thanks for registering on our site.</p>
                 <p>Please click the link below to verify your account.</p>
-                <a href="http://${req.headers.host}/verify-email?token-${user.emailToken}">Verify your account</a>
+                <a href="http://${req.headers.host}/verify-email?token=${user.emailToken}">Verify your account</a>
                 `
         }
 
