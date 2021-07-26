@@ -24,7 +24,7 @@ module.exports.AnswerSchema = Joi.object({
 module.exports.UserSchema = Joi.object({
     user: Joi.object({
         username: Joi.string().required(),
-        email: Joi.string().required(),
-        isVerified: Joi.boolean().required()
+        email: Joi.string(),
+        isVerified: Joi.boolean()
     }).required()
 })

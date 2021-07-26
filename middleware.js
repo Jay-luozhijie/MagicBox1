@@ -86,7 +86,7 @@ module.exports.validateAnswer = (req, res, next) => {
 }
 
 module.exports.validateUser = (req, res, next) => {
-    const { error } = UserSchema.validate(req.body)         //查joi user schema 是否通过
+    const { error } = UserSchema.validate(req.body)         
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -95,7 +95,7 @@ module.exports.validateUser = (req, res, next) => {
     }
 }
 
-module.exports.isAnswerAuthor = async (req, res, next) => {       //看是否为此comment的作者
+module.exports.isAnswerAuthor = async (req, res, next) => {       
     const { id, answerId } = req.params
     const answer = await AnswerModel.findById(answerId)
     if (!answer.author.equals(req.user._id)) {
@@ -108,8 +108,9 @@ module.exports.isAnswerAuthor = async (req, res, next) => {       //看是否为
 module.exports.isVerified = async (req, res, next) => {
     try {
         const user = await UserModel.findOne({ username: req.body.username })
-        if (user.isVerified) return next();
-
+        if (user.isVerified) {
+            return next();
+        }
         req.flash('error', 'Your account has not been verified. Please check your email to verify your account')
         return res.redirect('/')
     } catch (e) {

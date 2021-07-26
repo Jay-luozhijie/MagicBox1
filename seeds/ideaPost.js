@@ -16,6 +16,11 @@ db.once("open", () => {
 })
 
 const seedDB = async () => {
+    // const user = await UserModel.findById('60c5ddb2b171e75a48810f52')
+    // user.username="Jimmy"
+    // user.isVerified = true
+    // await user.save()
+    // console.log(user)
     await IdeaModel.deleteMany({});
     for (let i = 1; i <= 50; i++) {
         const idea1 = new IdeaModel({
