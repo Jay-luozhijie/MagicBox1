@@ -15,6 +15,8 @@ const sendgrid = require('@sendgrid/mail');
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY); //should keep in secret!!!
 
 const crypto = require('crypto');
+
+const myEmail = 'magicboxnoreply01@gmail.com';
 /////////////////   user login, register and logout   ///////////////////////////////
 
 router.get('/register', (req, res) => {                                     //register page, asking for username, password and email
@@ -38,7 +40,7 @@ router.post('/register', async (req, res) => {
         }
 
         const msg = {
-            from: 'magicBoxNoReply@gmail.com',
+            from: myEmail,
             to: user.email,
             subject: 'MagicBox - verify your email',
             text: `
