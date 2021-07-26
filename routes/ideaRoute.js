@@ -12,7 +12,7 @@ const { storage, cloudinary } = require('../cloudinary')
 const upload = multer({ storage })
 
 const sendgrid = require('@sendgrid/mail');
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY || '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'); //should keep in secret!!!
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY); //should keep in secret!!!
 
 const crypto = require('crypto');
 /////////////////   user login, register and logout   ///////////////////////////////
