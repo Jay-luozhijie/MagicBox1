@@ -9,11 +9,13 @@
     window.keyword = undefined;
 
     const getIdeas = async (page, limit) => {//fetch data from api
+        const deployedAddress='https://secure-brushlands-03249.herokuapp.com'
+        const localAddress ='http://localhost:3000'
         const API_URL = keyword
-            ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
-            : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
-            // ? `http://localhost:3000/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
-            // : `http://localhost:3000/api/ideaIndex/?page=${page}&limit=${limit}`;
+            // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
+            // : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
+            ? deployedAddress+`/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
+            : deployedAddress+`/api/ideaIndex/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {

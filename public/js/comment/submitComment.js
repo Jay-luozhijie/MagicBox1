@@ -4,9 +4,9 @@ $(document).ready(function(){
         let commentContent=document.querySelector('#commentbody').value
         document.querySelector('#commentbody').value=``
         let author = commentAuthor
-        //https://secure-brushlands-03249.herokuapp.com
-        //http://localhost:3000
-        let url = 'https://secure-brushlands-03249.herokuapp.com/api/commentForm'
+        const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+        const localAddress = 'http://localhost:3000'
+        let url = deployedAddress+'/api/commentForm'
 
         $.post(url,{commentContent,ideaId}).done(function(data){
             const commentComponent = document.createElement('div')      //commentComponent

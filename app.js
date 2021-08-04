@@ -27,7 +27,7 @@ const multer = require('multer')
 const { storage } = require('./cloudinary')
 const upload = multer({ storage })
 
-const dbUrl =  process.env.DB_URL ||'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

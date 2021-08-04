@@ -17,6 +17,9 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY); //should keep in secret!!!
 const crypto = require('crypto');
 
 const myEmail = 'magicboxnoreply01@gmail.com';
+
+const localAddress = '/'
+const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
 /////////////////   user login, register and logout   ///////////////////////////////
 
 router.get('/register', (req, res) => {                                     //register page, asking for username, password and email
@@ -81,7 +84,7 @@ router.get('/verify-email', async (req, res, next) => {
 
         if (!user) {
             req.flash('error', 'Token is invalid. Please contact us for assistance');
-            return res.redirect('/');
+            return res.redirect(deployedAddress);
         }
         user.emailToken = null;
         user.isVerified = true;
@@ -94,13 +97,13 @@ router.get('/verify-email', async (req, res, next) => {
             }
 
             req.flash('success', `Welcome to MagicBox, ${user.username}!`);
-            res.redirect('/');
+            res.redirect(deployedAddress);
         })
 
     } catch (error) {
         console.log(error)
         req.flash('error', 'Something went wrong.')
-        res.redirect('/')
+        res.redirect(deployedAddress)
     }
 })
 
@@ -126,6 +129,7 @@ router.get('/logout', (req, res) => {                   //logout
 ////////////////////////  basic CRUD   ////////////////////////////////
 
 router.get('/', catchAsync(async (req, res) => {                     //home page
+
     if (req.query.keyword) {//is searching
         const keyword = req.query.keyword;
         res.render("ideas/searchIndex", { keyword: JSON.stringify(keyword) })
