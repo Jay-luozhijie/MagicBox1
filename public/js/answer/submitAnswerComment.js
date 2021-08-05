@@ -1,34 +1,33 @@
 $(document).ready(function(){
-    $('#commentForm').submit(function(e){
-        e.preventDefault()
-        let commentContent=document.querySelector('#commentbody').value
-        document.querySelector('#commentbody').value=``
-        let author = commentAuthor
-        const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
-        const localAddress = 'http://localhost:3000'
-        let url = localAddress+'/api/commentForm'
 
-        $.post(url,{commentContent,ideaId}).done(function(data){
+    $(document).on('submit', '.commentToAnswerForm',function(e){
+        e.preventDefault()
+        let commentToAnswer = this[0].value
+        this[0].value=``
+        let answerId = this.id.slice(19)
+        let url = this.action
+
+        $.post(url,{commentToAnswer}).done(function(data){
             const commentComponent = document.createElement('div')      //commentComponent
             commentComponent.classList.add('card', 'mb-3')
             commentComponent.id = `commentComponent${data.commentId}`
-            $('#commentsContainer').prepend(commentComponent)
+            $(`#answerCommentsContainer${answerId}`).prepend(commentComponent)
 
             const eachCommentContainer = document.createElement('div')
             eachCommentContainer.classList.add('card-body')
             eachCommentContainer.id=`eachCommentContainer${data.commentId}`
             commentComponent.appendChild(eachCommentContainer)
             eachCommentContainer.innerHTML=`
-                <div class="card-title commentReplyUsername">${author}</div>
-                <div class="card-text mx-3 mb-2">${commentContent}</div>`
+                <div class="card-title commentReplyUsername">${data.commentAuthor}</div>
+                <div class="card-text mx-3 mb-2">${commentToAnswer}</div>`
             eachCommentContainer.innerHTML += `
                 <div class='d-flex flex-row'>
                     <p>
-                        <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment${data.commentId}" role="button" aria-expanded="false" aria-controls="replyToComment${comment._id}">
+                        <a class="btn btn-primary replyButton btn-sm ms-3" data-bs-toggle="collapse" href="#replyToComment${data.commentId}" role="button" aria-expanded="false" aria-controls="replyToComment${data.commentId}">
                             Reply
                         </a>
                     </p>
-                    <form class="ms-3 deleteComment" action='/${ideaId}/comment/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
+                    <form class="ms-3 deleteComment" action='/${ideaId}/answer/${answerId}/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
                         <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
                     </form>
                 </div>`
@@ -53,13 +52,7 @@ $(document).ready(function(){
             replyIndex.id = `replyIndex${data.commentId}`
             replyContainer.appendChild(replyIndex)
         })
+
     })
 
-    $(document).on('submit','.deleteComment',function(e){
-        e.preventDefault()
-        let commentId = this.id.slice(13)
-        let url = this.action
-        document.getElementById(`commentComponent${commentId}`).remove()
-        $.post(url,{}).done(function(data){})
-    })
 })

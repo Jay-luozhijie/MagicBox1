@@ -4,9 +4,11 @@ const router = express.Router({ mergeParams: true })
 const catchAsync = require('../utils/catchAsync')
 const IdeaModel = require('../models/ideaModel')
 const AnswerModel = require("../models/answerModel")
-const { isLoggedIn, validateAnswer, isAnswerAuthor } = require('../middleware')
+const { isLoggedIn, validateAnswer, isAnswerAuthor, validateAnswerComment, isCommentAuthor } = require('../middleware')
 const multer = require('multer')
 const { storage, cloudinary } = require('../cloudinary')
+const CommentModel = require('../models/commentModel')
+const ReplyModel = require('../models/replyModel')
 const upload = multer({ storage })
 
 router.get('/', (req, res) => {
@@ -42,12 +44,38 @@ router.put('/:answerId', isLoggedIn, upload.array('answerImage'), validateAnswer
     res.redirect(`/${id}`)
 }))
 
-router.delete('/:answerId', isLoggedIn, isAnswerAuthor, catchAsync(async (req, res) => {                   //delete comment
+router.delete('/:answerId', isLoggedIn, isAnswerAuthor, catchAsync(async (req, res) => {        //delete answer
     const { id, answerId } = req.params
     await IdeaModel.findByIdAndUpdate(id, { $pull: { answer: answerId } })
     await AnswerModel.findByIdAndDelete(answerId)
     req.flash('success', 'successfully deleted answer')
     res.redirect(`/${id}`)
+}))
+
+router.post('/:answerId/comment', isLoggedIn, validateAnswerComment, catchAsync(async (req, res) => {//comment to answer
+    const { answerId } = req.params
+    const answer = await AnswerModel.findById(answerId)
+    const comment = await new CommentModel({ commentBody: req.body.commentToAnswer })
+    comment.author = req.user._id
+    comment.answer = answer._id
+    answer.comment.push(comment)
+    await comment.save()
+    await answer.save()
+    return res.json({ commentId: comment._id, commentAuthor: req.user.username})
+}))
+
+router.delete('/:answerId/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => {    //delete comment
+    const { answerId, commentId } = req.params
+    await AnswerModel.findByIdAndUpdate(answerId, { $pull: { comment: commentId } })
+    await CommentModel.findByIdAndDelete(commentId)
+    return
+}))
+
+router.delete('/:commentId/reply/:replyId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => {   //delete reply
+    const { commentId, replyId } = req.params
+    await CommentModel.findByIdAndUpdate(commentId, { $pull: { reply: replyId } })
+    await ReplyModel.findByIdAndDelete(replyId)
+    return
 }))
 
 

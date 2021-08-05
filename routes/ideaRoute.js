@@ -84,7 +84,7 @@ router.get('/verify-email', async (req, res, next) => {
 
         if (!user) {
             req.flash('error', 'Token is invalid. Please contact us for assistance');
-            return res.redirect(deployedAddress);
+            return res.redirect(localAddress);
         }
         user.emailToken = null;
         user.isVerified = true;
@@ -97,13 +97,13 @@ router.get('/verify-email', async (req, res, next) => {
             }
 
             req.flash('success', `Welcome to MagicBox, ${user.username}!`);
-            res.redirect(deployedAddress);
+            res.redirect(localAddress);
         })
 
     } catch (error) {
         console.log(error)
         req.flash('error', 'Something went wrong.')
-        res.redirect(deployedAddress)
+        res.redirect(localAddress)
     }
 })
 
@@ -164,12 +164,13 @@ router.get('/:id', catchAsync(async (req, res) => {         //show page
             path: 'author'
         }
     }).populate('author')
+    let answerIdArray=idea.answer.map(answer=>(answer._id)) //can't parse the array idea.answer in answerIndex.js because it is too big
     if (!idea) {
         req.flash('error', 'Cannot find that idea!')
         return res.redirect('/')
     }
     res.cookie("ideaId", req.params.id);
-    res.render("ideas/show", { idea })
+    res.render("ideas/show", { idea,answerIdArray })
 }))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {    //edit page

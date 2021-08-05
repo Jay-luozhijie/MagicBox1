@@ -3,6 +3,7 @@ const express = require('express')
 const CommentModel = require('../models/commentModel')
 const router = express.Router({ mergeParams: true })
 const IdeaModel = require('../models/ideaModel')
+const AnswerModel = require('../models/answerModel')
 
 function paginatedResults(model) {
     return async (req, res, next) => {
@@ -112,6 +113,43 @@ function paginatedComments(model) {
     }
 }
 
+function paginatedAnswerComments(answerModel,commentModel) {
+    return async (req, res, next) => {
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+        const answerId = req.query.answerId
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+        const results = {}
+        try {
+            const answer = await answerModel.findById(answerId)
+            const commentNum = answer.comment.length
+            if (endIndex < commentNum) {
+                results.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+            if (startIndex > 0) {
+                results.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+            console.log('hello1')
+            results.result = await commentModel.find({ answer: answerId }).populate('author','username')
+                .populate({
+                    path: 'reply',
+                    populate: [{ path: 'author' }, { path: 'replyTo' }]
+                }).limit(limit).skip(startIndex).exec()
+            res.paginatedAnswerComments = results
+            return next()
+        } catch (e) {
+            res.status(500).json({ message: e.message })
+        }
+    }
+} 
+
 
 router.get('/searchIndex', searchResults(IdeaModel), (req, res) => {
     return res.json(res.searchResults)
@@ -133,20 +171,12 @@ router.post('/commentForm', async (req, res) => {
     return res.json({commentId:comment._id})
 })
 
-// router.post('/answerCommentForm',async(req,res)=>{
-//     const ideaId = req.body.ideaId
-//     const idea = await IdeaModel.findById(ideaId)
-//     const comment = new CommentModel({ commentBody: req.body.commentContent })
-//     comment.author = req.user._id
-//     comment.idea = idea._id
-//     idea.comment.push(comment)
-//     await comment.save()
-//     await idea.save()
-//     return res.json({commentId:comment._id})
-// })
-
 router.get('/paginatedComment', paginatedComments(CommentModel), (req, res) => {
     return res.json(res.paginatedComments)
+})
+
+router.get('/paginatedAnswerComment',paginatedAnswerComments(AnswerModel,CommentModel),(req,res)=>{
+    return res.json(res.paginatedAnswerComments)
 })
 
 module.exports = router
