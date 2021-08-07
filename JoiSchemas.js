@@ -12,6 +12,10 @@ module.exports.CommentSchema = Joi.object({
     comment: Joi.string().required()
 })
 
+module.exports.AnswerCommentSchema = Joi.object({
+    commentToAnswer: Joi.string().required()
+})
+
 module.exports.ReplySchema = Joi.object({
     reply: Joi.string().required()
 })

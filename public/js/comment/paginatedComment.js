@@ -10,7 +10,7 @@
     const getComments = async (page, limit) => {//fetch data from api
         const deployedAddress='https://secure-brushlands-03249.herokuapp.com'
         const localAddress ='http://localhost:3000'
-        const API_URL = deployedAddress+`/api/paginatedComment/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
+        const API_URL = localAddress+`/api/paginatedComment/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
@@ -32,18 +32,20 @@
         const commentNavigation = document.querySelector('#commentNavigation')
         if (apiResponse.previous && apiResponse.next) {
             commentNavigation.innerHTML = `
-            <a class='btn me-3' id='commentPreviousPage'>&lt;---previous</a>
+            <a class='btn me-3 commentNavigationBtn' id='commentPreviousPage'>&lt;---previous</a>
             <span style="font-size:18px;">${page}</span>
-            <a class='btn ms-3' id='commentNextPage'>next---&gt;</a>`
+            <a class='btn ms-3 commentNavigationBtn' id='commentNextPage'>next---&gt;</a>`
         } else if(!apiResponse.next && !apiResponse.previous){
             commentNavigation.innerHTML = `
             <span style="font-size:18px;">${page}</span>`
         } else if(!apiResponse.next){
             commentNavigation.innerHTML = `
-            <a class='btn me-3' id='commentPreviousPage'>&lt;---previous</a><span style="font-size:18px;">${page}</span>`
+            <a class='btn me-3 commentNavigationBtn' id='commentPreviousPage'>&lt;---previous</a>
+            <span style="font-size:18px;">${page}</span>`
         } else {
             commentNavigation.innerHTML = `
-            <span style="font-size:18px;">${page}</span><a class='btn ms-3' id='commentNextPage'>next---&gt;</a>`
+            <span style="font-size:18px;">${page}</span>
+            <a class='btn ms-3 commentNavigationBtn' id='commentNextPage'>next---&gt;</a>`
         }
         comments.forEach(comment => {
             const commentComponent = document.createElement('div')      //commentComponent

@@ -17,6 +17,10 @@ const CommentSchema = new Schema({
     idea: {
         type: Schema.Types.ObjectId,
         ref: 'IdeaModel'
+    },
+    answer:{
+        type: Schema.Types.ObjectId,
+        ref: 'AnswerModel'
     }
 })
 

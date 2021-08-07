@@ -27,12 +27,10 @@ router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req,
     const { id, commentId } = req.params
     await IdeaModel.findByIdAndUpdate(id, { $pull: { comment: commentId } })
     await CommentModel.findByIdAndDelete(commentId)
-    req.flash('success', 'successfully deleted comment')
-    res.redirect(`/${id}`)
+    return
 }))
 
-router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
-    const idea = await IdeaModel.findById(req.params.id)
+router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'} reply to comment
     const comment = await CommentModel.findById(req.params.commentId).populate('author')
     const reply = new ReplyModel({
         replyTo: comment.author,
@@ -49,9 +47,8 @@ router.post('/:commentId/reply', isLoggedIn, validateReply, catchAsync(async (re
     
 }))
 
-router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'}
+router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(async (req, res) => {//req.body: {reply: 'xxx'} reply to reply
     let oldReply = await ReplyModel.findById(req.params.replyId).populate('author','username')
-    const idea = await IdeaModel.findById(req.params.id)
     const comment = await CommentModel.findById(req.params.commentId)
     const newReply = new ReplyModel({
         replyTo: oldReply.author,
@@ -68,12 +65,11 @@ router.post('/:commentId/reply/:replyId',isLoggedIn, validateReply, catchAsync(a
     })
 }))
 
-router.delete('/:commentId/reply/:replyId', isLoggedIn, isReplyAuthor, catchAsync(async (req, res) => {
-    const { id, commentId, replyId } = req.params
+router.delete('/:commentId/reply/:replyId', isLoggedIn, isReplyAuthor, catchAsync(async (req, res) => {//delete reply's reply
+    const { commentId, replyId } = req.params
     await CommentModel.findByIdAndUpdate(commentId, { $pull: { reply: replyId } })
     await ReplyModel.findByIdAndDelete(replyId)
-    req.flash('success', 'successfully deleted reply')
-    res.redirect(`/${id}`)
+    return
 }))
 
 module.exports = router

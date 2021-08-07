@@ -20,7 +20,6 @@ const seedDB = async () => {
     user.username="Jimmy"
     user.isVerified = true
     await user.save()
-    console.log(user)
     // await IdeaModel.deleteMany({});
     // for (let i = 1; i <= 50; i++) {
     //     const idea1 = new IdeaModel({

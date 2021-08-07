@@ -58,16 +58,11 @@
     border-color: #ced4da;
 } */
 
-#commentPreviousPage{
+.commentNavigationBtn{
     font-size:17px;
 }
-#commentPreviousPage:hover{
-    color:#00b4d8;
-}
-#commentNextPage{
-    font-size:17px;
-}
-#commentNextPage:hover{
+
+.commentNavigationBtn:hover{
     color:#00b4d8;
 }
 

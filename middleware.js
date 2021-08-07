@@ -1,4 +1,4 @@
-const { IdeaSchema, CommentSchema, UserSchema, ReplySchema, AnswerSchema } = require('./JoiSchemas')
+const { IdeaSchema, CommentSchema, UserSchema, ReplySchema, AnswerSchema, AnswerCommentSchema } = require('./JoiSchemas')
 const ExpressError = require('./utils/ExpressError')
 const IdeaModel = require('./models/ideaModel')
 const CommentModel = require('./models/commentModel')
@@ -37,6 +37,16 @@ module.exports.isAuthor = async (req, res, next) => {         //is idea's author
 
 module.exports.validateComment = (req, res, next) => {      //joi comment schema
     const { error } = CommentSchema.validate(req.body)
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next()
+    }
+}
+
+module.exports.validateAnswerComment = (req, res, next) => {      //joi comment schema
+    const { error } = AnswerCommentSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
