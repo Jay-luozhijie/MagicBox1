@@ -18,6 +18,10 @@ const AnswerSchema = new Schema({
     comment: [
         { type: Schema.Types.ObjectId, ref: 'CommentModel' }
     ],
+    idea: {
+        type: Schema.Types.ObjectId,
+        ref: 'IdeaModel'
+    },
 })
 
 module.exports = mongoose.model('AnswerModel', AnswerSchema)

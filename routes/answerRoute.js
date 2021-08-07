@@ -20,6 +20,7 @@ router.post('/', isLoggedIn, upload.array('answerImage'), validateAnswer, catchA
     const answer = new AnswerModel({ content: req.body.answerContent })
     answer.images = req.files.map(file => ({ url: file.path, filename: file.filename }))
     answer.author = req.user._id
+    answer.idea = idea._id
     idea.answer.push(answer)
     await answer.save()
     await idea.save()
