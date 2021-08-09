@@ -55,7 +55,7 @@
                 <div class="answerAuthor mb-2">
                     ${answer.author.username}
                 </div>
-                <div>
+                <div class='answerContent'>
                     ${answer.content}
                 </div>`
 
@@ -98,20 +98,27 @@
 
 
             const answerBtnGroup = document.createElement('div')
+            answerBtnGroup.classList.add('d-flex','flex-row','justify-content-start','my-3')
             eachAnswerContainer.appendChild(answerBtnGroup)
             if (currentUser) {
                 answerBtnGroup.innerHTML += `
-                <a class="btn showIdea-buttons" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
-                    Comment
-                </a>`
+                <div>
+                    <a class="btn showIdea-buttons mx-1" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
+                        Comment
+                    </a>
+                </div>`
                 if (currentUser && answer.author._id === currentUser._id) {
                     answerBtnGroup.innerHTML += `
-                    <form action='/${ideaId}/answer/${answer._id}?_method=DELETE' class='deleteAnswer' id='deleteAnswer${answer._id}' method="POST">
-                        <button class='btn btn-sm btn-danger'>Delete</button>
-                    </form>
-                    <button class='answerEdit-btn btn btn-info btn-sm mt-2' id='answerEditBtn${answer._id}'>
-                        Edit
-                    </button>`
+                    <div>
+                        <form action='/${ideaId}/answer/${answer._id}?_method=DELETE' class='deleteAnswer' id='deleteAnswer${answer._id}' method="POST">
+                            <button class='answerDeleteBtn showIdea-buttons mx-1'>Delete</button>
+                        </form>
+                    </div>
+                    <div>
+                        <button class='answerEdit-btn showIdea-buttons mx-1' id='answerEditBtn${answer._id}'>
+                            Edit
+                        </button>
+                    </div>`
                 }
             }
 
@@ -121,7 +128,7 @@
             eachAnswerContainer.appendChild(commentContainer)
             if (currentUser) {
                 commentContainer.innerHTML += `
-                <form action="/${ideaId}/answer/${answer._id}/comment" class="validated-form mb-3 mx-5 commentToAnswerForm" id="commentToAnswerForm${answer._id}" method="POST" novalidate>
+                <form action="/${ideaId}/answer/${answer._id}/comment" class="validated-form mb-3 commentToAnswerForm" id="commentToAnswerForm${answer._id}" method="POST" novalidate>
                     <div class="my-3">
                         <label class="form-label" for="commentbody${answer._id}">Comment</label>
                         <textarea class='form-control' name='commentToAnswer' id='commentbody${answer._id}' cols='30' rows='2'></textarea>

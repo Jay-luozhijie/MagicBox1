@@ -75,7 +75,7 @@
                             ${idea.description}
                         </div>
                         <div>
-                            <a href="/${idea._id}" class="btn btn-primary more-btn">more</a>
+                            <a href="/${idea._id}" class="more-btn mt-5">more</a>
                         </div>
                     </div>
                     <p class="ms-5 mb-1 likedNum">
@@ -90,7 +90,7 @@
                             ${idea.description}
                         </div>
                         <div>
-                            <a href="/${idea._id}" class="btn btn-primary more-btn mt-5">more</a>
+                            <a href="/${idea._id}" class="more-btn mt-5">more</a>
                         </div>
                     </div>
                     <p class="ms-5 mb-1 likedNum">

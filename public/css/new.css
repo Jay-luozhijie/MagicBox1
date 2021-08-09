@@ -1,0 +1,44 @@
+.newIdeaContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.newIdeaInnerContainer{
+    width:70%;
+}
+
+#ideaSubmit{
+    width: 30%;
+    background-color: #fcdc5d;
+    border-color:#fcdc5d ;
+    color:black;
+}
+
+#ideaSubmit:hover{
+    color:black;
+    background-color: #fec601;
+    border-color:#fec601 ;
+}
+
+#createNewIdeaTitle{
+    font-size:35px;
+}
+
+@media (max-width:853px){
+    .newIdeaInnerContainer{
+        width:94%;
+    }
+}
+
+
+@media (max-width:380px){
+    .ideaSubmitContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    #ideaSubmit{
+        width: 100%;
+    }
+}

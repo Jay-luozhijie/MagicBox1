@@ -7,25 +7,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mm-auto">
-        <li class="nav-item" style="margin-left: 15px;">
+        <li class="nav-item" style="margin-left: 10px;">
           <a class="nav-link active" aria-current="page" href="/">Find Ideas</a>
-        </li>
-        <li class="nav-item dropdown" style="margin-left: 15px;">
-          <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Category
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">1</a></li>
-            <li><a class="dropdown-item" href="#">2</a></li>
-            <li><a class="dropdown-item" href="#">3</a></li>
-          </ul>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <li class="" style="margin-right: 25px;">
+        <li class="navbarSearch" style="margin-right: 25px;">
           <form action="/" method="GET" class="form-inline d-flex searchForm">
-            <input name="keyword" type="text" class="form-control me-2" placeholder="Search...">
+            <input name="keyword" type="text" class="form-control me-2" placeholder="Search..." id='navbarSearch'>
             <button type="submit" class="btn btn-primary" id="searchIcon"><svg xmlns="http://www.w3.org/2000/svg"
                 width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path
@@ -35,13 +24,13 @@
           </form>
         </li>
         <% if(currentUser) {%>
-          <li class="nav-item dropdown" style="margin-right: 15px;">
+          <li class="nav-item dropdown" style="margin-right: 15px; margin-left:10px;">
             <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               <%= currentUser.username %>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="width:10px;">
-              <li><a class="dropdown-item" href="/user/<%= currentUser._id %>">My page</a></li>
+              <li><a class="dropdown-item" href="/user/<%= currentUser._id %>">Account</a></li>
               <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
           </li>
