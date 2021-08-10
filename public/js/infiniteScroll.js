@@ -66,7 +66,7 @@
             if(!idea.deleted){
                 ideaComponent.innerHTML = `
                 <div class="mb-3 ideaCard">
-                    <div class=" mt-1 ms-2 mb-3 IndexideaAuthor">${idea.author.username}</div>
+                    <div class=" mt-1 ms-2 mb-3 indexIdeaAuthor">${idea.author.username}</div>
                     <div class=" indexIdeaContent ms-5">
                         <div class="mb-3 indexIdeaTitle">
                             ${idea.title}
@@ -75,7 +75,7 @@
                             ${idea.description}
                         </div>
                         <div>
-                            <a href="/${idea._id}" class="btn btn-primary more-btn">more</a>
+                            <a href="/${idea._id}" class="more-btn mt-5">more</a>
                         </div>
                     </div>
                     <p class="ms-5 mb-1 likedNum">
@@ -90,7 +90,7 @@
                             ${idea.description}
                         </div>
                         <div>
-                            <a href="/${idea._id}" class="btn btn-primary more-btn mt-5">more</a>
+                            <a href="/${idea._id}" class="more-btn mt-5">more</a>
                         </div>
                     </div>
                     <p class="ms-5 mb-1 likedNum">
@@ -103,7 +103,7 @@
     }
 
     const loadIdeas = async (page, limit) => {
-        setTimeout(async () => {
+        (async () => {
             apiResponse = await getIdeas(page, limit)
             showIdeas(apiResponse.result)
             loading = false;
@@ -132,7 +132,7 @@
                     }
                 }
             }
-        }, 50)
+        })()
     }
 
     window.addEventListener('scroll', async () => {//listen to scroll-to-bottom event
@@ -140,7 +140,7 @@
         const scrolledHeight = window.scrollY;
         const pageHeight = window.innerHeight;
 
-        if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse.next) {
+        if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse && apiResponse.next) {
             loader.style.visibility = "visible";
             loading = true;
             page++;

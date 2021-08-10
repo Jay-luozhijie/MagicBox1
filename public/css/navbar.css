@@ -30,3 +30,19 @@
     border-color:#f8ffe5 ;
 }
 
+@media (max-width:814px){
+    #navbarSearch:focus {
+        border:solid;
+        border-color: #ffcd39;
+        box-shadow: none;
+    }
+    .navbarSearch{
+        margin-left:9px;
+    }
+    .navbar .btn-primary{
+        margin-left: 9px;
+        padding-left: 0;
+    }
+    
+   
+}

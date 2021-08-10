@@ -1,9 +1,7 @@
-@media (min-width:1000px){  /*index idea list justify to center when >= 1000px */
-    .indexPage{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
+.indexPage{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .ideaCard{  /*container of each idea in index page*/
@@ -15,7 +13,15 @@
     background-color: white;
 }
 
-.IndexideaAuthor{       
+.indexIdeaDescription{
+    width: 100%;
+    overflow: hidden; 
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+.indexIdeaAuthor{       
     font-weight: 350;
     font-size: 20px;
     color: grey;
@@ -33,27 +39,50 @@
     font-weight: 800;
 }
 
-.indexIdeaDescription{
-    width: 100%;
-    overflow: hidden; 
-    display: -webkit-box; 
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
-}
-
 .more-btn{
     background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
+    text-decoration: none;
+    padding: 7px 20px;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    border-radius: 5px;
+    color:rgba(0,0,0,0.7);
+    cursor: pointer;
 }
 
 .more-btn:hover{
-    color:black;
     background-color: #fec601;
-    border-color:#fec601 ;
+    color:rgba(0,0,0,0.7);
 }
 
 .likedNum{
     font-weight: 330;
     font-size:15px;
+}
+
+@media (max-width:900px){
+    .ideaCard{  /*container of each idea in index page*/
+        width:40em;
+    }
+    .indexIdeaDescription{
+        width: 85%;
+    }
+    .indexIdeaContent{      /*container of title & description*/
+        height:18rem; 
+        width: 38rem;
+    }
+}
+
+@media (max-width:660px){
+    .ideaCard{  /*container of each idea in index page*/
+        width:25em;
+    }
+    .indexIdeaDescription{
+        width: 75%;
+    }
+    .indexIdeaContent{      /*container of title & description*/
+        height:18rem; 
+        width: 25rem;
+    }
 }

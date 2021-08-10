@@ -16,10 +16,14 @@ db.once("open", () => {
 })
 
 const seedDB = async () => {
-    const user = await UserModel.findById('60c5ddb2b171e75a48810f52')
-    user.username="Jimmy"
-    user.isVerified = true
-    await user.save()
+    const idea = await IdeaModel.findById('60d9cd9e1d83324c2cfc7db8')
+    idea.answer=[]
+    idea.comment=[]
+    await idea.save()
+    // const user = await UserModel.findById('60c5ddb2b171e75a48810f52')
+    // user.username="Jimmy"
+    // user.isVerified = true
+    // await user.save()
     // await IdeaModel.deleteMany({});
     // for (let i = 1; i <= 50; i++) {
     //     const idea1 = new IdeaModel({

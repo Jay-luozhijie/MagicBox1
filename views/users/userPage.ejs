@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
-    <div class="row">
-        <div class="col-6 offset-3">
-            <div>
+    <div class="userPageContainer">
+        <div>
+            <div class="">
                 <% if(currentUser && currentUser.equals(user)) {%>
                     <div class="ms-3">
                         <h1>
@@ -12,8 +12,10 @@
                         <form class="mb-3">
                             <button type="button" class="btn btn-warning" onclick="location.href='/user/edit'">Edit
                                 your
-                                profile</button>
+                                profile
+                            </button>
                         </form>
+                    </div>
                 <% } else { %>
                     <div>
                         <div>
@@ -21,150 +23,144 @@
                                 Welcome to <%= user.username %>'s profile:
                             </h1>
                         </div>
+                    </div>
                 <% } %>
-                    <div class="mb-3 ms-3">
-                        <a href="/user/<%=user._id%>/following" style="color: #fcc75d;">To see
-                            who
-                            <%= user.username %>
-                                is following
-                        </a>
-                        <br>
-                        <a href="/user/<%=user._id%>/follower" style="color: #fcc75d;">To see who are
-                            following
-                            <%= user.username %>
-                        </a>
+                <div class="mb-3 ms-3">
+                    <a href="/user/<%=user._id%>/following" style="color: #fcc75d;">To see
+                        who
+                        <%= user.username %>
+                            is following
+                    </a>
+                    <br>
+                    <a href="/user/<%=user._id%>/follower" style="color: #fcc75d;">To see who are
+                        following
+                        <%= user.username %>
+                    </a>
+                </div>
+            </div> 
+
+            <div class="">
+                <div class="">
+
+                    <p class="ms-3">
+                        <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#doingList" aria-expanded="true" aria-controls="collapseExample">
+                            Doing-list
+                        </button>
+
+                        <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collection" aria-expanded="false" aria-controls="collapseExample">
+                            Collection
+                        </button>
+
+                        <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse" data-bs-target="#like"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Like
+                        </button>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            Some placeholder content for the collapse component. This panel is hidden by default but revealed
+                            when the user activates the relevant trigger.
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-
-    <div class="row">
-        <div class="col-6 offset-3">
-
-            <p class="ms-3">
-                <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#doingList" aria-expanded="true" aria-controls="collapseExample">
-                    Doing-list
-                </button>
-
-                <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collection" aria-expanded="false" aria-controls="collapseExample">
-                    Collection
-                </button>
-
-                <button class="btn btn-outline-warning" type="button" data-bs-toggle="collapse" data-bs-target="#like"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    Like
-                </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed
-                    when the user activates the relevant trigger.
-                </div>
-            </div>
-
-            <div class="collapse show" id="doingList">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h3>Doing-list:</h3>
-                        <p>
-                            <% if(user.doingPost.length> 1) {%>
-                                <%= user.doingPost.length %> items
+                    <div class="collapse show" id="doingList">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3>Doing-list:</h3>
+                                <p>
+                                    <% if(user.doingPost.length> 1) {%>
+                                        <%= user.doingPost.length %> items
                                     <% } else { %>
                                         <%= user.doingPost.length %> item
-                                            <% } %>
-                        </p>
-                        <% if(user.doingPost.length> 0) {%>
-                            <% for(let post of user.doingPost) { %>
-                                <hr>
-                                <div>
-                                    <h5>
-                                        <%= post.title %>:
-                                    </h5>
-                                    <p>
-                                        <%- post.description %>
-                                    </p>
-                                    <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
-                                </div>
-
-                                <% } %>
-                                    <% } else {%>
+                                    <% } %>
+                                </p>
+                                <% if(user.doingPost.length> 0) {%>
+                                    <% for(let post of user.doingPost) { %>
                                         <hr>
-                                        <p>You are not doing any item currently.</p>
-                                        <% } %>
+                                        <div>
+                                            <h5>
+                                                <%= post.title %>:
+                                            </h5>
+                                            <p>
+                                                <%- post.description %>
+                                            </p>
+                                            <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
+                                        </div>
+                                    <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You are not doing any item currently.</p>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="collapse" id="collection">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h3>Collection:</h3>
-                        <p>
-                            <% if(user.doingPost.length> 1) {%>
-                                <%= user.doingPost.length %> items
+                    <div class="collapse" id="collection">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3>Collection:</h3>
+                                <p>
+                                    <% if(user.doingPost.length> 1) {%>
+                                        <%= user.doingPost.length %> items
                                     <% } else { %>
                                         <%= user.doingPost.length %> item
-                                            <% } %>
-                        </p>
-                        <% if(user.collect.length> 0) {%>
-                            <% for(let post of user.collect) { %>
-                                <hr>
-                                <div>
-                                    <h5>
-                                        <%= post.title %>:
-                                    </h5>
-                                    <p>
-                                        <%- post.description %>
-                                    </p>
-                                    <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
-                                </div>
-
-                                <% } %>
-                                    <% } else {%>
+                                    <% } %>
+                                </p>
+                                <% if(user.collect.length> 0) {%>
+                                    <% for(let post of user.collect) { %>
                                         <hr>
-                                        <p>You haven't collected any post so far.</p>
-                                        <% } %>
+                                        <div>
+                                            <h5>
+                                                <%= post.title %>:
+                                            </h5>
+                                            <p>
+                                                <%- post.description %>
+                                            </p>
+                                            <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
+                                        </div>
+                                    <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You haven't collected any post so far.</p>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="collapse" id="like">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h3>Liked post:</h3>
-                        <p>
-                            <% if(user.doingPost.length> 1) {%>
-                                <%= user.doingPost.length %> items
+                    <div class="collapse" id="like">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3>Liked post:</h3>
+                                <p>
+                                    <% if(user.doingPost.length> 1) {%>
+                                        <%= user.doingPost.length %> items
                                     <% } else { %>
                                         <%= user.doingPost.length %> item
-                                            <% } %>
-                        </p>
-                        <% if(user.likePost.length> 0) {%>
-                            <% for(let post of user.likePost) { %>
-                                <hr>
-                                <div>
-                                    <h5>
-                                        <%= post.title %>:
-                                    </h5>
-                                    <p>
-                                        <%- post.description %>
-                                    </p>
-                                    <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
-                                </div>
-
-                                <% } %>
-                                    <% } else {%>
+                                    <% } %>
+                                </p>
+                                <% if(user.likePost.length> 0) {%>
+                                    <% for(let post of user.likePost) { %>
                                         <hr>
-                                        <p>You haven't liked any post so far.</p>
-                                        <% } %>
+                                        <div>
+                                            <h5>
+                                                <%= post.title %>:
+                                            </h5>
+                                            <p>
+                                                <%- post.description %>
+                                            </p>
+                                            <a class="btn btn-outline-warning" href="/<%= post._id %>" role="button">Link</a>
+                                        </div>
+                                    <% } %>
+                                <% } else {%>
+                                    <hr>
+                                    <p>You haven't liked any post so far.</p>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>

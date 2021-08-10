@@ -1,3 +1,19 @@
+.showPageContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.showPageCard{
+    width:55em;
+    border: solid;
+    border-width: 1px;
+    border-color: rgba(173,181,189,0.4);
+    border-radius:7px;
+    background-color: white;
+}
+
+
 /* idea */
 .ideaAuthor{
     font-size:20px;
@@ -35,9 +51,9 @@
 
 .showIdea-buttons {/*5 btns below idea*/
     background-color: #fcdc5d;
-    padding: 7px 10px;
+    padding: 5px 10px;
     margin-left: 5px;
-    font-size: 17px;
+    font-size: 18px;
     border: none;
     border-radius: 5px;
     color:rgba(0,0,0,0.7);
@@ -48,6 +64,29 @@
     background-color: #fec601;
     color:rgba(0,0,0,0.7);
 }
+
+.sixBtnContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.firstFourBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.secondTwoBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.ideaDetailSixBtn{
+    margin-left: 15px;
+}
+
 
 
 /* comment */
@@ -137,6 +176,24 @@
     color: grey;
 }
 
+.answerDeleteBtn{
+    background-color: #f8ad9d;
+    color:black;
+}
+.answerDeleteBtn:hover{
+    background-color: #dc3545;
+    color:white;
+}
+
+.answerEdit-btn{
+    background-color:#6edff6;
+    color:black;
+}
+.answerEdit-btn:hover{
+    background-color:#0dcaf0;
+    color:white;
+}
+
 #backgroundCover{
     top:0%;
     left:0%;
@@ -192,4 +249,77 @@
 
 .carousel-button{
     z-index:0;
+}
+
+@media (max-width:900px){
+    .showPageCard{
+        width:90%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .showIdea-buttons {
+        padding: 5px 6px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width:710px){
+    
+    .ideaAuthor{
+        font-size:15px;
+    }
+    .followBtn{
+        font-size:15px;
+    }
+    .ideaTitle{
+        font-size:17px;
+        font-weight: 570;
+    }
+    .ideaDescription{
+       font-size:15px;
+    }
+    .answerAuthor{
+        font-size:15px;
+    }
+    .answerContent{
+        font-size:15px;
+    }
+    .sixBtnContainer{
+        display: inline
+    }
+    .firstFourBtn{
+        margin: 0px 5px 2px 5px;
+        justify-content: start;
+    }
+    .secondTwoBtn{
+        margin: 10px 5px 10px 5px;
+        justify-content: start;
+    }
+    .ideaDetailSixBtn{
+        margin-left: 0px;
+    }
+    .answerEdit-modal{
+        max-width: 95%;
+    }
+}
+
+@media (max-width:400px){
+    .showPageCard{
+        width:98%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+    .ideaAuthor{
+        font-size:15px;
+    }
+    .followBtn{
+        font-size:15px;
+    }
+    .ideaTitle{
+        font-size:17px;
+        font-weight: 570;
+    }
+    .ideaDescription{
+       font-size:15px;
+    }
 }
