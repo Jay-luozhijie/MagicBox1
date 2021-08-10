@@ -23,9 +23,6 @@ const apiRoute = require("./routes/apiRoute")
 const answerRoute = require('./routes/answerRoute')
 const UserModel = require('./models/userModel')
 
-const multer = require('multer')
-const { storage } = require('./cloudinary')
-const upload = multer({ storage })
 
 const dbUrl = 'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
 mongoose.connect(dbUrl, {

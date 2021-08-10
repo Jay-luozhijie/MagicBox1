@@ -9,13 +9,13 @@
     window.keyword = undefined;
 
     const getIdeas = async (page, limit) => {//fetch data from api
-        const deployedAddress='https://secure-brushlands-03249.herokuapp.com'
-        const localAddress ='http://localhost:3000'
+        const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+        const localAddress = 'http://localhost:3000'
         const API_URL = keyword
             // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
             // : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
-            ? localAddress+`/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
-            : localAddress+`/api/ideaIndex/?page=${page}&limit=${limit}`;
+            ? localAddress + `/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
+            : localAddress + `/api/ideaIndex/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
@@ -48,7 +48,7 @@
                         let word = arr.slice(j, j + len);
                         if (word == keyword) {
                             newArr = newArr + `<span class='colorRed'>` + word + `</span>`
-                            j = j + len
+                            j = j + len - 1
                         } else {
                             newArr = newArr + arr[j]
                         }
@@ -63,7 +63,7 @@
         ideas.forEach(idea => {
             const ideaComponent = document.createElement('div');
             ideaComponent.classList.add('idea');
-            if(!idea.deleted){
+            if (!idea.deleted) {
                 ideaComponent.innerHTML = `
                 <div class="mb-3 ideaCard">
                     <div class=" mt-1 ms-2 mb-3 indexIdeaAuthor">${idea.author.username}</div>
@@ -123,7 +123,7 @@
                             let word = arr.slice(j, j + len);
                             if (word == keyword) {
                                 newArr = newArr + `<span class='colorRed'>` + word + `</span>`
-                                j = j + len
+                                j = j + len - 1
                             } else {
                                 newArr = newArr + arr[j]
                             }

@@ -37,7 +37,11 @@ const UserSchema = new Schema({
     finishedPost: [{
         type: Schema.Types.ObjectId,
         ref: 'IdeaModel'
-    }]
+    }],
+    avatar: {
+        url: String,
+        filename: String
+    }
 })
 
 UserSchema.plugin(passportLocalMongoose)

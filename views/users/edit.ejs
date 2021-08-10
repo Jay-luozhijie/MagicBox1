@@ -4,7 +4,42 @@
             <div class="text-center">
                 <h1 class="mb-3">Edit your profile:</h1>
             </div>
+
+            <hr>
+            <div class="row">
+                <div class="mb-3 col-3">
+                    <% if(user.avatar==undefined) {%>
+                        <img src='https://res.cloudinary.com/dge5viwyc/image/upload/v1628588846/avatarUpload/xnoirwebg9mlgq7scqfk.png'
+                            width="120" height="120" style="border-radius: 50%;" alt="avatar">
+
+                        <% } else { %>
+                            <img src='<%= user.avatar.url %>' width="120" height="120" style="border-radius: 50%;"
+                                alt="avatar">
+                            <% } %>
+                </div>
+                <div class="mb-3 col-3">
+                    <form action="/user/edit" method="POST" novalidate class="validated-form"
+                        enctype="multipart/form-data">
+
+                        <label class="form-label" for="avatar">Upload your avatar:</label>
+                        <br>
+                        <input type="file" name="avatar" id="avatar">
+                        <br>
+                        <button class="btn btn-warning mt-4">Update Avatar</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <hr>
             <form action="/user/edit?_method=PATCH" method='POST' novalidate class="validated-form">
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="avatar">Upload your avatar:</label>
+                    <br>
+                    <input type="file" name="user[avatar]" id="avatar">
+                </div> -->
+                <br>
                 <div class="mb-3">
                     <label class="form-label" for="username">Username:</label>
                     <input id="username" class="form-control" type="text" name="user[username]"
@@ -14,6 +49,7 @@
                         (your username cannot be empty and must
                         be less than 20 letters)</div>
                 </div>
+
                 <!-- <div class="mb-3">
                     <label for="email">Email:</label>
                     <input id="email" type="email" class="form-control" value="<%= user.email %>" name="user[email]"
@@ -26,7 +62,10 @@
                     <textarea class="form-control" type="text" id="bio" name="user[bio]"
                         rows="5"><%= user.bio%> </textarea>
                 </div> -->
+                <br>
+
                 <button class="btn btn-warning">edit</button>
+
             </form>
         </div>
     </div>

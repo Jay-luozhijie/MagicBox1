@@ -10,24 +10,39 @@ const ideaModel = require('../models/ideaModel')
 const { response } = require('express')
 const ExpressError = require('../utils/ExpressError')
 
-
+const multer = require("multer")
+const { storage } = require('../cloudinary/upload')
+const upload = multer({ storage })
 ////////////////////////  basic CRUD   ////////////////////////////////
 router.get('/edit', isLoggedIn, catchAsync(async (req, res) => {
     const user = req.user;
     res.render('users/edit', { user });
 }))
 
+router.post('/edit', isLoggedIn, upload.single('avatar'), catchAsync(async (req, res) => {
+    const id = req.user._id
+    const user = await UserModel.findById(id)
+    const url = req.file.path
+    const filename = req.file.filename
+    user.avatar = { url, filename }
+
+    await user.save()
+    req.flash('success', 'Successfully uploaded your avatar!')
+    res.redirect(`/user/${id}`)
+}))
+
 router.patch('/edit', isLoggedIn, validateUser, catchAsync(async (req, res) => {//summit edit user info  
-    try{
+    try {
         const id = req.user._id;
-        const sameName = await UserModel.find({username:req.body.user.username}).limit(1)
-        const sameEmail = await UserModel.find({email:req.body.user.email}).limit(1)
-        if(sameName.length !== 0 && (String(sameName[0]._id) !== String(id))){
+        const sameName = await UserModel.find({ username: req.body.user.username }).limit(1)
+        const sameEmail = await UserModel.find({ email: req.body.user.email }).limit(1)
+
+        if (sameName.length !== 0 && (String(sameName[0]._id) !== String(id))) {
             throw new ExpressError('username has already been registered', 500)
-        } else if(sameEmail.length !== 0 && (String(sameEmail[0]._id) !== String(id))){
+        } else if (sameEmail.length !== 0 && (String(sameEmail[0]._id) !== String(id))) {
             throw new ExpressError('email has already been registered', 500)
         } else {
-            const newUser = await UserModel.findByIdAndUpdate(id, { ...req.body.user },{new: true})
+            const newUser = await UserModel.findByIdAndUpdate(id, { ...req.body.user }, { new: true })
             req.logout()
             req.login(newUser, err => {                                  //after register, will auto login and direct to main page
                 if (err) {
@@ -38,7 +53,7 @@ router.patch('/edit', isLoggedIn, validateUser, catchAsync(async (req, res) => {
                 }
             })
         }
-    } catch(e){
+    } catch (e) {
         req.flash('error', e.message)
         res.redirect('/user/edit')
     }
