@@ -10,3 +10,8 @@ body{
     color: red;
 }
 
+.noContentWarning{
+    margin-top: 10px;
+    color: #dc3545;
+    font-size: 14px;
+}

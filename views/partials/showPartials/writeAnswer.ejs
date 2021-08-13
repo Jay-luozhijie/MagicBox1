@@ -3,10 +3,10 @@
             <%if(currentUser){%>
                 <form action="/<%=idea._id%>/answer" id='submitAnswerForm' class="validated-form my-3 mx-5" method="POST" enctype="multipart/form-data" novalidate>           
                     <label class="form-label" for="answerContent">Share your product:</label>
-                    <textarea class='textEditorArea' id = 'submitAnswerContent' name="answerContent" placeholder="description:" required></textarea>
-                    <div class="valid-feedback">good!</div>
-                    <div class="invalid-feedback">Please enter a title.</div>
-                    
+                    <textarea class='textEditorArea' id = 'submitAnswerContent' name="answerContent" placeholder="description:"></textarea>
+                    <div id='noAnswerContentErrorMessage' class='noContentWarning'>
+
+                    </div>
                     <div class="mb-5 mt-3">
                         <label for="formFileMultiple" class="form-label">upload images:</label>
                         <input class="form-control" type="file" id="answerImage" name='answerImage' multiple>
@@ -20,4 +20,5 @@
         <br>
     </div>
 </div>
+<script src='/js/answer/submitAnswer.js'></script>
 

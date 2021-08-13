@@ -149,108 +149,6 @@
 }
 
 
-/*create answer*/
-#answerSubmit{
-    background-color: #fcdc5d;
-    border-color:#fcdc5d ;
-    color:black;
-}
-
-#answerSubmit:hover{
-    color:black;
-    background-color: #fec601;
-    border-color:#fec601 ;
-}
-
-.createAnswerArea{
-    border:solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #ced4da;
-}
-
-
-/* answer index */
-.answerAuthor{
-    font-size:20px;
-    color: grey;
-}
-
-.answerDeleteBtn{
-    background-color: #f8ad9d;
-    color:black;
-}
-.answerDeleteBtn:hover{
-    background-color: #dc3545;
-    color:white;
-}
-
-.answerEdit-btn{
-    background-color:#6edff6;
-    color:black;
-}
-.answerEdit-btn:hover{
-    background-color:#0dcaf0;
-    color:white;
-}
-
-#backgroundCover{
-    top:0%;
-    left:0%;
-    visibility: hidden;
-    position:fixed;
-    height: 100%;
-    width: 100%;
-    background-color: black;
-    z-index: 0;
-    opacity: 0.5;
-}
-
-.answerEdit-modal{
-    position:fixed;
-    top:55%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0);
-    transition: 300ms ease-in-out;
-    border:1px solid black;
-    border-radius:10px;
-    z-index: 2;
-    width: 800px;
-    max-width: 80%;
-    background-color: white;
-}
-
-.answerEdit-modalBody{
-    height: 600px;
-    overflow-y:scroll;
-}
-
-.answerEdit-modalHeader{
-    padding:10px 15px;
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    border-bottom: 1px solid black;
-}
-
-.answerEdit-modalHeader .answerEditTitle{
-    font-size:1.25rem;
-    font-weight:bold;
-}
-
-.answerEdit-modalHeader .answerEditClose-btn{
-    cursor:pointer;
-    border:none;
-    outline:none;
-    background:none;
-    font-size:1.5rem;
-    font-weight: bold;
-}
-
-.carousel-button{
-    z-index:0;
-}
-
 @media (max-width:900px){
     .showPageCard{
         width:90%;
@@ -260,6 +158,11 @@
     .showIdea-buttons {
         padding: 5px 6px;
         font-size: 13px;
+    }
+    .answerEdit-btn{
+        padding:5px 13px;
+        background-color:#6edff6;
+        color:black;
     }
 }
 

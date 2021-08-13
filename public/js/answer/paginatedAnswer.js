@@ -24,6 +24,7 @@
     (async function () {//initialize
         loadingSign.style.visibility = "visible"
         apiResponse = await getAnswers(page, limit)
+        console.log(apiResponse.result)
         showAnswers(apiResponse.result)
         loadingSign.style.visibility = "hidden"
     })()
@@ -34,9 +35,6 @@
             answerContainer.innerHTML += `This post hasn't received any answer.`
         }
         answers.forEach(answer => {
-
-
-
             const answerContainer = document.querySelector('#answerContainer')
 
             const answerComponent = document.createElement('div')      //answerComponent
@@ -100,13 +98,13 @@
             const answerBtnGroup = document.createElement('div')
             answerBtnGroup.classList.add('d-flex','flex-row','justify-content-start','my-3')
             eachAnswerContainer.appendChild(answerBtnGroup)
+            answerBtnGroup.innerHTML += `
+            <div>
+                <a class="btn showIdea-buttons mx-1" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
+                    Comment
+                </a>
+            </div>`
             if (currentUser) {
-                answerBtnGroup.innerHTML += `
-                <div>
-                    <a class="btn showIdea-buttons mx-1" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
-                        Comment
-                    </a>
-                </div>`
                 if (currentUser && answer.author._id === currentUser._id) {
                     answerBtnGroup.innerHTML += `
                     <div>
@@ -128,10 +126,13 @@
             eachAnswerContainer.appendChild(commentContainer)
             if (currentUser) {
                 commentContainer.innerHTML += `
-                <form action="/${ideaId}/answer/${answer._id}/comment" class="validated-form mb-3 commentToAnswerForm" id="commentToAnswerForm${answer._id}" method="POST" novalidate>
+                <form action="/${ideaId}/answer/${answer._id}/comment" class="mb-3 commentToAnswerForm" id="commentToAnswerForm${answer._id}" method="POST">
                     <div class="my-3">
                         <label class="form-label" for="commentbody${answer._id}">Comment</label>
                         <textarea class='form-control' name='commentToAnswer' id='commentbody${answer._id}' cols='30' rows='2'></textarea>
+                        <div class='noContentWarning' id='noAnswerCommentContentWarning${answer._id}'>
+                        
+                        </div>
                     </div>
                     <div class="d-flex flex-row-reverse">
                         <button class="btn btn-sm commentSubmit">Submit</button>
@@ -166,14 +167,17 @@
             const editForm = document.createElement('form')
             modalBody.appendChild(editForm)
             editForm.action = `/${ideaId}/answer/${answer._id}?_method=PUT`
-            editForm.classList.add('validated-form', 'my-3', 'mx-5')
+            editForm.classList.add('editAnswerForm','my-3', 'mx-5')
+            editForm.id=`editAnswerForm${answer._id}`
             editForm.method = "POST"
             editForm.enctype = 'multipart/form-data'
             editForm.noValidate = true
             editForm.innerHTML += `
             <label class='mb-2'>Share your product:</label>
-            <textarea class='textEditorArea' name="answerContent"
-                placeholder="description:">${answer.content}</textarea>
+            <textarea class='textEditorArea' name="answerContent" placeholder="description:">${answer.content}</textarea>
+            <div class='noContentWarning' id='noEditedAnswerContent${answer._id}'>
+            
+            </div>
             <div class="mb-2 mt-3">
                 <label class="mb-2">upload images:</label>
                 <input class="form-control" type="file" id="answerImage" name='answerImage'
@@ -203,19 +207,21 @@
             });
 
             let answerEditBtn = document.querySelector(`#answerEditBtn${answer._id}`)
-            answerEditBtn.addEventListener('click', function () {
-                const answerEditModal = document.querySelector('#answerEditModal' + answer._id)
-                answerEditModal.style.transform = 'translate(-50%,-50%) scale(1)';  
-                document.querySelector('#backgroundCover').style.visibility='visible'
-                $('body').css('overflow','hidden')
-            })
-            let answerEditCloseBtn = document.querySelector(`#answerEditCloseBtn${answer._id}`)
-            answerEditCloseBtn.addEventListener('click',function(){
-                const answerEditModal = document.querySelector('#answerEditModal' + answer._id);
-                answerEditModal.style.transform = 'translate(-50%,-50%) scale(0)';  
-                document.querySelector('#backgroundCover').style.visibility='hidden';
-                $('body').css('overflow','auto')
-            })
+            if(answerEditBtn !== null){
+                answerEditBtn.addEventListener('click', function () {
+                    const answerEditModal = document.querySelector('#answerEditModal' + answer._id)
+                    answerEditModal.style.transform = 'translate(-50%,-50%) scale(1)';  
+                    document.querySelector('#backgroundCover').style.visibility='visible'
+                    $('body').css('overflow','hidden')
+                })
+                let answerEditCloseBtn = document.querySelector(`#answerEditCloseBtn${answer._id}`)
+                answerEditCloseBtn.addEventListener('click',function(){
+                    const answerEditModal = document.querySelector('#answerEditModal' + answer._id);
+                    answerEditModal.style.transform = 'translate(-50%,-50%) scale(0)';  
+                    document.querySelector('#backgroundCover').style.visibility='hidden';
+                    $('body').css('overflow','auto')
+                })
+            }
 
             let answerId = answer._id
             let commentsContainer = document.querySelector(`#answerCommentsContainer${answerId}`)
@@ -299,12 +305,13 @@
                     eachCommentContainer.appendChild(replyContainer)
                     if (currentUser) {
                         replyContainer.innerHTML += `
-                            <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="validated-form mb-3 mx-5 replyToCommentForm" method="POST" novalidate>
+                            <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="mb-3 mx-5 replyToCommentForm" method="POST">
                                 <div class="mb-3">
                                     <textarea class='form-control replyBody' name='reply'
-                                        cols='30' rows='1' required></textarea>
-                                    <div class="valid-feedback">good!</div>
-                                    <div class="invalid-feedback">Please provide reply content.</div>
+                                        cols='30' rows='1'></textarea>
+                                    <div class='noContentWarning' id='noReplyContentWarning${comment._id}'>
+                                    
+                                    </div>
                                 </div>
                                 <button class="btn commentSubmit btn-sm">Submit</button>
                             </form>`
@@ -372,20 +379,17 @@
                         eachReply.appendChild(replyToReplyForm)
                         if (currentUser) {
                             replyToReplyForm.innerHTML += `
-                                        <form action="/${ideaId}/comment/${comment._id}/reply/${reply._id}"
-                                            class="validated-form mb-3 mx-5 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
-                                            method="POST" novalidate>
-                                            <div class="mb-3">
-                                                <textarea class='form-control'
-                                                    name='reply' class='replyBody'
-                                                    cols='30' rows='1'
-                                                    required></textarea>
-                                                <div class="valid-feedback">good!</div>
-                                                <div class="invalid-feedback">Please provide reply content</div>
-                                            </div>
-                                            <button class="btn commentSubmit btn-sm">Submit</button>
-                                        </form>`
-
+                                <form action="/${ideaId}/comment/${comment._id}/reply/${reply._id}"
+                                    class="mb-3 mx-5 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
+                                    method="POST">
+                                    <div class="mb-3">
+                                        <textarea class='form-control' name='reply' class='replyBody' cols='30' rows='1'></textarea>
+                                        <div class='noContentWarning' id='noReplyToReplyContent${reply._id}'>
+                                        
+                                        </div>
+                                    </div>
+                                    <button class="btn commentSubmit btn-sm">Submit</button>
+                                </form>`
                         }
                     }
                 })
@@ -429,6 +433,18 @@
         })
     }
 
+    $(document).on('submit','.editAnswerForm',function(e){
+        let answerContent = this[0].value
+        const answerId = this.id.slice(14)
+        const noAnswerContent = document.querySelector(`#noEditedAnswerContent${answerId}`)
+        if(answerContent === ``){
+            e.preventDefault()
+            noAnswerContent.innerHTML=`Please provide answer description.`
+        } else {
+            noAnswerContent.innerHTML=``
+        }
+    })
+
     $(document).on('submit', '.deleteAnswer', function (e) {
         e.preventDefault()
         let answerId = this.id.slice(12)
@@ -442,7 +458,7 @@
             apiResponse = await getAnswers(page, limit)
             showAnswers(apiResponse.result)
             loading = false;
-            loader.style.visibility = "hidden";
+            loadingSign.style.visibility = "hidden";
         })()
     }
 
@@ -452,131 +468,10 @@
         const pageHeight = window.innerHeight;
 
         if (pageHeight + scrolledHeight > totalHeight - 1 && !loading && apiResponse && apiResponse.next) {
-            loader.style.visibility = "visible";
+            loadingSign.style.visibility = "visible";
             loading = true;
             page++;
             await loadAnswers(page, limit);
         }
     }, { passive: true })
 })()
-
-
-
-
-//this is the original one(without infinite scroll)
-// <% if(idea.answer.length> 0) {%>
-//     <%for(let answer of idea.answer){%>
-//         <div class='card mb-3 mt-3 mb-3'>
-//             <div class="card-body ms-3 mb-3">
-//                      <div>
-//                         <div class="answerAuthor mb-2">
-//                             ${answer.author.username}
-//                         </div>
-//                         <p>
-//                             <div id="carousel${answer._id}" class="carousel slide" data-bs-interval="false" data-bs-ride="carousel">
-//                                 <div class="carousel-inner">
-//                                     <% answer.images.forEach(function(img,i) { %>
-//                                         <% if (i===0) {%>
-//                                             <div class="carousel-item active">
-//                                                 <img style="max-width: 1000px; max-height: 500px;" src="<%=img.url%>"
-//                                                     class='d-block w-100' alt="">
-//                                             </div>
-//                                         <%} else {%>
-//                                                 <div class="carousel-item">
-//                                                     <img style="max-width: 1000px; max-height: 500px;" src="<%=img.url%>"
-//                                                         class='d-block w-100' alt="">
-//                                                 </div>
-//                                         <%}%>
-//                                     <% }) %>
-//                                 </div>
-
-//                                 <% if(answer.images.length>1){%>
-//                                     <button class="carousel-control-prev carousel-button" type="button"
-//                                         data-bs-target="#carousel${answer._id}" data-bs-slide="prev">
-//                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-//                                         <span class="visually-hidden">Previous</span>
-//                                     </button>
-//                                     <button class="carousel-control-next carousel-button" type="button"
-//                                         data-bs-target="#carousel${answer._id}" data-bs-slide="next">
-//                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-//                                         <span class="visually-hidden">Next</span>
-//                                     </button>
-//                                 <%}%>
-//                             </div>
-//                             ${answer.content}
-//                         </p>
-//                     </div>
-//                      <%if (currentUser) {%>
-//                         <a class="btn showIdea-buttons" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
-//                             Comment
-//                         </a>
-//                         <%if(currentUser && answer.author.equals(currentUser._id)){%>
-//                             <form action='/${idea}/answer/${answer._id}?_method=DELETE' method="POST">
-//                                 <button class='btn btn-sm btn-danger'>Delete</button>
-//                             </form>
-//                             <button class='answerEdit-btn btn btn-info btn-sm mt-2' id='answerEditBtn${answer._id}'>
-//                                 Edit
-//                             </button>
-//                         <%}%>      
-//                     <%}%>
-
-//                     <div class="collapse" id="commentToAnswer${answer._id}">
-//                         <%if(currentUser){%>
-//                             <form action="/${idea}/answer/${answer._id}/comment" class="validated-form mb-3 mx-5 commentToAnswerForm" id="commentToAnswerForm${answer._id}" method="POST" novalidate>
-//                                 <div class="my-3">
-//                                     <label class="form-label" for="commentbody${answer._id}">Comment</label>
-//                                     <textarea class='form-control' name='commentToAnswer' id='commentbody${answer._id}' cols='30' rows='2'></textarea>
-//                                 </div>
-//                                 <div class="d-flex flex-row-reverse">
-//                                     <button class="btn btn-sm commentSubmit">Submit</button>
-//                                 </div>
-//                             </form>
-//                             <hr style="height:20px; color:#ced4da;">
-//                         <%}%>
-//                         <div>
-//                             <div class="mx-5" id="answerCommentsContainer${answer._id}">
-
-//                             </div>
-//                             <div id='answerCommentNavigation${answer._id}' class='d-flex justify-content-center'>
-
-//                             </div>
-//                         </div>
-//                     </div>
-
-//                     <div class='answerEdit-modal' id="answerEditModal${answer._id}">
-//                         <div class='answerEdit-modalHeader'>
-//                             <div class="answerEditTitle">Edit your answer</div>
-//                             <button class='answerEditClose-btn' id = 'answerEditCloseBtn${answer._id}'>&times;</button>
-//                         </div>
-//                         <div class='answerEdit-modalBody'>
-//                             <form action="/${idea}/answer/${answer._id}?_method=PUT" class="validated-form my-3 mx-5" method="POST"
-//                                 enctype="multipart/form-data" novalidate>
-//                                 <label class='mb-2'>Share your product:</label>
-//                                 <textarea class='textEditorArea' name="answerContent"
-//                                     placeholder="description:">${answer.content}</textarea>
-//                                 <div class="mb-2 mt-3">
-//                                     <label class="mb-2">upload images:</label>
-//                                     <input class="form-control" type="file" id="answerImage" name='answerImage'
-//                                         multiple>
-//                                 </div>
-//                                 <div style='display:flex; flex-direction:column; justify-content: left;'>
-//                                     <% answer.images.forEach(function(img,i) { %>
-//                                         <img class='img-thumbnail' src="<%=img.url%>" alt="">
-//                                             <label for='image-<%=img.filename%>'>Delete</label>
-//                                             <input type='checkbox' name='deleteImages[]' value='<%=img.filename%>' id='image-<%=img.filename%>'>
-//                                     <%})%>
-//                                 </div>
-//                                 <div class='mt-3'>
-//                                     <button type="submit" class="btn" id='answerSubmit'>Save</button>
-//                                 </div>
-//                             </form>
-//                         </div>
-//                     </div>
-    //             </div>
-    //         </div>
-    //     <%}%>
-    // <%} else {%>
-    //     <div>
-    //         <p>This post hasn't received any answer.</p>
-    //     </div>
-    // <%}%>

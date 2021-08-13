@@ -4,11 +4,44 @@
     margin-right:20%;
 }
 
+.userPageAvatar{
+    border-radius: 50%; 
+    width:120px; 
+    height:120px;
+}
+
+
+.showPageAvatar{
+    border-radius: 50%; 
+    width:50px; 
+    height:50px;
+}
+
 @media (max-width:900px){
     .userPageContainer{
         width: 90%;
         margin-left: 5%;
         margin-right:5%;
+    }
+
+    .userPageAvatar{
+        width:80px; 
+        height:80px;
+    }
+    .showPageAvatar{
+        width:30px; 
+        height:30px;
+    }
+}
+
+@media (max-width:400px){
+    .userPageAvatar{
+        width:60px; 
+        height:60px;
+    }
+    .showPageAvatar{
+        width:25px; 
+        height:25px;
     }
 }
 

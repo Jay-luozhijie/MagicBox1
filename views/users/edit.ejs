@@ -8,14 +8,12 @@
             <hr>
             <div class="row">
                 <div class="mb-3 col-3">
-                    <% if(user.avatar==undefined) {%>
+                    <% if(user.avatar.url == undefined) {%>
                         <img src='https://res.cloudinary.com/dge5viwyc/image/upload/v1628588846/avatarUpload/xnoirwebg9mlgq7scqfk.png'
-                            width="120" height="120" style="border-radius: 50%;" alt="avatar">
-
-                        <% } else { %>
-                            <img src='<%= user.avatar.url %>' width="120" height="120" style="border-radius: 50%;"
-                                alt="avatar">
-                            <% } %>
+                            alt="avatar" class="userPageAvatar">
+                    <% } else { %>
+                        <img src='<%= user.avatar.url %>' alt="avatar" class="userPageAvatar">
+                    <% } %>
                 </div>
                 <div class="mb-3 col-3">
                     <form action="/user/edit" method="POST" novalidate class="validated-form"

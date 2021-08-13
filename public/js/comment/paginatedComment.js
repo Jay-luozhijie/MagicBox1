@@ -88,12 +88,13 @@
                     eachCommentContainer.appendChild(replyContainer)
                     if (currentUser) {
                         replyContainer.innerHTML += `
-                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="validated-form mb-3 mx-5 replyToCommentForm" method="POST" novalidate>
+                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="mb-3 mx-5 replyToCommentForm" method="POST">
                             <div class="mb-3">
                                 <textarea class='form-control replyBody' name='reply'
-                                    cols='30' rows='1' required></textarea>
-                                <div class="valid-feedback">good!</div>
-                                <div class="invalid-feedback">Please provide reply content.</div>
+                                    cols='30' rows='1'></textarea>
+                                <div class='noContentWarning' id='noReplyContentWarning${comment._id}'>
+                                
+                                </div>
                             </div>
                             <button class="btn commentSubmit btn-sm">Submit</button>
                         </form>`
@@ -162,15 +163,13 @@
                                 if (currentUser) {
                                     replyToReplyForm.innerHTML += `
                                     <form action="/${ideaId}/comment/${comment._id}/reply/${reply._id}"
-                                        class="validated-form mb-3 mx-5 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
-                                        method="POST" novalidate>
+                                        class="mb-3 mx-5 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
+                                        method="POST">
                                         <div class="mb-3">
-                                            <textarea class='form-control'
-                                                name='reply' class='replyBody'
-                                                cols='30' rows='1'
-                                                required></textarea>
-                                            <div class="valid-feedback">good!</div>
-                                            <div class="invalid-feedback">Please provide reply content</div>
+                                            <textarea class='form-control' name='reply' class='replyBody' cols='30' rows='1'></textarea>
+                                            <div class='noContentWarning' id='noReplyToReplyContent${reply._id}'>
+                                            
+                                            </div>
                                         </div>
                                         <button class="btn commentSubmit btn-sm">Submit</button>
                                     </form>`
