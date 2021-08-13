@@ -84,7 +84,7 @@ router.get('/verify-email', async (req, res, next) => {
 
         if (!user) {
             req.flash('error', 'Token is invalid. Please contact us for assistance');
-            return res.redirect(localAddress);
+            return res.redirect(deployedAddress);
         }
         user.emailToken = null;
         user.isVerified = true;
@@ -97,13 +97,13 @@ router.get('/verify-email', async (req, res, next) => {
             }
 
             req.flash('success', `Welcome to MagicBox, ${user.username}!`);
-            res.redirect(localAddress);
+            res.redirect(deployedAddress);
         })
 
     } catch (error) {
         console.log(error)
         req.flash('error', 'Something went wrong.')
-        res.redirect(localAddress)
+        res.redirect(deployedAddress)
     }
 })
 

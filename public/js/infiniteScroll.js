@@ -14,8 +14,8 @@
         const API_URL = keyword
             // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
             // : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
-            ? localAddress + `/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
-            : localAddress + `/api/ideaIndex/?page=${page}&limit=${limit}`;
+            ? deployedAddress + `/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
+            : deployedAddress + `/api/ideaIndex/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {

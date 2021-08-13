@@ -27,6 +27,15 @@ function paginatedResults(model) {
         }
         try {
             results.result = await model.find({}).populate('author').limit(limit).skip(startIndex).exec()
+            // for(let idea of results.result) {
+            //    for(let a of idea.answer){
+            //         const answer = await AnswerModel.findById(a._id)
+            //         answer.idea = idea._id
+            //         answer.save()
+            //         console.log("answer ideaId:" + answer.idea)
+            //    }
+            //    console.log("ideaId:" + idea._id)
+            // }
             res.paginatedResults = results
             return next()
         } catch (e) {

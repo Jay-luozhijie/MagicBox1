@@ -6,7 +6,7 @@ $(document).ready(function(){
         let author = commentAuthor
         const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
         const localAddress = 'http://localhost:3000'
-        let url = localAddress+'/api/commentForm'
+        let url = deployedAddress+'/api/commentForm'
 
         $.post(url,{commentContent,ideaId}).done(function(data){
             const commentComponent = document.createElement('div')      //commentComponent

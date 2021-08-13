@@ -24,7 +24,7 @@ const answerRoute = require('./routes/answerRoute')
 const UserModel = require('./models/userModel')
 
 
-const dbUrl = 'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/IdeaV1';               //process.env.DB_URL ||         //deploy version
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser());
 app.use(express.json())
 
-const secret = 'thisshouldbeabettersecret!';        //process.env.SECRET||                      //deploy version
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';        //process.env.SECRET||                      //deploy version
 
 const sessionConfig = {
     name: 'session',                                                                          //deploy version
@@ -94,7 +94,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-const port = 3000;                        //process.env.PORT ||                       //deploy version
+const port = process.env.PORT || 3000;                        //process.env.PORT ||                       //deploy version
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
