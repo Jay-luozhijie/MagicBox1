@@ -9,7 +9,7 @@ $(document).ready(function(){
             noCommentContent.innerHTML=``
             document.querySelector('#commentbody').value=``
             let author = commentAuthor
-            const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+            const deployedAddress = 'https://magicbox2021.herokuapp.com'
             const localAddress = 'http://localhost:3000'
             let url = deployedAddress+'/api/commentForm'
 

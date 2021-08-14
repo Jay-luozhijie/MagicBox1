@@ -19,7 +19,7 @@ const crypto = require('crypto');
 const myEmail = 'magicboxnoreply01@gmail.com';
 
 const localAddress = '/'
-const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+const deployedAddress = 'https://magicbox2021.herokuapp.com'
 /////////////////   user login, register and logout   ///////////////////////////////
 
 router.get('/register', (req, res) => {                                     //register page, asking for username, password and email

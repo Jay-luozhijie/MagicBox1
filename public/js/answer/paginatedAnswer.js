@@ -6,7 +6,7 @@
     let loadingSign = document.querySelector('.loadingSign')
     
     const getAnswers = async (page, limit) => {//fetch data from api
-        const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+        const deployedAddress = 'https://magicbox2021.herokuapp.com'
         const localAddress = 'http://localhost:3000'
         const API_URL = deployedAddress + `/api/paginatedAnswer/?page=${page}&limit=${limit}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
@@ -231,7 +231,7 @@
             let commentApiResponse = undefined;
 
             const getComments = async (page, limit) => {//fetch data from api
-                const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+                const deployedAddress = 'https://magicbox2021.herokuapp.com'
                 const localAddress = 'http://localhost:3000'
                 const API_URL = deployedAddress + `/api/paginatedAnswerComment/?page=${commentPage}&limit=${commentLimit}&answerId=${answerId}`;
                 const response = await fetch(API_URL, {

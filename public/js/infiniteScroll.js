@@ -9,7 +9,7 @@
     window.keyword = undefined;
 
     const getIdeas = async (page, limit) => {//fetch data from api
-        const deployedAddress = 'https://secure-brushlands-03249.herokuapp.com'
+        const deployedAddress = 'https://magicbox2021.herokuapp.com'
         const localAddress = 'http://localhost:3000'
         const API_URL = keyword
             // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
