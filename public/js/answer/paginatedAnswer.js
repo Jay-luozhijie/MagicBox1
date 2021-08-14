@@ -24,7 +24,6 @@
     (async function () {//initialize
         loadingSign.style.visibility = "visible"
         apiResponse = await getAnswers(page, limit)
-        console.log(apiResponse.result)
         showAnswers(apiResponse.result)
         loadingSign.style.visibility = "hidden"
     })()
@@ -69,17 +68,18 @@
             carousel.appendChild(innerCarousel)
             answer.images.forEach(function (img, i) {
                 if (i === 0) {
-                    innerCarousel.innerHTML = `
+                    innerCarousel.innerHTML += `
                     <div class="carousel-item active">
                         <img style="max-width: 1000px; max-height: 500px;" src="${img.url}" class='d-block w-100' alt="">
                     </div>`
                 } else {
-                    innerCarousel.innerHTML = `
+                    innerCarousel.innerHTML += `
                     <div class="carousel-item">
                         <img style="max-width: 1000px; max-height: 500px;" src="${img.url}" class='d-block w-100' alt="">
                     </div>`
                 }
             })
+            
             if (answer.images.length > 1) {
                 carousel.innerHTML += `
                 <button class="carousel-control-prev carousel-button" type="button"
@@ -186,9 +186,10 @@
 
             const imageIndex = document.createElement('div')
             imageIndex.style = 'display:flex; flex-direction:column; justify-content: left;'
-            answer.images.forEach(function (img, i) {
+            editForm.appendChild(imageIndex)
+            answer.images.forEach(function (img) {
                 imageIndex.innerHTML += `
-                <img class='img-thumbnail' src="${img.url}" alt="">
+                <img src="${img.url}" alt="">
                 <label for='image-${img.filename}'>Delete</label>
                 <input type='checkbox' name='deleteImages[]' value='${img.filename}' id='image-${img.filename}'>`
             })
