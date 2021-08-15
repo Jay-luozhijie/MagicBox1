@@ -31,7 +31,7 @@ $(document).ready(function(){
                                 Reply
                             </a>
                         </p>
-                        <form class="ms-3 deleteComment" action='/${ideaId}/answer/${answerId}/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
+                        <form class="ms-2 deleteComment" action='/${ideaId}/answer/${answerId}/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
                             <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
                         </form>
                     </div>`
@@ -53,7 +53,7 @@ $(document).ready(function(){
                         <button class="btn commentSubmit btn-sm">Submit</button>
                     </form>`
                 let replyIndex = document.createElement('div')      //replyIndex
-                replyIndex.classList.add('card','replyIndex','ms-4')
+                replyIndex.classList.add('card','replyIndex')
                 replyIndex.id = `replyIndex${data.commentId}`
                 replyContainer.appendChild(replyIndex)
             })
