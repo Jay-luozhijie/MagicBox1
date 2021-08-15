@@ -33,7 +33,7 @@ $(document).ready(function(){
                                 Reply
                             </a>
                         </p>
-                        <form class="ms-3 deleteComment" action='/${ideaId}/comment/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
+                        <form class="ms-2 deleteComment" action='/${ideaId}/comment/${data.commentId}?_method=DELETE' method="POST" id='deleteComment${data.commentId}'>
                             <button class='btn btn-sm btn-danger commentDeleteButton'>Delete</button>
                         </form>
                     </div>`
@@ -44,7 +44,7 @@ $(document).ready(function(){
                 eachCommentContainer.appendChild(replyContainer)
                 
                 replyContainer.innerHTML += `
-                    <form action="/${ideaId}/comment/${data.commentId}/reply" id='replyToCommentForm${data.commentId}' class="mb-3 mx-5 replyToCommentForm" method="POST">
+                    <form action="/${ideaId}/comment/${data.commentId}/reply" id='replyToCommentForm${data.commentId}' class="mb-3 replyToCommentForm" method="POST">
                         <div class="mb-3">
                             <textarea class='form-control replyBody' name='reply'
                                 cols='30' rows='1'></textarea>
@@ -55,7 +55,7 @@ $(document).ready(function(){
                         <button class="btn commentSubmit btn-sm">Submit</button>
                     </form>`
                 let replyIndex = document.createElement('div')      //replyIndex
-                replyIndex.classList.add('card','replyIndex','ms-4')
+                replyIndex.classList.add('card','replyIndex')
                 replyIndex.id = `replyIndex${data.commentId}`
                 replyContainer.appendChild(replyIndex)
             })

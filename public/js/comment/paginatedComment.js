@@ -88,7 +88,7 @@
                     eachCommentContainer.appendChild(replyContainer)
                     if (currentUser) {
                         replyContainer.innerHTML += `
-                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="mb-3 mx-5 replyToCommentForm" method="POST">
+                        <form action="/${ideaId}/comment/${comment._id}/reply" id='replyToCommentForm${comment._id}' class="mb-3 replyToCommentForm" method="POST">
                             <div class="mb-3">
                                 <textarea class='form-control replyBody' name='reply'
                                     cols='30' rows='1'></textarea>
@@ -101,7 +101,7 @@
                     }
                         // <div class='card replyIndex ms-4'>
                         let replyIndex = document.createElement('div')      //replyIndex
-                        replyIndex.classList.add('card','replyIndex','ms-4')
+                        replyIndex.classList.add('card','replyIndex')
                         replyIndex.id = `replyIndex${comment._id}`
                         replyContainer.appendChild(replyIndex)
                         for (let reply of comment.reply) {
@@ -118,9 +118,9 @@
                                     reply to 
                                     <span class="commentReplyUsername">
                                         ${reply.replyTo.username}
-                                    </span> :
+                                    </span>:
                                 </p>
-                                <p class="card-text ms-3">
+                                <p class="card-text">
                                     ${reply.replyBody}
                                 </p>`
                         if (currentUser) {
@@ -128,7 +128,7 @@
                                 eachReply.innerHTML += `
                                 <div class="d-flex flex-row">
                                     <p class="">
-                                        <a class="btn btn-primary replyButton btn-sm ms-3"
+                                        <a class="btn btn-primary replyButton btn-sm"
                                             data-bs-toggle="collapse"
                                             href="#replyToReply${reply._id}" role="button"
                                             aria-expanded="false"
@@ -163,7 +163,7 @@
                                 if (currentUser) {
                                     replyToReplyForm.innerHTML += `
                                     <form action="/${ideaId}/comment/${comment._id}/reply/${reply._id}"
-                                        class="mb-3 mx-5 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
+                                        class="mb-3 replyToReplyForm" id = 'replyToReplyForm${reply._id}'
                                         method="POST">
                                         <div class="mb-3">
                                             <textarea class='form-control' name='reply' class='replyBody' cols='30' rows='1'></textarea>

@@ -1,5 +1,8 @@
 /* submit answer */
-
+#answerContainer{
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
 #answerSubmit{
     background-color: #fcdc5d;
@@ -99,6 +102,10 @@
     .answerEdit-modal{
         max-width: 90%;
         background-color: white;
+    }
+    #answerContainer{
+        margin-left: 0px;
+        margin-right: 0px;
     }
 }
 

@@ -1,6 +1,6 @@
 <div class="collapse" id="comment">
     <%if(currentUser){%>
-        <form action="/<%=idea._id%>/comment" class="mb-3 mx-5" id="commentForm" method="POST">
+        <form action="/<%=idea._id%>/comment" class="mb-3" id="commentForm" method="POST">
             <div class="my-3">
                 <label class="form-label" for="commentbody">Comment</label>
                 <textarea class='form-control' name='comment' id='commentbody' cols='30' rows='2'></textarea>
@@ -15,7 +15,7 @@
         <hr style="height:20px; color:#ced4da;">
     <%}%>
     <div>
-        <div class="mx-5" id="commentsContainer">
+        <div class="" id="commentsContainer">
            
         </div>
         <div id='commentNavigation' class='d-flex justify-content-center'>

@@ -100,12 +100,15 @@
 
 
 /* comment */
-/* #comment{
-    border:solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #ced4da;
-} */
+#commentForm{
+   margin-left: 40px;
+   margin-right: 40px;
+}
+
+#commentsContainer{
+    margin-left: 40px;
+    margin-right: 40px;
+}
 
 .commentNavigationBtn{
     font-size:17px;
@@ -150,6 +153,15 @@
     background-color: #0275d8;
     border-color: #0275d8;
     color:white;
+}
+
+.replyToCommentForm{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.replyIndex{
+    margin-left: 50px;
 }
 
 .commentDeleteButton{
@@ -223,6 +235,15 @@
 }
 
 @media (max-width:400px){
+    #commentForm{
+        margin-left: 5px;
+        margin-right: 5px;
+     }
+     #commentsContainer{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    
     .showPageCard{
         width:98%;
         margin-left: 1%;
@@ -240,6 +261,13 @@
     }
     .ideaDescription{
        font-size:15px;
+    }
+    .replyToCommentForm{
+        margin-left: 10px;
+        margin-right: 0px;
+    }
+    .replyIndex{
+        margin-left: 10px;
     }
 }
 
