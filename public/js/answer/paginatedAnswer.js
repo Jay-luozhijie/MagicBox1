@@ -8,7 +8,7 @@
     const getAnswers = async (page, limit) => {//fetch data from api
         const deployedAddress = 'https://magicbox2021.herokuapp.com'
         const localAddress = 'http://localhost:3000'
-        const API_URL = localAddress + `/api/paginatedAnswer/?page=${page}&limit=${limit}&ideaId=${ideaId}`;
+        const API_URL = deployedAddress + `/api/paginatedAnswer/?page=${page}&limit=${limit}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
@@ -233,7 +233,7 @@
             const getComments = async (page, limit) => {//fetch data from api
                 const deployedAddress = 'https://magicbox2021.herokuapp.com'
                 const localAddress = 'http://localhost:3000'
-                const API_URL = localAddress + `/api/paginatedAnswerComment/?page=${commentPage}&limit=${commentLimit}&answerId=${answerId}`;
+                const API_URL = deployedAddress + `/api/paginatedAnswerComment/?page=${commentPage}&limit=${commentLimit}&answerId=${answerId}`;
                 const response = await fetch(API_URL, {
                     method: 'GET',
                     headers: {
