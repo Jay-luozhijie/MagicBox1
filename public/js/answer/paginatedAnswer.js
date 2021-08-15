@@ -167,7 +167,7 @@
             const editForm = document.createElement('form')
             modalBody.appendChild(editForm)
             editForm.action = `/${ideaId}/answer/${answer._id}?_method=PUT`
-            editForm.classList.add('editAnswerForm','my-3', 'mx-5')
+            editForm.classList.add('editAnswerForm','my-3')
             editForm.id=`editAnswerForm${answer._id}`
             editForm.method = "POST"
             editForm.enctype = 'multipart/form-data'

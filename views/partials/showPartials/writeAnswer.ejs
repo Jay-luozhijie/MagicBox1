@@ -1,14 +1,14 @@
 <div class='collapse' id="shareProduct">
-    <div class="createAnswerArea mb-4 ms-4 me-4">
+    <div class="createAnswerArea mb-4">
             <%if(currentUser){%>
-                <form action="/<%=idea._id%>/answer" id='submitAnswerForm' class="validated-form my-3 mx-5" method="POST" enctype="multipart/form-data" novalidate>           
-                    <label class="form-label" for="answerContent">Share your product:</label>
+                <form action="/<%=idea._id%>/answer" id='submitAnswerForm' class="validated-form my-3" method="POST" enctype="multipart/form-data" novalidate>           
+                    <label class="form-label ms-2" for="answerContent">Share your product:</label>
                     <textarea class='textEditorArea' id = 'submitAnswerContent' name="answerContent" placeholder="description:"></textarea>
                     <div id='noAnswerContentErrorMessage' class='noContentWarning'>
 
                     </div>
-                    <div class="mb-5 mt-3">
-                        <label for="formFileMultiple" class="form-label">upload images:</label>
+                    <div class="mb-3 mt-3">
+                        <label for="formFileMultiple" class="form-label ms-2">upload images:</label>
                         <input class="form-control" type="file" id="answerImage" name='answerImage' multiple>
                     </div>
                 

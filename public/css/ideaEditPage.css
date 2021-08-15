@@ -1,0 +1,10 @@
+.ideaEditPageContainer{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+.secondIdeaEditPageContainer{
+    width: 800px;
+    max-width: 90%;
+}
