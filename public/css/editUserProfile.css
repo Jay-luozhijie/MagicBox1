@@ -34,13 +34,13 @@
     .originalAvatar{
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: start;
         margin-bottom: 20px;
     }
     .updateAvatarForm{
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: start;
         margin-left: 20px;
         font-size: 13px;
     }

@@ -82,6 +82,9 @@
         margin-left: 2.5%;
         margin-right:2.5%;
     }
+    #indexPageContainer{
+        width:100%;
+    }
 }
 
 @media (max-width:400px){
