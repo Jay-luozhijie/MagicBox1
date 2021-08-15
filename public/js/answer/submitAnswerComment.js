@@ -42,7 +42,7 @@ $(document).ready(function(){
                 eachCommentContainer.appendChild(replyContainer)
                 
                 replyContainer.innerHTML += `
-                    <form action="/${ideaId}/comment/${data.commentId}/reply" id='replyToCommentForm${data.commentId}' class="mb-3 mx-5 replyToCommentForm" method="POST">
+                    <form action="/${ideaId}/comment/${data.commentId}/reply" id='replyToCommentForm${data.commentId}' class="mb-3 replyToCommentForm" method="POST">
                         <div class="mb-3">
                             <textarea class='form-control replyBody' name='reply'
                                 cols='30' rows='1'></textarea>
