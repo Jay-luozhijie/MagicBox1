@@ -8,7 +8,7 @@
     const getAnswers = async (page, limit) => {//fetch data from api
         const deployedAddress = 'https://magicbox2021.herokuapp.com'
         const localAddress = 'http://localhost:3000'
-        const API_URL = deployedAddress + `/api/paginatedAnswer/?page=${page}&limit=${limit}&ideaId=${ideaId}`;
+        const API_URL = localAddress + `/api/paginatedAnswer/?page=${page}&limit=${limit}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
@@ -96,10 +96,10 @@
 
 
             const answerBtnGroup = document.createElement('div')
-            answerBtnGroup.classList.add('d-flex','flex-row','justify-content-start','my-3')
+            answerBtnGroup.classList.add('my-3','answerBtnGroup')
             eachAnswerContainer.appendChild(answerBtnGroup)
             answerBtnGroup.innerHTML += `
-            <div>
+            <div class='answerCommentBtnContainer'>
                 <a class="btn showIdea-buttons mx-1" data-bs-toggle="collapse" href="#commentToAnswer${answer._id}" role="button" aria-expanded="false" aria-controls="#commentToAnswerForm${answer._id}">
                     Comment
                 </a>
@@ -107,12 +107,12 @@
             if (currentUser) {
                 if (currentUser && answer.author._id === currentUser._id) {
                     answerBtnGroup.innerHTML += `
-                    <div>
+                    <div class='answerDeleteBtnContainer'>
                         <form action='/${ideaId}/answer/${answer._id}?_method=DELETE' class='deleteAnswer' id='deleteAnswer${answer._id}' method="POST">
                             <button class='answerDeleteBtn showIdea-buttons mx-1'>Delete</button>
                         </form>
                     </div>
-                    <div>
+                    <div class='answerEditBtnContainer'>
                         <button class='answerEdit-btn showIdea-buttons mx-1' id='answerEditBtn${answer._id}'>
                             Edit
                         </button>
@@ -233,7 +233,7 @@
             const getComments = async (page, limit) => {//fetch data from api
                 const deployedAddress = 'https://magicbox2021.herokuapp.com'
                 const localAddress = 'http://localhost:3000'
-                const API_URL = deployedAddress + `/api/paginatedAnswerComment/?page=${commentPage}&limit=${commentLimit}&answerId=${answerId}`;
+                const API_URL = localAddress + `/api/paginatedAnswerComment/?page=${commentPage}&limit=${commentLimit}&answerId=${answerId}`;
                 const response = await fetch(API_URL, {
                     method: 'GET',
                     headers: {

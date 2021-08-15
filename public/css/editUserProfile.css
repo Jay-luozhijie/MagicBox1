@@ -1,0 +1,47 @@
+.originalAvatar{
+    margin-left:15px;
+    margin-right:50px;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.secondPageContainer{
+    width: 50rem;
+}
+
+.updateAvatarSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+@media (max-width:900px){
+    .secondPageContainer{
+        width: 70%;
+        margin-left:15%;
+        margin-right:15%;
+    }
+}
+
+@media(max-width:550px){
+    .updateAvatarSection{
+        display: inline;
+    }
+    .originalAvatar{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .updateAvatarForm{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-left: 20px;
+        font-size: 13px;
+    }
+}

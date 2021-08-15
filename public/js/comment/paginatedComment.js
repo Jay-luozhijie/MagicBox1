@@ -10,7 +10,7 @@
     const getComments = async (page, limit) => {//fetch data from api
         const deployedAddress='https://magicbox2021.herokuapp.com'
         const localAddress ='http://localhost:3000'
-        const API_URL = deployedAddress+`/api/paginatedComment/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
+        const API_URL = localAddress+`/api/paginatedComment/?page=${page}&limit=${limit}&commentNum=${commentArrayLength}&ideaId=${ideaId}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {

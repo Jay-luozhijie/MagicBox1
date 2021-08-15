@@ -14,8 +14,8 @@
         const API_URL = keyword
             // ? `https://secure-brushlands-03249.herokuapp.com/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`// deploy version
             // : `https://secure-brushlands-03249.herokuapp.com/api/ideaIndex/?page=${page}&limit=${limit}`;
-            ? deployedAddress + `/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
-            : deployedAddress + `/api/ideaIndex/?page=${page}&limit=${limit}`;
+            ? localAddress + `/api/searchIndex/?page=${page}&limit=${limit}&keyword=${keyword}`
+            : localAddress + `/api/ideaIndex/?page=${page}&limit=${limit}`;
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
@@ -61,13 +61,14 @@
 
     const showIdeas = (ideas) => {//show 10 ideas
         ideas.forEach(idea => {
-            const ideaComponent = document.createElement('div');
-            ideaComponent.classList.add('idea');
+            // const ideaComponent = document.createElement('div');
+            // ideaComponent.classList.add('idea');
+            const ideaCard = document.createElement("div");
+            ideaCard.classList.add('mb-3','ideaCard');
             if (!idea.deleted) {
-                ideaComponent.innerHTML = `
-                <div class="mb-3 ideaCard">
+                ideaCard.innerHTML = `
                     <div class=" mt-1 ms-2 mb-3 indexIdeaAuthor">${idea.author.username}</div>
-                    <div class=" indexIdeaContent ms-5">
+                    <div class=" indexIdeaContent">
                         <div class="mb-3 indexIdeaTitle">
                             ${idea.title}
                         </div>
@@ -80,13 +81,11 @@
                     </div>
                     <p class="ms-5 mb-1 likedNum">
                         ${idea.upVote.length} people like this post!
-                    </p>
-                </div>`;
+                    </p>`;
             } else {
-                ideaComponent.innerHTML = `
-                <div class="mb-3 ideaCard">
-                    <div class="indexIdeaContent ms-5 mt-5">
-                        <div class="mb-5 deletedIdeaDescription">
+                ideaCard.innerHTML = `
+                    <div class="indexIdeaContent">
+                        <div class="mb-4 deletedIdeaDescription">
                             ${idea.description}
                         </div>
                         <div>
@@ -95,10 +94,9 @@
                     </div>
                     <p class="ms-5 mb-1 likedNum">
                         ${idea.upVote.length} people like this post!
-                    </p>
-                </div>`;
+                    </p>`;
             }
-            ideasIndex.appendChild(ideaComponent)
+            ideasIndex.appendChild(ideaCard)
         })
     }
 

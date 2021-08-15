@@ -4,21 +4,19 @@
     justify-content: center;
 }
 
+#indexPageContainer{
+    width:75rem;
+}
+
 .ideaCard{  /*container of each idea in index page*/
-    width:55em;
+    width:70%;
+    margin-left: 15%;
+    margin-right: 15%;
     border: solid;
     border-width: 1px;
     border-color: rgba(173,181,189,0.4);
     border-radius:7px;
     background-color: white;
-}
-
-.indexIdeaDescription{
-    width: 100%;
-    overflow: hidden; 
-    display: -webkit-box; 
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
 }
 
 .indexIdeaAuthor{       
@@ -32,11 +30,28 @@
     flex-direction: column;
     justify-content: start;
     height:18rem; 
-    width: 48rem;
+    width: 90%;
+    margin-left: 5%;
+    margin-right:5%;
 }
 
 .indexIdeaTitle{
     font-weight: 800;
+}
+
+.indexIdeaDescription{
+    width: 100%;
+    overflow: hidden; 
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+.deletedIdeaDescription{
+    margin-top:50px;
+    font-weight: 800;
+    font-size:25px;
+    color:rgba(0,0,0,0.5)
 }
 
 .more-btn{
@@ -63,26 +78,16 @@
 
 @media (max-width:900px){
     .ideaCard{  /*container of each idea in index page*/
-        width:40em;
-    }
-    .indexIdeaDescription{
-        width: 85%;
-    }
-    .indexIdeaContent{      /*container of title & description*/
-        height:18rem; 
-        width: 38rem;
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right:2.5%;
     }
 }
 
-@media (max-width:660px){
+@media (max-width:400px){
     .ideaCard{  /*container of each idea in index page*/
-        width:25em;
-    }
-    .indexIdeaDescription{
-        width: 75%;
-    }
-    .indexIdeaContent{      /*container of title & description*/
-        height:18rem; 
-        width: 25rem;
+        width: 98%;
+        margin-left: 1%;
+        margin-right:1%;
     }
 }

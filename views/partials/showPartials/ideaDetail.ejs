@@ -1,14 +1,14 @@
 <div class="card-body">
     <% if(!idea.deleted){ %>
-        <div class="d-flex flex-row mt-3 ms-3 row">
-            <div class="col-1">
+        <div class="d-flex flex-row">
+            <div class="ideaAuthorAvatar">
                 <% if(idea.author.avatar.url == undefined ) {%>
                     <img src='https://res.cloudinary.com/dge5viwyc/image/upload/v1628588846/avatarUpload/xnoirwebg9mlgq7scqfk.png' alt="avatar" class='showPageAvatar'>
                 <% } else { %>
                     <img src='<%= idea.author.avatar.url %>' alt="avatar" class='showPageAvatar'>
                 <% } %>
             </div>
-            <div class="ideaAuthor col-2">
+            <div class="ideaAuthor">
                 <a href='/user/<%=idea.author._id%>' style="color:grey;
                     text-decoration: none;">
                     <%=idea.author.username%>
@@ -16,7 +16,7 @@
             </div>
 
             <% if(currentUser && !currentUser.equals(idea.author)){ %>
-                <div class="col-1">
+                <div class="">
                     <% if(currentUser && idea.author.follower.includes(currentUser._id)) { %>
                         <a type="button" class="followBtn" id="cancelFollow">unfollow</a>
                     <% } else { %>
@@ -26,7 +26,7 @@
             <% } %>
         </div>
 
-        <hr>
+        <hr class='ideaDetailIdeaBtnBreak'>
         <div class="ideaTitle">
             <%=idea.title%>
         </div>
