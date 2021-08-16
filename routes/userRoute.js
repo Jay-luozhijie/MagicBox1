@@ -80,7 +80,7 @@ router.post('/follow', async (req, res) => {
     const user = await UserModel.findById(userId);
     const idea = await (await IdeaModel.findById(ideaId));
     const author = await UserModel.findById(idea.author);
-    if (author.follower.indexOf(userId)) { }
+    if (author.follower.indexOf(userId) != -1) { }
     else {
         author.follower.push(userId);
         user.following.push(author._id);
